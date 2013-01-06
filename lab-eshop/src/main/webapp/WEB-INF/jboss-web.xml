@@ -2,6 +2,6 @@
 
 <jboss-web>
 	<context-root>eshop</context-root>
-
+    <security-domain>java:/jaas/labeshopsecurity</security-domain>
 	<!-- <security-domain>java:/jaas/lab-eshop</security-domain> -->
 </jboss-web>

@@ -1,7 +1,12 @@
 package cz.cvut.fel.jee.labEshop.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -14,7 +19,11 @@ import javax.persistence.Table;
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
+	@Column(nullable = false, unique = true)
+    @ManyToMany(fetch = FetchType.EAGER , cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	private Set<Role> roles;
+	
+		
 	@Column(nullable = false, unique = true)
 	private String username;
 
@@ -72,6 +81,14 @@ public class User extends BaseEntity {
 
 	public String getFullName() {
 		return firstName + " " + lastName;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 }
