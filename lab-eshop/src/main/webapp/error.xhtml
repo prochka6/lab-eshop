@@ -1,17 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-	<title>EShop</title>
-</h:head>
+
 
 <h:body>
-	<h1>Error login page !</h1>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="Error" />
+		<ui:param name="pageHeading" value="Error" />
+		
+		<ui:define name="content">
+			Something goes wrong here!
+		</ui:define>
+		
+		
+	</ui:composition>
 
-	<p>If something goes wrong you will be redirect here</p>
 </h:body>
 
 </html>

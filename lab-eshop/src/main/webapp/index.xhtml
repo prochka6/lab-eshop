@@ -1,22 +1,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-	<title>EShop</title>
-</h:head>
+
 
 <h:body>
-	<h1>Hello World !</h1>
+	<ui:composition template="/WEB-INF/templates/tmpl2Cols.xhtml">
+		<ui:param name="pageTitle" value="EShop" />
+		<ui:param name="pageHeading" value="Hello World !" />
+		
+		<ui:define name="leftColumn">
+			<ui:include src="/WEB-INF/includes/categoryMenu.xhtml" />
+			
+		</ui:define>
 
-	<p>This is just sample text on main page.</p>
-		Form action
-	<h:form>
-	<h:commandButton value="Admin logout" action="#{loginBean.logout()}" rendered="#{loginBean.admin}" />
-	<h:commandButton value="Customer logout" action="#{loginBean.logout()}" rendered="#{loginBean.customer}" />
-	</h:form>
+		<ui:define name="content">
+			<p>This is just sample text on main page.</p>
+			Form action
+			<h:form>
+				<h:commandButton value="Admin logout" action="#{loginBean.logout}"
+					rendered="#{loginBean.admin}" />
+				<h:commandButton value="Customer logout"
+					action="#{loginBean.logout}" rendered="#{loginBean.customer}" />
+			</h:form>
+		</ui:define>
+
+
+
+	</ui:composition>
+
 </h:body>
 
 </html>
