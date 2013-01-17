@@ -2,20 +2,20 @@ package cz.cvut.fel.jee.labEshop.data;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import cz.cvut.fel.jee.labEshop.idata.IObjectManager;
+
 /**
- * This class is ancestor of all managers, it provide acces to EntityManager 
- * and implements all basic operation with persiting object.
+ * This class is ancestor of all managers, it provide acces to EntityManager and
+ * implements all basic operation with persiting object.
  */
 public class ObjectManager implements IObjectManager, Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	@PersistenceContext(unitName = "lab-eshop-PU")
+
+	@Inject
 	protected EntityManager em;
 
 	@Override
@@ -41,7 +41,6 @@ public class ObjectManager implements IObjectManager, Serializable {
 	public void update(Object objectToUpdate) {
 		objectToUpdate = em.merge(objectToUpdate);
 		em.persist(objectToUpdate);
-
 	}
 
 	@Override

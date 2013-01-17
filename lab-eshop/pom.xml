@@ -8,6 +8,7 @@
 	<name>E-shop</name>
 
 	<properties>
+		<seam.version>3.1.0.Final</seam.version>
 		<javaee6.web.spec.version>2.0.0.Final</javaee6.web.spec.version>
 		<jboss.bom.version>1.0.0.Final</jboss.bom.version>
 		<jboss.plugin.version>7.3.Final</jboss.plugin.version>
@@ -28,6 +29,13 @@
 				<groupId>org.jboss.bom</groupId>
 				<artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
 				<version>${jboss.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>seam-bom</artifactId>
+				<version>${seam.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -77,6 +85,24 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- Seam 3 -->
+		<dependency>
+			<groupId>org.jboss.solder</groupId>
+			<artifactId>solder-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.seam.faces</groupId>
+			<artifactId>seam-faces</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.seam.international</groupId>
+			<artifactId>seam-international</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.seam.persistence</groupId>
+			<artifactId>seam-persistence</artifactId>
+		</dependency>
+
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -90,12 +116,14 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
 				<configuration>
 					<source>${maven.compiler.version}</source>
 					<target>${maven.compiler.version}</target>

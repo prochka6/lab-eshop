@@ -7,16 +7,14 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition>
-	<h:form class="catMenu" >
+
+	<h:panelGroup class="catMenu" layout="block">
 		<ul>
-			<li><a href="#">Sample Category 1</a></li>
-			<li><a href="#">Sample Category 2</a></li>
-			<li><a href="#">Sample Category 3</a></li>
-			<li><a href="#">Sample Category 4</a></li>
-
+			<ui:repeat var="category" value="#{categoriesList}">
+				<li><a href="#">#{category.name}</a></li>
+			</ui:repeat>
 		</ul>
-
-	</h:form>
+	</h:panelGroup>
 
 </ui:composition>
 </html>

@@ -7,6 +7,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 
@@ -24,7 +25,7 @@ public class Test {
 	@Inject
 	private Logger log;
 
-	@Inject
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	@PostConstruct

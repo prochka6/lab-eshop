@@ -2,32 +2,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
-
-
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:shop="http://java.sun.com/jsf/composite/components">
 
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmpl2Cols.xhtml">
 		<ui:param name="pageTitle" value="EShop" />
 		<ui:param name="pageHeading" value="Hello World !" />
-		
+
 		<ui:define name="leftColumn">
 			<ui:include src="/WEB-INF/includes/categoryMenu.xhtml" />
-			
+
 		</ui:define>
 
 		<ui:define name="content">
 			<p>This is just sample text on main page.</p>
-			Form action
+
+			<h4>Products</h4>
+			<h:dataTable var="product" value="#{sample.products}" border="1">
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					#{product.id}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Title</f:facet>
+					#{product.title}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Brand</f:facet>
+					#{product.brand.name}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Category</f:facet>
+					#{product.category.name}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Avaibility</f:facet>
+					#{product.availability}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Price</f:facet>
+					#{product.price.amount} CZK
+				</h:column>
+				<h:column>
+					<f:facet name="header">Summary</f:facet>
+					#{product.summary}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Description</f:facet>
+					#{product.description}
+				</h:column>
+			</h:dataTable>
+
+			<h4>Preview List</h4>
+			<ui:repeat var="product" value="#{sample.products}" varStatus="s">
+				<div style="float: left; #{!s.odd? 'margin-right: 15px;' : ''}">
+					<shop:productPreview product="#{product}" />
+				</div>
+			</ui:repeat>
+			<div style="clear: both;" />
+
+			<h4>Form action</h4>
 			<h:form>
 				<h:commandButton value="Admin logout" action="#{loginBean.logout}"
 					rendered="#{loginBean.admin}" />
 				<h:commandButton value="Customer logout"
 					action="#{loginBean.logout}" rendered="#{loginBean.customer}" />
 			</h:form>
+
 		</ui:define>
-
-
 
 	</ui:composition>
 

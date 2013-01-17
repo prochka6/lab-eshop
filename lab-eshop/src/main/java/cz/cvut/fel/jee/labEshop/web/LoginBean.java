@@ -1,15 +1,16 @@
-package cz.cvut.fel.jee.labEshop.view.controllers;
+package cz.cvut.fel.jee.labEshop.web;
 
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,10 +26,12 @@ import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
  * 
  * @author Tom
  */
-
-@ManagedBean(name = "loginBean")
+@Named("loginBean")
 @SessionScoped
-public class LoginBean {
+public class LoginBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Actually looged user, if user is not logged then is null.
 	 */
@@ -36,10 +39,9 @@ public class LoginBean {
 
 	@Inject
 	private IUserManager userManager;
-	////////////////////////////////
-	//// Logged user role type ////
-	///////////////////////////////
-	
+	// //////////////////////////////
+	// // Logged user role type ////
+	// /////////////////////////////
 
 	/**
 	 * If user is logged and has admin role then is set to true otherwise false.
@@ -47,7 +49,8 @@ public class LoginBean {
 	private boolean isAdmin = false;
 
 	/**
-	 * If user is logged and has customer role then is set to true otherwise false.
+	 * If user is logged and has customer role then is set to true otherwise
+	 * false.
 	 */
 	private boolean isCustomer = false;
 
@@ -62,19 +65,17 @@ public class LoginBean {
 	}
 
 	/**
-	 * Method check if user is logged and determine if user is customer or admin or has both roles.
-	 * When user is not logged then loggedUser is null.
+	 * Method check if user is logged and determine if user is customer or admin
+	 * or has both roles. When user is not logged then loggedUser is null.
 	 */
 	public void recognizeUser() {
-		Principal p = FacesContext.getCurrentInstance().getExternalContext()
-				.getUserPrincipal();
+		Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
 		if (p != null && loggedUser == null) {
 			loggedUser = userManager.findUserByUsername(p.getName());
-		} else if(p == null ) {
+		} else if (p == null) {
 			loggedUser = null;
 		}
-		if (loggedUser == null || loggedUser.getRoles() == null
-				|| loggedUser.getRoles().isEmpty()) {
+		if (loggedUser == null || loggedUser.getRoles() == null || loggedUser.getRoles().isEmpty()) {
 			isAdmin = false;
 			isCustomer = false;
 			isUserLogged = false;
@@ -86,8 +87,7 @@ public class LoginBean {
 			if (userRole.getRole().equals(LabEshopConstants.CUSTOMER_ROLE)) {
 				isCustomer = true;
 				isUserLogged = true;
-			} else if (userRole.getRole().equals(
-					LabEshopConstants.ADMINISTRATOR_ROLE)) {
+			} else if (userRole.getRole().equals(LabEshopConstants.ADMINISTRATOR_ROLE)) {
 				isAdmin = true;
 				isUserLogged = true;
 			}
@@ -100,12 +100,10 @@ public class LoginBean {
 	 */
 	public String logout() {
 		FacesContext facescontext = FacesContext.getCurrentInstance();
-		HttpServletRequest ref = (HttpServletRequest) facescontext
-				.getExternalContext().getRequest();
+		HttpServletRequest ref = (HttpServletRequest) facescontext.getExternalContext().getRequest();
 		try {
 			ref.logout();
-			HttpSession session = (HttpSession) facescontext
-					.getExternalContext().getSession(false);
+			HttpSession session = (HttpSession) facescontext.getExternalContext().getSession(false);
 			session.invalidate();
 			return "logout";
 		} catch (ServletException ex) {
@@ -113,7 +111,7 @@ public class LoginBean {
 			return "logout";
 		}
 	}
-	
+
 	public User getLoggedUser() {
 		return loggedUser;
 	}
@@ -140,11 +138,9 @@ public class LoginBean {
 		this.isAdmin = isAdmin;
 	}
 
-
-
 	public boolean isUserLogged() {
 		recognizeUser();
-		if(isUserLogged || isAdmin || isCustomer){
+		if (isUserLogged || isAdmin || isCustomer) {
 			isUserLogged = true;
 		}
 		return isUserLogged;

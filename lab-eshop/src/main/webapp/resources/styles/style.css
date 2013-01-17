@@ -9,7 +9,6 @@ a {
 	text-decoration: none;
 }
 
-
 a:hover {
 	color: #744040;
 	text-decoration: underline;
@@ -29,13 +28,11 @@ a:hover {
 	width: 500px;
 	float: right;
 	height: 80px;
-
 }
-
 
 #headerMenu ul {
 	list-style: none;
-	float: right; 
+	float: right;
 	margin-bottom: 3px;
 }
 
@@ -57,7 +54,6 @@ a:hover {
 #cart a {
 	position: relative;
 	top: -15px;
-	
 }
 
 #cartImg {
@@ -76,7 +72,7 @@ a:hover {
 
 #content {
 	min-height: 400px;
-	padding: 25px; 
+	padding: 25px;
 }
 
 .footer {
@@ -121,20 +117,18 @@ a:hover {
 }
 
 #leftColumn {
-
 	width: 140px;
 	float: left;
 	display: block;
 	min-height: 400px;
-	padding:  25px 5px; 
+	padding: 25px 5px;
 	border-right: 1px solid #a0a0a0;
-	
 }
 
 #mainColumn {
 	width: 798px;
 	min-height: 400px;
-	padding: 25px; 
+	padding: 25px;
 	float: left;
 	display: block;
 }
@@ -143,8 +137,6 @@ a:hover {
 	margin: 0px;
 	padding: 0;
 	list-style-type: none;
-
-	
 }
 
 .catMenu li {

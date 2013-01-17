@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,11 +15,14 @@ import javax.persistence.criteria.Root;
 import cz.cvut.fel.jee.labEshop.idata.IUserManager;
 import cz.cvut.fel.jee.labEshop.model.Role;
 import cz.cvut.fel.jee.labEshop.model.User;
+import cz.cvut.fel.jee.labEshop.model.User_;
 
 /**
- * This is implementation of IUserManager interface. Please use metamodel in future. 
+ * This is implementation of IUserManager interface. Please use metamodel in
+ * future.
+ * 
  * @author Tom
- *
+ * 
  */
 
 @Stateless
@@ -33,9 +35,7 @@ public class UserManager extends ObjectManager implements IUserManager {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> userQuery = cb.createQuery(User.class);
 		Root<User> rootQueryUser = userQuery.from(User.class);
-		//NEXT TIME USE ACCESS VIA METAMODEL!!!!!
-		Predicate usernamePredicate = cb.equal(rootQueryUser.get("username"),
-				username);
+		Predicate usernamePredicate = cb.equal(rootQueryUser.get(User_.username), username);
 		userQuery.distinct(true).where(usernamePredicate);
 		TypedQuery<User> typedQuery = em.createQuery(userQuery);
 		List<User> resultList = typedQuery.getResultList();
@@ -44,9 +44,6 @@ public class UserManager extends ObjectManager implements IUserManager {
 		}
 		return null;
 	}
-
-
-
 
 	@Override
 	public void addUser(User userToadd, Set<String> rolesOfUser) {

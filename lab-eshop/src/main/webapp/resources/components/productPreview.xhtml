@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<head>
+<title>Single product item.</title>
+</head>
+
+<!-- TODO: implement and style !!! -->
+
+<body>
+
+	<composite:interface>
+		<composite:attribute name="product" required="true"
+			type="cz.cvut.fel.jee.labEshop.model.Product" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div
+			style="margin: 5px; width: 370px; padding: 10px 5px 5px; background-color: #e5e5e5; -moz-box-shadow: 0px 0px 7px #888; -webkit-box-shadow: 0px 0px 7px #888; box-shadow: 0px 0px 7px #888;">
+			<strong>#{cc.attrs.product.title}</strong>
+			<ul>
+				<li>#{cc.attrs.product.price.amount} CZK</li>
+				<li>#{cc.attrs.product.availability}</li>
+			</ul>
+			<p>#{cc.attrs.product.summary}</p>
+			<p style="border-top: 1px solid #888; padding-top: 10px;">#{cc.attrs.product.description}</p>
+		</div>
+	</composite:implementation>
+
+</body>
+</html>

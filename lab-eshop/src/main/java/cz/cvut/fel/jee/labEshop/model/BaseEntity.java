@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.jboss.solder.core.Veto;
+
 /**
  * Base persistent class. Defines persistence contract with generated synthetic
  * identifier {@linkplain #id}. ID is used for equals and hashCode contract.
@@ -21,6 +23,7 @@ import javax.persistence.MappedSuperclass;
  * 
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
+@Veto
 @SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {

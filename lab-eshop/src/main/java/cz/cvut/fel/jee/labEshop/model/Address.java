@@ -1,18 +1,21 @@
 package cz.cvut.fel.jee.labEshop.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+
+import org.jboss.solder.core.Veto;
 
 /**
- * Maybe only VALUE OBJECT ?!?
+ * Address wrapper type.
  * 
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
-@Entity
-@Table(name = "address")
-public class Address extends BaseEntity {
+@Veto
+@Embeddable
+public class Address implements Serializable {
 
-	private static final long serialVersionUID = 7431863096943747783L;
+	private static final long serialVersionUID = 1L;
 
 	private String street;
 

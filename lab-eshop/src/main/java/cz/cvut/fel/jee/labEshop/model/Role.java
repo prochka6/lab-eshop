@@ -2,32 +2,34 @@ package cz.cvut.fel.jee.labEshop.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.jboss.solder.core.Veto;
 
 /**
- * This entity hold information of role in system include user which has these roles
+ * This entity hold information of role in system include user which has these
+ * roles
+ * 
  * @author Tom
- *
+ * 
  */
+@Veto
 @Entity
 @Table(name = "role")
 public class Role extends BaseEntity {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * Users which has this role
+	 * Users who has assigned this role
 	 */
 	@Column(nullable = false, unique = true)
-	 @ManyToMany(mappedBy="roles",fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
-	
+
 	/**
 	 * Label of role used by JAAS to determine authorization
 	 */
@@ -49,5 +51,5 @@ public class Role extends BaseEntity {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-	
+
 }

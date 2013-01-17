@@ -7,39 +7,38 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link href="/eshop/resources/styles/style.css" rel="stylesheet"
-		type="text/css" />
+	<link href="#{request.contextPath}/resources/styles/style.css"
+		rel="stylesheet" type="text/css" />
 	<title>#{pageTitle}</title>
 </h:head>
 
 <h:body>
 
 	<div class="header">
-	<h:outputLink value="index.xhtml">
-		<img src="/eshop/resources/images/logo.png" /> </h:outputLink>
-		
-		<div id="headerMenu" >
+		<h:outputLink value="index.xhtml">
+			<img src="/eshop/resources/images/logo.png" />
+		</h:outputLink>
+
+		<div id="headerMenu">
 			<ui:include src="/WEB-INF/includes/headerMenu.xhtml" />
 		</div>
-		
 	</div>
 
 	<div class="main">
-	
+
 		<div id="leftColumn">
 			<ui:insert name="leftColumn">Left content</ui:insert>
-		
 		</div>
 
 		<div id="mainColumn">
 			<h2>#{pageHeading}</h2>
-		
+
 			<ui:insert name="content">Main content</ui:insert>
 		</div>
-		
-		<div style="clear:both;"></div>
 
-		<div class="footer"> 
+		<div style="clear: both;"></div>
+
+		<div class="footer">
 			<ui:include src="/WEB-INF/includes/footer.xhtml" />
 		</div>
 

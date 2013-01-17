@@ -1,13 +1,14 @@
 package cz.cvut.fel.jee.labEshop.util;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
-import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
+import org.jboss.seam.persistence.SeamManagedPersistenceContextCreated;
+import org.jboss.solder.core.ExtensionManaged;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,26 +19,22 @@ import org.slf4j.LoggerFactory;
  */
 public class Resources {
 
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
 	@SuppressWarnings("unused")
 	@Produces
-	@PersistenceContext
-	private EntityManager em;
+	@ExtensionManaged
+	@ConversationScoped
+	@PersistenceUnit(unitName = "lab-eshop-PU")
+	private EntityManagerFactory entityManagerFactory;
 
 	@Produces
 	public Logger produceLog(InjectionPoint ip) {
 		return LoggerFactory.getLogger(ip.getMember().getDeclaringClass());
 	}
 
-	@Produces
-	@RequestScoped
-	public FacesContext produceFacesContext() {
-		return FacesContext.getCurrentInstance();
-	}
-
-	@Produces
-	@RequestScoped
-	public HttpServletRequest produceHttpServletRequest() {
-		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	public void initEntityManager(@Observes SeamManagedPersistenceContextCreated event) {
+		log.debug("Entity Manager {} opened.", event.getEntityManager());
 	}
 
 }

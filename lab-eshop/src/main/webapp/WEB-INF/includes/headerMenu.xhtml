@@ -8,31 +8,22 @@
 
 <ui:composition>
 
-	<h:form>
-		<ul>
-			<li><c:choose>
+	<ul>
+		<li><h:form>
+				<h:commandLink action="#{loginBean.logout}"
+					rendered="#{loginBean.userLogged}">Logout</h:commandLink>
+			</h:form> <h:link outcome="login.xhtml" value="Login" /></li>
 
-					<c:when test="#{loginBean.userLogged}">
-						<h:commandLink action="#{loginBean.logout}">Logout</h:commandLink>
-					</c:when>
+		<li><a href="/eshop/index.xhtml">Home</a></li>
+	</ul>
 
-					<c:otherwise>
-						<h:outputLink value="/eshop/login.xhtml">Login</h:outputLink>
-					</c:otherwise>
-				</c:choose></li>
-
-			<li><a href="/eshop/index.xhtml">Home</a></li>
-
-		</ul>
-
-		<h:panelGroup rendered="#{loginBean.userLogged}">
-			<div id="cart">
-				<h:outputLink value="cart.xhtml">Cart
-			<img src="/eshop/resources/images/cart.png" id="cartImg" />
-				</h:outputLink>
-			</div>
-		</h:panelGroup>
-	</h:form>
+	<h:panelGroup rendered="#{loginBean.userLogged}">
+		<div id="cart">
+			<h:outputLink value="cart.xhtml">Cart <img
+					src="/eshop/resources/images/cart.png" id="cartImg" />
+			</h:outputLink>
+		</div>
+	</h:panelGroup>
 
 </ui:composition>
 </html>

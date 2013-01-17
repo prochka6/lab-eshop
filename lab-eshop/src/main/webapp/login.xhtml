@@ -10,7 +10,7 @@
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
 		<ui:param name="pageTitle" value="EShop" />
 		<ui:param name="pageHeading" value="Login" />
-		
+
 		<ui:define name="content">
 			<form method="post" action="j_security_check">
 				<h:panelGrid id="panel" columns="2">
@@ -20,15 +20,15 @@
 					<input type="password" size="25" name="j_password" />
 				</h:panelGrid>
 				<input type="submit" value="Log me in" />
-				
-				
+
+
 				<!--  <h:commandLink value="New Registration" action="newRegistration" /> -->
-				
+
 			</form>
 		</ui:define>
-		
-		
-		
+
+
+
 	</ui:composition>
 
 </h:body>

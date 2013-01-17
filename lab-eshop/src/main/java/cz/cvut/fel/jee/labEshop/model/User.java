@@ -4,32 +4,44 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.jboss.solder.core.Veto;
 
 /**
- * Possible implementation of user entity in eshop application.
+ * User represents person who is interacting with system.
  * 
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
+@Veto
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+
 	@Column(nullable = false, unique = true)
-    @ManyToMany(fetch = FetchType.EAGER , cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Role> roles;
-	
-		
+
+	@NotNull
+	@Size(min = 5)
 	@Column(nullable = false, unique = true)
 	private String username;
 
+	@NotNull
+	@Size(min = 5)
 	@Column(nullable = false)
 	private String password;
 
+	@NotNull
+	@Email
 	@Column(nullable = false, unique = true)
 	private String email;
 
@@ -38,6 +50,9 @@ public class User extends BaseEntity {
 
 	@Column(name = "last_name")
 	private String lastName;
+
+	@Embedded
+	private Address address;
 
 	public String getUsername() {
 		return username;
@@ -89,6 +104,14 @@ public class User extends BaseEntity {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }
