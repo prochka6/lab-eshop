@@ -35,7 +35,8 @@ public class UserManager extends ObjectManager implements IUserManager {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<User> userQuery = cb.createQuery(User.class);
 		Root<User> rootQueryUser = userQuery.from(User.class);
-		Predicate usernamePredicate = cb.equal(rootQueryUser.get(User_.username), username);
+		Predicate usernamePredicate = cb.equal(
+				rootQueryUser.get(User_.username), username);
 		userQuery.distinct(true).where(usernamePredicate);
 		TypedQuery<User> typedQuery = em.createQuery(userQuery);
 		List<User> resultList = typedQuery.getResultList();
@@ -50,7 +51,10 @@ public class UserManager extends ObjectManager implements IUserManager {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Role> roleQuery = cb.createQuery(Role.class);
 		roleQuery.distinct(true);
+		Root<Role> role = roleQuery.from(Role.class);
+		roleQuery.select(role);
 		TypedQuery<Role> typedQuery = em.createQuery(roleQuery);
+
 		List<Role> roleList = typedQuery.getResultList();
 		Iterator<Role> roleIt = roleList.iterator();
 		Role targetRole = null;
@@ -67,6 +71,22 @@ public class UserManager extends ObjectManager implements IUserManager {
 		}
 		userToadd.setRoles(rolesInSystem);
 		super.add(userToadd);
+	}
+
+	@Override
+	public List<User> findAllUsers() {
+		List<User> usersList;
+		CriteriaQuery<User> query = em.getCriteriaBuilder().createQuery(User.class);
+		query.from(User.class);
+		usersList = em.createQuery(query).getResultList();
+
+		return usersList;
+	}
+
+	@Override
+	public void updateUser(User userToEdit) {
+		super.update(userToEdit);
+		
 	}
 
 }

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition>
+
+	<h:form>
+		<ul>
+			<li><h:outputLink value="#{request.contextPath}/index.xhtml">Home</h:outputLink></li>
+
+			<!-- If user is logged in, only customer menu is displayed.
+					Otherwise Login link is displayed  -->
+			<c:choose>
+				<c:when test="#{loginBean.customer}">
+					<li><h:outputLink
+							value="#{request.contextPath}/customer/accountDetail.xhtml">Account</h:outputLink></li>
+					<li><h:commandLink action="#{loginBean.logout}">Logout</h:commandLink></li>
+				</c:when>
+
+				<c:otherwise>
+					<li><h:outputLink
+							value="#{request.contextPath}/customer/index.xhtml">Login</h:outputLink>
+						&nbsb; | &nbsb; <h:outputLink
+							value="#{request.contextPath}/newUser.xhtml"
+							style="font-size: 13pt;">Register</h:outputLink></li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+	</h:form>
+
+	<h:panelGroup rendered="#{loginBean.userLogged}">
+		<div id="cart">
+			<h:outputLink value="#{request.contextPath}/customer/cart.xhtml">Cart <img
+					src="#{request.contextPath}/resources/images/cart.png" id="cartImg" />
+			</h:outputLink>
+		</div>
+	</h:panelGroup>
+
+</ui:composition>
+</html>
+

@@ -25,7 +25,7 @@ a:hover {
 }
 
 #headerMenu {
-	width: 500px;
+	width: 600px;
 	float: right;
 	height: 80px;
 }
@@ -101,7 +101,8 @@ a:hover {
 	float: right;
 	position: relative;
 	top: 120px;
-	display: inline;
+	display: block;
+	left: 70px;
 }
 
 .footer a {
@@ -116,21 +117,24 @@ a:hover {
 	text-decoration: underline;
 }
 
+.wrap {
+clear: both;
+width: 1000px;
+padding-bottom: 10px;
+overflow:hidden;
+}
+
 #leftColumn {
 	width: 140px;
 	float: left;
-	display: block;
-	min-height: 400px;
 	padding: 25px 5px;
-	border-right: 1px solid #a0a0a0;
+	display:inline;
 }
 
 #mainColumn {
 	width: 798px;
-	min-height: 400px;
 	padding: 25px;
-	float: left;
-	display: block;
+	float: right;
 }
 
 .catMenu ul {
@@ -150,4 +154,9 @@ a:hover {
 	position: relative;
 	left: 3px;
 	background: #cfdeff;
+}
+
+.errorRequired {
+	color: red;
+	
 }

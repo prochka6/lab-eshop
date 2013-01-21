@@ -62,14 +62,6 @@
 			</ui:repeat>
 			<div style="clear: both;" />
 
-			<h4>Form action</h4>
-			<h:form>
-				<h:commandButton value="Admin logout" action="#{loginBean.logout}"
-					rendered="#{loginBean.admin}" />
-				<h:commandButton value="Customer logout"
-					action="#{loginBean.logout}" rendered="#{loginBean.customer}" />
-			</h:form>
-
 		</ui:define>
 
 	</ui:composition>

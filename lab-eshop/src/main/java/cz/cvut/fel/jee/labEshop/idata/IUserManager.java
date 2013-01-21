@@ -1,5 +1,6 @@
 package cz.cvut.fel.jee.labEshop.idata;
 
+import java.util.List;
 import java.util.Set;
 
 import cz.cvut.fel.jee.labEshop.model.User;
@@ -25,5 +26,18 @@ public interface IUserManager {
 	 * @param rolesOfUser role which will user has
 	 */
 	public void addUser(User userToadd, Set<String> rolesOfUser);
+	
+	/**
+	 * This method find all users in database
+	 * @return List<Usr> of all users
+	 */
+	public List<User> findAllUsers();
+	
+	
+	/**
+	 * This method update data of selected user
+	 * @param userToEdit user which will updated in database
+	 */
+	public void updateUser(User userToEdit);
 	
 }
