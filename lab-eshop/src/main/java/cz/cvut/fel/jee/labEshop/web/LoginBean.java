@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cz.cvut.fel.jee.labEshop.idata.IUserManager;
+import cz.cvut.fel.jee.labEshop.manager.UserManager;
 import cz.cvut.fel.jee.labEshop.model.Role;
 import cz.cvut.fel.jee.labEshop.model.User;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
@@ -38,7 +38,7 @@ public class LoginBean implements Serializable {
 	private User loggedUser = null;
 
 	@Inject
-	private IUserManager userManager;
+	private UserManager userManager;
 	// //////////////////////////////
 	// // Logged user role type ////
 	// /////////////////////////////

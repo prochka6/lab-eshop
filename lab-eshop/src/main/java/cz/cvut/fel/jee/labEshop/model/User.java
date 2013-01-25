@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,6 +24,8 @@ import org.jboss.solder.core.Veto;
 @Veto
 @Entity
 @Table(name = "user")
+@NamedQueries({ @NamedQuery(name = "User.getByEmail", query = "select u from User u where u.email = :email"),
+		@NamedQuery(name = "User.getByUsername", query = "select u from User u where u.username = :username") })
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -112,6 +116,11 @@ public class User extends BaseEntity {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 
 }

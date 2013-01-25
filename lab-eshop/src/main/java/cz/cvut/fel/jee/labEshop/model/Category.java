@@ -1,6 +1,9 @@
 package cz.cvut.fel.jee.labEshop.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.jboss.solder.core.Veto;
@@ -15,10 +18,12 @@ import org.jboss.solder.core.Veto;
 @Veto
 @Entity
 @Table(name = "category")
+@NamedQueries({ @NamedQuery(name = "Category.getByName", query = "select c from Category c where c.name = :name") })
 public class Category extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(unique = true)
 	private String name;
 
 	private String description;
@@ -37,6 +42,36 @@ public class Category extends BaseEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [name=" + name + "]";
 	}
 
 }

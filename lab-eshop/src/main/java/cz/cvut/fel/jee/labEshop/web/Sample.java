@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.slf4j.Logger;
 
+import cz.cvut.fel.jee.labEshop.dao.IUserDao;
 import cz.cvut.fel.jee.labEshop.model.Product;
 
 /**
@@ -28,6 +29,9 @@ public class Sample {
 	private EntityManager em;
 
 	private List<Product> products;
+
+	@Inject
+	private IUserDao userDao;
 
 	public List<Product> products() {
 		if (products == null) {

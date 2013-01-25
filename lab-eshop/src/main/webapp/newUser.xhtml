@@ -20,7 +20,7 @@
 					<h:inputText value="#{newUser.username}" id="username"
 						label="Username" required="true"
 						requiredMessage="Username required">
-						<f:validator binding="#{usernameValidator}"></f:validator>
+						<f:validator validatorId="usernameUniqueValidator" />
 					</h:inputText>
 					<h:message for="username" errorClass="errorRequired" />
 
@@ -34,7 +34,7 @@
 					<h:outputText value="Email:" />
 					<h:inputText value="#{newUser.email}" id="email" label="Email"
 						required="true" requiredMessage="Email required">
-						<f:validator binding="#{emailValidator}"></f:validator>
+						<f:validator validatorId="emailUniqueValidator" />
 					</h:inputText>
 					<h:message for="email" errorClass="errorRequired" />
 

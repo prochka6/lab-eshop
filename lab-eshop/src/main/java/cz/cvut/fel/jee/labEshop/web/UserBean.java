@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 
-import cz.cvut.fel.jee.labEshop.idata.IUserManager;
+import cz.cvut.fel.jee.labEshop.manager.UserManager;
 import cz.cvut.fel.jee.labEshop.model.Address;
 import cz.cvut.fel.jee.labEshop.model.User;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
@@ -39,7 +39,7 @@ public class UserBean implements Serializable {
 	private FacesContext facesContext;
 
 	@Inject
-	private IUserManager userManager;
+	private UserManager userManager;
 
 	@Inject
 	private Event<User> userEventSrc;
@@ -65,8 +65,7 @@ public class UserBean implements Serializable {
 		newUser.setAddress(address);
 		userManager.addUser(newUser, role);
 
-		facesContext.addMessage(null, new FacesMessage(
-				FacesMessage.SEVERITY_INFO, "Registered!",
+		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!",
 				"Registration successful"));
 		userEventSrc.fire(newUser);
 
