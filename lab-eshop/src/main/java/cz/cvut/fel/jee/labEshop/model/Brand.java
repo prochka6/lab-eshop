@@ -2,13 +2,16 @@ package cz.cvut.fel.jee.labEshop.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.jboss.solder.core.Veto;
 
 /**
  * Brand represents manufacturer of product. Can be used to specify workflow
- * during complain processes or contain additional data about brands.
+ * during complain processes or contain additional data about brands in
+ * {@linkplain #comment} field.
  * 
  * <p>
  * Example: Sony, Cisco, LG, ...
@@ -22,8 +25,12 @@ public class Brand extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank
 	@Column(unique = true)
 	private String name;
+
+	@Lob
+	private String comment;
 
 	public String getName() {
 		return name;
@@ -31,6 +38,20 @@ public class Brand extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Contains Brand contract, description or any other relevant informations.
+	 * This field is optional.
+	 * 
+	 * @return the brand notes and other information.
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	@Override
@@ -60,7 +81,7 @@ public class Brand extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Brand [name=" + name + "]";
+		return name;
 	}
 
 }
