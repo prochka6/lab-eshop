@@ -8,21 +8,18 @@
 
 <ui:composition>
 
-	<h:form>
-		<ul>
-			<li><h:outputLink value="#{request.contextPath}/index.xhtml">Home</h:outputLink></li>
+	<ul>
+		<li><h:link outcome="/index" title="Lab-Eshop" value="Home" /></li>
 
-			<!-- Menu for logged admin -->
-
-			<li><h:outputLink value="#">Users</h:outputLink></li>
-			<li><h:outputLink value="#">Products</h:outputLink></li>
-			<li><h:outputLink value="#">Categories</h:outputLink></li>
-			<li><h:outputLink value="#">Orders</h:outputLink></li>
-			<li><h:commandLink action="#{loginBean.logout}">Logout</h:commandLink></li>
-
-		</ul>
-	</h:form>
-
+		<!-- Menu for logged admin -->
+		<li><h:link>Users</h:link></li>
+		<li><h:link>Products</h:link></li>
+		<li><h:link>Categories</h:link></li>
+		<li><h:link>Orders</h:link></li>
+		<li><h:form style="display: inline;">
+				<h:commandLink action="#{loginBean.logout}">Logout</h:commandLink>
+			</h:form></li>
+	</ul>
 
 </ui:composition>
 </html>

@@ -21,14 +21,15 @@
 
 	<composite:implementation>
 		<div
-			style="margin: 5px; width: 370px; padding: 10px 5px 5px; background-color: #e5e5e5; -moz-box-shadow: 0px 0px 7px #888; -webkit-box-shadow: 0px 0px 7px #888; box-shadow: 0px 0px 7px #888;">
+			style="margin: 5px; width: 370px; padding: 10px 5px 5px; background-color: #fff; -moz-box-shadow: 0px 0px 7px #CCC; -webkit-box-shadow: 0px 0px 7px #CCC; box-shadow: 0px 0px 7px #CCC;">
 			<strong>#{cc.attrs.product.title}</strong>
 			<ul>
 				<li>#{cc.attrs.product.price.amount} CZK</li>
 				<li>#{cc.attrs.product.availability}</li>
 			</ul>
 			<p>#{cc.attrs.product.summary}</p>
-			<p style="border-top: 1px solid #888; padding-top: 10px;">#{cc.attrs.product.description}</p>
+			<div class="separator" />
+			<p>#{cc.attrs.product.description}</p>
 		</div>
 	</composite:implementation>
 

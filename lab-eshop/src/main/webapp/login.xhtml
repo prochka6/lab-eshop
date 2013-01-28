@@ -9,24 +9,37 @@
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
 		<ui:param name="pageTitle" value="EShop" />
-		<ui:param name="pageHeading" value="Login" />
 
-		<ui:define name="content">
-			<form method="post" action="j_security_check">
-				<h:panelGrid id="panel" columns="2">
-					<h:outputLabel value="Username" />
-					<input type="text" name="j_username" size="25" />
-					<h:outputLabel value="Password" />
-					<input type="password" size="25" name="j_password" />
-				</h:panelGrid>
-				<input type="submit" value="Log me in" />
+		<ui:define name="canvas">
 
-			</form>
-			<br />
-			<br />
-			<h:form>
-				<h:commandLink value="New Registration" action="newUser" />
-			</h:form>
+			<div class="panel">
+
+				<div class="panel-title">Sign In</div>
+
+				<form method="post" action="j_security_check">
+					<div class="form-field">
+						<label for="login-username">Username</label> <input
+							id="login-username" type="text" name="j_username" size="25" />
+					</div>
+
+					<div class="form-field">
+						<label for="login-password">Password</label> <input
+							id="login-password" type="password" size="25" name="j_password" />
+					</div>
+
+					<div class="form-buttons">
+						<input type="submit" value="Sign In" />
+					</div>
+				</form>
+
+				<p>
+					<h:link outcome="/forgottenPassword" value="Forgot Password ?" />
+					<br />
+					<h:link outcome="/registration" value="Sign Up"
+						title="Sign Up to Lab-Eshop to start shopping." />
+				</p>
+			</div>
+
 		</ui:define>
 	</ui:composition>
 

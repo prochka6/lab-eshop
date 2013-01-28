@@ -10,40 +10,52 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href="#{request.contextPath}/resources/styles/style.css"
 		rel="stylesheet" type="text/css" />
+	<ui:insert name="template-header" />
 	<title>#{pageTitle}</title>
 </h:head>
 
 <h:body>
 
-	<div class="header">
-		<h:outputLink value="#{request.contextPath}/index.xhtml">
-			<img src="#{request.contextPath}/resources/images/logo.png" />
-		</h:outputLink>
+	<div id="global-header">
+		<div class="container">
+			<div id="header-logo">
+				<h:link outcome="/index" title="Lab-Eshop">
+					<img src="#{request.contextPath}/resources/images/logo.png"
+						title="Lab-Eshop" />
+				</h:link>
+			</div>
 
-		<div id="headerMenu">
-			<c:choose>
-				<c:when test="#{loginBean.admin}">
-					<ui:include src="/WEB-INF/includes/adminHeaderMenu.xhtml" />
-				</c:when>
-				<c:otherwise>
-					<ui:include src="/WEB-INF/includes/customerHeaderMenu.xhtml" />
-				</c:otherwise>
-			</c:choose>
+			<div id="header-account"></div>
+
+			<div id="header-menu">
+				<c:choose>
+					<c:when test="#{loginBean.admin}">
+						<ui:include src="/WEB-INF/includes/adminHeaderMenu.xhtml" />
+					</c:when>
+					<c:otherwise>
+						<ui:include src="/WEB-INF/includes/customerHeaderMenu.xhtml" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+
 		</div>
 	</div>
 
-	<div class="main">
-
-		<div id="content">
-			<h2>#{pageHeading}</h2>
-
-			<ui:insert name="content">Vychozi obsah</ui:insert>
+	<div id="layout">
+		<div class="container">
+			<div id="canvas">
+				<ui:insert name="canvas">Page canvas space.</ui:insert>
+			</div>
 		</div>
-
-		<div class="footer">
-			<ui:include src="/WEB-INF/includes/footer.xhtml" />
-		</div>
-
 	</div>
+
+	<div id="global-footer">
+		<div class="container">
+			<div class="footer">
+				<ui:include src="/WEB-INF/includes/footer.xhtml" />
+			</div>
+		</div>
+	</div>
+
 </h:body>
 </html>

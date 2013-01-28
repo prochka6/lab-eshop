@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - Registration" />
+
+		<ui:define name="canvas">
+			<div class="panel">
+
+				<div class="panel-title">Registration</div>
+
+				<p>
+					Create an Lab-Eshop account and start shopping, or
+					<h:link outcome="/index" value="Sign In" />
+					.
+				</p>
+
+				<h:form>
+					<h:messages globalOnly="true" />
+
+					<div class="form-field">
+						<h:outputLabel for="username" value="Username" />
+						<h:inputText value="#{newUser.username}" id="username"
+							label="Username" required="true"
+							requiredMessage="Username required">
+							<f:validator validatorId="usernameUniqueValidator" />
+						</h:inputText>
+						<h:message for="username" errorClass="errorRequired" />
+					</div>
+
+					<div class="form-field">
+						<h:outputLabel for="password" value="Password" />
+						<h:inputSecret value="#{newUser.password}" id="password"
+							required="true" requiredMessage="Password required" />
+						<h:message for="password" errorClass="errorRequired" />
+					</div>
+
+					<div class="form-field">
+						<h:outputLabel for="email" value="Email" />
+						<h:inputText value="#{newUser.email}" id="email" required="true"
+							requiredMessage="Email required" size="30">
+							<f:validator validatorId="emailUniqueValidator" />
+						</h:inputText>
+						<h:message for="email" errorClass="errorRequired" />
+					</div>
+
+					<div class="form-field" style="display: inline-block;">
+						<h:outputLabel for="firstname" value="First Name" />
+						<h:inputText value="#{newUser.firstName}" id="firstname" />
+						<h:message for="firstname" errorClass="errorRequired" />
+					</div>
+
+					<div class="form-field" style="display: inline-block;">
+						<h:outputLabel for="lasttname" value="Last Name" />
+						<h:inputText value="#{newUser.lastName}" id="lasttname" />
+						<h:message for="lasttname" errorClass="errorRequired" />
+					</div>
+
+					<br />
+
+					<!-- Form section implementation, possible with title !?!-->
+					<div class="form-field" style="display: inline-block;">
+						<h:outputLabel for="street" value="Street" />
+						<h:inputText value="#{address.street}" id="street" size="40" />
+						<h:message for="street" errorClass="errorRequired" />
+					</div>
+
+					<div class="form-field" style="display: inline-block;">
+						<h:outputLabel for="city" value="City" />
+						<h:inputText value="#{address.city}" id="city" size="30" />
+						<h:message for="city" errorClass="errorRequired" />
+					</div>
+
+					<div class="form-field" style="display: inline-block;">
+						<h:outputLabel for="country" value="Country" />
+						<h:inputText value="#{address.country}" id="country" size="30" />
+						<h:message for="country" errorClass="errorRequired" />
+					</div>
+
+					<br />
+
+					<h:commandButton type="submit" value="Save"
+						action="#{userBean.register}" />
+					<h:button value="Storno" outcome="/index" />
+				</h:form>
+
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

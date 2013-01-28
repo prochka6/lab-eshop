@@ -9,10 +9,13 @@
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
 		<ui:param name="pageTitle" value="Login error" />
-		<ui:param name="pageHeading" value="Login error" />
 
-		<ui:define name="content">
-			Invalid user/password combination!
+		<ui:define name="canvas">
+			<div class="panel">
+				<h2>Login error</h2>
+
+				Invalid user/password combination!
+			</div>
 		</ui:define>
 
 

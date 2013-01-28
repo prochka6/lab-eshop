@@ -11,7 +11,7 @@
 		<ui:param name="pageTitle" value="EShop - account detail" />
 		<ui:param name="pageHeading" value="Simple account detail" />
 
-		<ui:define name="content">
+		<ui:define name="canvas">
 
 			<div style="float: left">
 				<h4>
@@ -30,7 +30,8 @@
 			<div style="float: left; display: inline; margin-left: 40px;">
 				<h:form>
 					<ul>
-						<li><h:outputLink value="#{request.contextPath}/customer/cart.xhtml">Cart</h:outputLink></li>
+						<li><h:outputLink
+								value="#{request.contextPath}/customer/cart.xhtml">Cart</h:outputLink></li>
 						<li><h:commandLink action="#{loginBean.logout}">Logout</h:commandLink></li>
 					</ul>
 

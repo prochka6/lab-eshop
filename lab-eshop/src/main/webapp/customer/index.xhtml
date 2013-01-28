@@ -4,18 +4,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-
-
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
 		<ui:param name="pageTitle" value="EShop" />
-		<ui:param name="pageHeading" value="Hello World from customer section!" />
 
-		<ui:define name="content">
-			<p>This is just sample text on customer secure page.</p>
+		<ui:define name="canvas">
+			<div class="panel">
+				<h2>Hello World from customer section!</h2>
+
+				<p>This is just sample text on customer secure page.</p>
+			</div>
 		</ui:define>
-
-
 
 	</ui:composition>
 

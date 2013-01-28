@@ -8,37 +8,35 @@
 
 <ui:composition>
 
-	<h:form>
-		<ul>
-			<li><h:outputLink value="#{request.contextPath}/index.xhtml">Home</h:outputLink></li>
+	<ul>
+		<li><h:link outcome="/index" value="Home" title="Lab-Eshop" /></li>
 
-			<!-- If user is logged in, only customer menu is displayed.
+		<!-- If user is logged in, only customer menu is displayed.
 					Otherwise Login link is displayed  -->
-			<c:choose>
-				<c:when test="#{loginBean.customer}">
-					<li><h:outputLink
-							value="#{request.contextPath}/customer/accountDetail.xhtml">Account</h:outputLink></li>
-					<li><h:commandLink action="#{loginBean.logout}">Logout</h:commandLink></li>
-				</c:when>
+		<c:choose>
+			<c:when test="#{loginBean.customer}">
+				<li><h:link outcome="/customer/accountDetail">Account</h:link></li>
+				<li><h:form style="display:inline;">
+						<h:commandLink action="#{loginBean.logout}">Logout</h:commandLink>
+					</h:form></li>
+			</c:when>
 
-				<c:otherwise>
-					<li><h:outputLink
-							value="#{request.contextPath}/customer/index.xhtml">Login</h:outputLink>
-						&nbsb; | &nbsb; <h:outputLink
-							value="#{request.contextPath}/newUser.xhtml"
-							style="font-size: 13pt;">Register</h:outputLink></li>
-				</c:otherwise>
-			</c:choose>
-		</ul>
-	</h:form>
+			<c:otherwise>
+				<li><h:link outcome="/customer/index">Login</h:link> &nbsb; | &nbsb;
+					<h:link outcome="/registration">Register</h:link></li>
+			</c:otherwise>
+		</c:choose>
+	</ul>
 
+	<!-- 
 	<h:panelGroup rendered="#{loginBean.userLogged}">
 		<div id="cart">
-			<h:outputLink value="#{request.contextPath}/customer/cart.xhtml">Cart <img
+			<h:ink value="#{request.contextPath}/customer/cart.xhtml">Cart <img
 					src="#{request.contextPath}/resources/images/cart.png" id="cartImg" />
-			</h:outputLink>
+			</h:ink>
 		</div>
 	</h:panelGroup>
+	 -->
 
 </ui:composition>
 </html>
