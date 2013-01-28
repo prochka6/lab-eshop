@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - Brands" />
+
+		<ui:define name="canvas">
+
+			<div class="panel">
+				<h2>Brands</h2>
+
+				<p>Brand represents manufacturer. Every product have assigned
+					brand to which belongs to. Brands can be created and edited. Every
+					brand contains name and optionally comment where can be specified
+					all contract or notes about choosen brand. Name represent
+					brand-name of manufacturer like LG, Apple, ...</p>
+
+				<h:messages id="formMessages" globalOnly="true" />
+
+				<h:form>
+					<h:commandButton action="#{brandsBean.newBrand()}"
+						value="Create Brand">
+						<f:ajax immediate="true" render=":detailForm"
+							onevent="document.getElementById('detailForm').scrollIntoView()" />
+					</h:commandButton>
+				</h:form>
+
+				<h:form id="brandsForm" prependId="false">
+
+					<h:panelGroup id="brandsList" layout="block">
+						<h:dataTable var="row" value="#{brandsBean.brands}">
+							<h:column>
+								<f:facet name="header">Id</f:facet>
+								<h:outputText value="#{row.id}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Name</f:facet>
+								<h:outputText value="#{row.name}" />
+							</h:column>
+
+							<h:column>
+								<h:commandLink action="#{brandsBean.selectBrand(row)}"
+									value="edit">
+									<f:ajax immediate="true" render=":detailForm"
+										onevent="document.getElementById('detailForm').scrollIntoView()" />
+								</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+
+				</h:form>
+
+				<h:form id="detailForm" prependId="false">
+
+					<h:panelGroup id="brandDetail" layout="block"
+						rendered="#{brandsBean.selection}">
+						<div class="form-field">
+							<h:outputLabel for="brandName" value="Name" />
+							<h:inputText value="#{brandsBean.selected.name}" id="brandName"
+								required="true" requiredMessage="Name required" />
+							<h:message for="brandName" errorClass="errorRequired" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="brandComment" value="Comment" />
+							<h:inputTextarea value="#{brandsBean.selected.comment}"
+								id="brandComment" />
+						</div>
+
+						<div class="form-buttons">
+							<h:commandButton action="#{brandsBean.submit()}" value="Submit">
+								<f:ajax execute="@form" render="@form :brandsForm :formMessages" />
+							</h:commandButton>
+
+							<h:commandLink immediate="true"
+								action="#{brandsBean.selectBrand(null)}" value="Close">
+								<f:ajax immediate="true" render="@form"
+									onevent="document.getElementById('canvas').scrollIntoView()" />
+							</h:commandLink>
+						</div>
+					</h:panelGroup>
+				</h:form>
+
+			</div>
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>
