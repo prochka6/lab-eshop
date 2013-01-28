@@ -16,7 +16,7 @@ import cz.cvut.fel.jee.labEshop.model.User;
  * This class serves as the custom validator for checking the username
  * uniqueness.
  * 
- * @author buben
+ * @author Michal Horak
  * @author <a href="mailto:prochka6@fel.cvut.cz">Kamil Prochazka (prochka6)</a>
  */
 @RequestScoped

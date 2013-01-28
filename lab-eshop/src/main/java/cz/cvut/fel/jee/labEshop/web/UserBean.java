@@ -19,11 +19,12 @@ import cz.cvut.fel.jee.labEshop.manager.UserManager;
 import cz.cvut.fel.jee.labEshop.model.Address;
 import cz.cvut.fel.jee.labEshop.model.User;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
+import cz.cvut.fel.jee.labEshop.util.Password;
 
 /**
  * This class creates new customers.
  * 
- * @author buben
+ * @author Michal Horak
  * 
  */
 @Named("userBean")
@@ -51,8 +52,6 @@ public class UserBean implements Serializable {
 	public UserBean() {
 	}
 
-	// TODO: How to encrypt password of new user into db ?
-
 	/**
 	 * Register new user with customer role
 	 * 
@@ -63,9 +62,11 @@ public class UserBean implements Serializable {
 		Set<String> role = new HashSet<String>();
 		role.add(LabEshopConstants.CUSTOMER_ROLE);
 		newUser.setAddress(address);
+		newUser.setPassword(Password.getHash(newUser.getPassword()));
 		userManager.addUser(newUser, role);
 
-		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!",
+		facesContext.addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_INFO, "Registered!",
 				"Registration successful"));
 		userEventSrc.fire(newUser);
 

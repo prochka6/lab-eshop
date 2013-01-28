@@ -1,1 +1,7 @@
 /.settings
+*.gitignore
+/target
+.factorypath
+.classpath
+.project
+

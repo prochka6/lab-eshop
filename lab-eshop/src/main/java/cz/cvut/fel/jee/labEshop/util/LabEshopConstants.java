@@ -14,5 +14,12 @@ public class LabEshopConstants {
 	// /////////////////////////////
 	public static final String CUSTOMER_ROLE = "customer";
 	public static final String ADMINISTRATOR_ROLE = "admin";
+	
+	
+	// /////////////////////////////////////
+	// /////Mail username, password ////////
+	// /////////////////////////////////////
+	public static final String MAIL_USERNAME = "ajeelab.eshop@gmail.com";
+	public static final String MAIL_PASSWORD = "ajeelabeshop";
 
 }

@@ -4,8 +4,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-
-
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
 		<ui:param name="pageTitle" value="EShop - account detail" />
@@ -14,15 +12,22 @@
 		<ui:define name="canvas">
 
 			<div style="float: left">
-				<h4>
+				<h3>
 					<h:outputLabel value="#{loginBean.loggedUser.fullName}" />
-				</h4>
-				Username:
+				</h3>
+				<b>Username:</b>
 				<h:outputLabel value="#{loginBean.loggedUser.username}" />
-				<br /> Email:
+				<br /> <b>Email:</b>
 				<h:outputLabel value="#{loginBean.loggedUser.email}" />
-				<br /> Address:
-				<h:outputLabel value="#{loginBean.loggedUser.address}" />
+				<br /> <b>Address:</b>
+				<div style="margin-left: 70px;">
+					<h:outputLabel value="#{loginBean.loggedUser.address.city}" />
+					<br />
+					<h:outputLabel value="#{loginBean.loggedUser.address.street}" />
+					<br />
+					<h:outputLabel value="#{loginBean.loggedUser.address.country}" />
+				</div>
+
 				<br />
 
 			</div>
