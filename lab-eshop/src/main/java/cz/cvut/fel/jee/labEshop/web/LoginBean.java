@@ -105,10 +105,10 @@ public class LoginBean implements Serializable {
 			ref.logout();
 			HttpSession session = (HttpSession) facescontext.getExternalContext().getSession(false);
 			session.invalidate();
-			return "logout";
+			return "/logout";
 		} catch (ServletException ex) {
 			Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-			return "logout";
+			return "/logout";
 		}
 	}
 
