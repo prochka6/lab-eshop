@@ -1,8 +1,9 @@
 package cz.cvut.fel.jee.labEshop.util;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
-
-import org.jboss.security.auth.spi.Util;
 
 /**
  * Password class contains methods for encrypting passwords and for generating
@@ -22,11 +23,20 @@ public class Password {
 	 * @param string
 	 *            to be hashed
 	 * @return secured password
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
 	 */
-	public static String getHash(String plainPassword) {
+	public static String getHash(String plainPassword)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-		String hashed = Util.createPasswordHash("MD5", Util.BASE64_ENCODING,
-				null, null, plainPassword);
+		MessageDigest md = MessageDigest.getInstance("MD5");
+
+		md.update(plainPassword.getBytes("UTF-8"));
+
+		byte[] hashedByteArray = md.digest();
+
+		String hashed = javax.xml.bind.DatatypeConverter
+				.printBase64Binary(hashedByteArray);
 
 		return hashed;
 	}

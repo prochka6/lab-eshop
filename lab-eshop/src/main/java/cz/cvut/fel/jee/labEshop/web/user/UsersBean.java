@@ -1,4 +1,4 @@
-package cz.cvut.fel.jee.labEshop.web;
+package cz.cvut.fel.jee.labEshop.web.user;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -8,11 +8,10 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.Produces;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.seam.international.status.Messages;
 import org.slf4j.Logger;
 
 import cz.cvut.fel.jee.labEshop.manager.UserManager;
@@ -20,6 +19,7 @@ import cz.cvut.fel.jee.labEshop.model.Address;
 import cz.cvut.fel.jee.labEshop.model.User;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
 import cz.cvut.fel.jee.labEshop.util.Password;
+import cz.cvut.fel.jee.labEshop.web.LoginBean;
 
 /**
  * This class creates new customers.
@@ -27,9 +27,9 @@ import cz.cvut.fel.jee.labEshop.util.Password;
  * @author Michal Horak
  * 
  */
-@Named("userBean")
+@Named("usersBean")
 @SessionScoped
-public class UserBean implements Serializable {
+public class UsersBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class UserBean implements Serializable {
 	private Logger log;
 
 	@Inject
-	private FacesContext facesContext;
+	private Messages messages;
 
 	@Inject
 	private UserManager userManager;
@@ -45,11 +45,16 @@ public class UserBean implements Serializable {
 	@Inject
 	private Event<User> userEventSrc;
 
+	@Inject
+	private LoginBean loginBean;
+
 	private User newUser;
+
+	private User editUser;
 
 	private Address address;
 
-	public UserBean() {
+	public UsersBean() {
 	}
 
 	/**
@@ -65,12 +70,19 @@ public class UserBean implements Serializable {
 		newUser.setPassword(Password.getHash(newUser.getPassword()));
 		userManager.addUser(newUser, role);
 
-		facesContext.addMessage(null, new FacesMessage(
-				FacesMessage.SEVERITY_INFO, "Registered!",
-				"Registration successful"));
+		messages.info("Registration successful");
 		userEventSrc.fire(newUser);
 
 		initNewUser();
+	}
+
+	/**
+	 * Update user account credentials
+	 */
+	public void update() {
+		log.info("Updating " + editUser.getFullName());
+		userManager.updateUser(editUser);
+		messages.info("Update successful");
 
 	}
 
@@ -78,6 +90,16 @@ public class UserBean implements Serializable {
 	public void initNewUser() {
 		newUser = new User();
 		address = new Address();
+
+	}
+
+	public String editUser() {
+		editUser = loginBean.getLoggedUser();
+		if (editUser.getAddress() == null) {
+			editUser.setAddress(new Address());
+		}
+
+		return "editAccount";
 	}
 
 	@Named
@@ -98,6 +120,24 @@ public class UserBean implements Serializable {
 
 	public void setNewUser(User newUser) {
 		this.newUser = newUser;
+	}
+
+	@Named
+	@Produces
+	public User getEditUser() {
+		return editUser;
+	}
+
+	public void setEditUser(User editUser) {
+		this.editUser = editUser;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 
 }

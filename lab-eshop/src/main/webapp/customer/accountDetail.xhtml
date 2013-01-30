@@ -7,40 +7,45 @@
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
 		<ui:param name="pageTitle" value="EShop - account detail" />
-		<ui:param name="pageHeading" value="Simple account detail" />
 
 		<ui:define name="canvas">
 
-			<div style="float: left">
-				<h3>
-					<h:outputLabel value="#{loginBean.loggedUser.fullName}" />
-				</h3>
-				<b>Username:</b>
-				<h:outputLabel value="#{loginBean.loggedUser.username}" />
-				<br /> <b>Email:</b>
-				<h:outputLabel value="#{loginBean.loggedUser.email}" />
-				<br /> <b>Address:</b>
-				<div style="margin-left: 70px;">
-					<h:outputLabel value="#{loginBean.loggedUser.address.city}" />
+			<div class="panel">
+				<div class="panel-title">Account detail</div>
+
+				<div style="float: left">
+					<h3>
+						<h:outputLabel value="#{loginBean.loggedUser.fullName}" />
+					</h3>
+					<b>Username:</b>
+					<h:outputLabel value="#{loginBean.loggedUser.username}" />
+					<br /> <b>Email:</b>
+					<h:outputLabel value="#{loginBean.loggedUser.email}" />
+					<br /> <b>Address:</b>
+					<div style="margin-left: 70px;">
+						<h:outputLabel value="#{loginBean.loggedUser.address.city}" />
+						<br />
+						<h:outputLabel value="#{loginBean.loggedUser.address.street}" />
+						<br />
+						<h:outputLabel value="#{loginBean.loggedUser.address.country}" />
+					</div>
+
 					<br />
-					<h:outputLabel value="#{loginBean.loggedUser.address.street}" />
-					<br />
-					<h:outputLabel value="#{loginBean.loggedUser.address.country}" />
+
 				</div>
 
-				<br />
+				<div style="float: left; display: inline; margin-left: 40px;">
+					<h:form>
+						<ul>
+							<li><h:outputLink
+									value="#{request.contextPath}/customer/cart.xhtml">Cart</h:outputLink></li>
+							<li><h:commandLink action="#{usersBean.editUser()}">Edit account</h:commandLink></li>
+							<li><h:commandLink action="#{usersPasswordBean.changePassword()}">Change password</h:commandLink></li>
+							<li><h:commandLink action="#{loginBean.logout}">Logout</h:commandLink></li>
+						</ul>
 
-			</div>
-
-			<div style="float: left; display: inline; margin-left: 40px;">
-				<h:form>
-					<ul>
-						<li><h:outputLink
-								value="#{request.contextPath}/customer/cart.xhtml">Cart</h:outputLink></li>
-						<li><h:commandLink action="#{loginBean.logout}">Logout</h:commandLink></li>
-					</ul>
-
-				</h:form>
+					</h:form>
+				</div>
 			</div>
 
 		</ui:define>

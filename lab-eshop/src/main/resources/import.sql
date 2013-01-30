@@ -1,7 +1,7 @@
 -- Insert into users, default admin password is admin
 insert into user (id, email, first_name, last_name, password, username) values (1, "admin@admin", "admin", "admin", "ISMvKXpXpadDiUoOSoAfww==", "admin")
--- User with default password cust
-insert into user (id, email, first_name, last_name, password, username) values (2, "cust@cust", "Martin", "Tomasek", "Oq01BqoR8F8mXqgwS4FSsw==", "cust")
+-- User with default password customer
+insert into user (id, email, first_name, last_name, password, username) values (2, "cust@cust", "Martin", "Tomasek", "kewfkyR1MEjACW0DamlPhg==", "customer")
 
 -- JAAS insert required, create role
 insert into role (id, role) values(1,"admin");

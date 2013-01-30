@@ -134,13 +134,6 @@
 			<artifactId>mail</artifactId>
 		</dependency>
 
-		<!-- Encrypting passwords -->
-		<dependency>
-			<groupId>org.picketbox</groupId>
-			<artifactId>picketbox</artifactId>
-			<version>4.0.7.Final</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>

@@ -3,11 +3,10 @@ package cz.cvut.fel.jee.labEshop.web;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.seam.international.status.Messages;
 import org.slf4j.Logger;
 
 import cz.cvut.fel.jee.labEshop.manager.UserManager;
@@ -31,7 +30,7 @@ public class ForgottenPasswordBean implements Serializable {
 	Logger log;
 
 	@Inject
-	FacesContext facesContext;
+	private Messages messages;
 
 	@Inject
 	private UserManager userManager;
@@ -83,17 +82,13 @@ public class ForgottenPasswordBean implements Serializable {
 			// send notification to user email
 			Mail.sendMail(userMail, subject, generateMessage(password, user));
 
-			facesContext.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO,
-					"New password was sent to your email address!",
-					"Password changed"));
+			messages.info("New password was sent to your email address!");
+			log.info("Password changed");
 
 		} catch (Exception e) {
-			facesContext.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO,
-					"Ooops, somethig goes wrong, please try it again.",
-					"Detail: " + e.getMessage()));
 
+			messages.info("Ooops, somethig goes wrong, please try it again.");
+			log.info("Detail: " + e.getMessage());
 		}
 	}
 
