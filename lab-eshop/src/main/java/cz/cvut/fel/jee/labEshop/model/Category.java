@@ -2,10 +2,13 @@ package cz.cvut.fel.jee.labEshop.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.jboss.solder.core.Veto;
 
 /**
@@ -23,9 +26,12 @@ public class Category extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(unique = true)
+	@NotBlank
+	@Size(max = 50)
+	@Column(length = 50, unique = true)
 	private String name;
 
+	@Lob
 	private String description;
 
 	public String getName() {

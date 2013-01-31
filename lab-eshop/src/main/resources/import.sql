@@ -18,6 +18,10 @@ insert into user_role (users_id, roles_id) values (2,2);
 -- Default categories
 insert into category (name) values ("Computers");
 insert into category (name) values ("Notebooks");
+insert into category (name) values ("Tablets");
+insert into category (name) values ("Televisions");
+insert into category (name) values ("Phones");
+insert into category (name) values ("Accessories");
 
 -- Default brands
 insert into brand (name) values ("Acer");
