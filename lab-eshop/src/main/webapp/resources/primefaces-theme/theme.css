@@ -1258,6 +1258,8 @@ a {
 	background: #ffffff;
 	color: #555;
 	font-size: 1em;
+	border: 1px solid;
+	border-color: #9b9b9b #ededed #ddd #c2c2c2;
 }
 
 .ui-inputfield.ui-state-focus,.ui-widget-content .ui-inputfield.ui-state-focus,.ui-widget-header .ui-inputfield.ui-state-focus

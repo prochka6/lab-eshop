@@ -50,11 +50,11 @@ public class BrandsBean implements Serializable {
 		if (isNew()) {
 			brandManager.createBrand(selected);
 			log.info("Brand {} created.", selected);
-			messages.info("Brand \"{0}\" created.", selected.getName());
+			messages.info("Brand created.");
 		} else {
 			selected = brandManager.updateBrand(selected);
-			log.info("Brand [{}] {} updated.", selected.getId(), selected);
-			messages.info("Brand \"{0}\" updated.", selected.getName());
+			log.info("Brand [id={}] {} updated.", selected.getId(), selected);
+			messages.info("Brand updated.");
 		}
 
 		resetForm();

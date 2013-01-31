@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
-		<ui:param name="pageTitle" value="EShop - Brands" />
+		<ui:param name="pageTitle" value="EShop - Manage Brands" />
 
 		<ui:define name="canvas">
 
@@ -19,73 +20,78 @@
 					all contract or notes about choosen brand. Name represent
 					brand-name of manufacturer like LG, Apple, ...</p>
 
-				<h:messages id="formMessages" globalOnly="true" />
+				<br />
 
 				<h:form>
-					<h:commandButton action="#{brandsBean.newBrand()}"
-						value="Create Brand">
-						<f:ajax immediate="true" render=":detailForm"
-							onevent="document.getElementById('detailForm').scrollIntoView()" />
-					</h:commandButton>
+					<p:commandButton action="#{brandsBean.newBrand()}"
+						value="Create Brand" immediate="true"
+						update=":brandDetail :detailForm"
+						oncomplete="LabEshop.scrollTo('detailForm');" />
 				</h:form>
+
+				<div class="separator" />
+
+				<p:messages id="formMessages" globalOnly="true" autoUpdate="true"
+					closable="true" />
 
 				<h:form id="brandsForm" prependId="false">
 
 					<h:panelGroup id="brandsList" layout="block">
-						<h:dataTable var="row" value="#{brandsBean.brands}">
-							<h:column>
-								<f:facet name="header">Id</f:facet>
+						<p:dataTable var="row" value="#{brandsBean.brands}">
+							<p:column headerText="ID">
 								<h:outputText value="#{row.id}" />
-							</h:column>
+							</p:column>
 
-							<h:column>
-								<f:facet name="header">Name</f:facet>
+							<p:column headerText="Name">
 								<h:outputText value="#{row.name}" />
-							</h:column>
+							</p:column>
 
-							<h:column>
-								<h:commandLink action="#{brandsBean.selectBrand(row)}"
-									value="edit">
-									<f:ajax immediate="true" render=":detailForm"
-										onevent="document.getElementById('detailForm').scrollIntoView()" />
-								</h:commandLink>
-							</h:column>
-						</h:dataTable>
+							<p:column styleClass="text-center">
+								<p:commandLink immediate="true"
+									action="#{brandsBean.selectBrand(row)}" value="edit"
+									update=":brandDetail :detailForm"
+									oncomplete="LabEshop.scrollTo('detailForm');" />
+							</p:column>
+						</p:dataTable>
 					</h:panelGroup>
 
 				</h:form>
 
-				<h:form id="detailForm" prependId="false">
+				<h:panelGroup id="brandDetail" layout="block">
 
-					<h:panelGroup id="brandDetail" layout="block"
+					<p:panel header="Brand" style="margin-top: 1.7em;"
 						rendered="#{brandsBean.selection}">
-						<div class="form-field">
-							<h:outputLabel for="brandName" value="Name" />
-							<h:inputText value="#{brandsBean.selected.name}" id="brandName"
-								required="true" requiredMessage="Name required" />
-							<h:message for="brandName" errorClass="errorRequired" />
-						</div>
 
-						<div class="form-field">
-							<h:outputLabel for="brandComment" value="Comment" />
-							<h:inputTextarea value="#{brandsBean.selected.comment}"
-								id="brandComment" />
-						</div>
+						<h:form id="detailForm" prependId="false">
+							<div class="form-field">
+								<h:outputLabel for="brandName" value="Name" />
+								<p:inputText value="#{brandsBean.selected.name}" id="brandName"
+									required="true" requiredMessage="Name required" size="40" />
+								<h:message for="brandName" errorClass="errorRequired" />
+							</div>
 
-						<div class="form-buttons">
-							<h:commandButton action="#{brandsBean.submit()}" value="Submit">
-								<f:ajax execute="@form" render="@form :brandsForm :formMessages" />
-							</h:commandButton>
+							<div class="form-field">
+								<h:outputLabel for="brandComment" value="Comment" />
+								<p:editor id="brandComment"
+									value="#{brandsBean.selected.comment}" width="915" />
+							</div>
 
-							<h:commandLink immediate="true"
-								action="#{brandsBean.selectBrand(null)}" value="Close">
-								<f:ajax immediate="true" render="@form"
-									onevent="document.getElementById('canvas').scrollIntoView()" />
-							</h:commandLink>
-						</div>
-					</h:panelGroup>
-				</h:form>
+							<div class="form-buttons">
+								<p:commandButton action="#{brandsBean.submit()}" value="Submit"
+									process="@form" update=":brandsForm :brandDetail"
+									oncomplete="if (!args.validationFailed){LabEshop.scrollTop();}" />
 
+								<p:commandLink immediate="true"
+									action="#{brandsBean.selectBrand(null)}" value="Cancel"
+									update=":brandDetail" oncomplete="LabEshop.scrollTop();" />
+							</div>
+						</h:form>
+					</p:panel>
+				</h:panelGroup>
+
+				<div class="top-nav">
+					<a title="Top" onclick="LabEshop.scrollTop();">&uarr; Top</a>
+				</div>
 			</div>
 		</ui:define>
 

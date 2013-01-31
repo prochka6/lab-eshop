@@ -10,11 +10,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href="#{request.contextPath}/resources/styles/style.css"
 		rel="stylesheet" type="text/css" />
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/scripts/common.js"></script>
 	<ui:insert name="template-header" />
 	<title>#{pageTitle}</title>
 </h:head>
 
 <h:body>
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 
 	<div id="global-header">
 		<div class="container">

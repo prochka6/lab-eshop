@@ -117,7 +117,7 @@ a:hover {
 	display: block;
 	height: 0;
 	border-bottom: 1px solid #d3d3d3;
-	height: 0;
+	margin: 0.8em 0;
 }
 
 .form-field {
@@ -136,12 +136,34 @@ a:hover {
 	margin-right: 10px;
 }
 
-.form-buttons {
-	
+.form-buttons button {
+	margin-right: 0.8em;
 }
 
 .errorRequired {
 	color: red;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.top-nav {
+	display: block;
+	margin: 1em 0 0 0;
+	text-align: right;
 }
 
 /* FOOTER */
