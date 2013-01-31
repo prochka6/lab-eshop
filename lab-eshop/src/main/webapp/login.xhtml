@@ -9,7 +9,7 @@
 
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
-		<ui:param name="pageTitle" value="EShop" />
+		<ui:param name="pageTitle" value="EShop - Sign In" />
 
 		<ui:define name="canvas">
 
@@ -29,7 +29,11 @@
 					</div>
 
 					<div class="form-buttons">
-						<input type="submit" value="Sign In" />
+						<input type="submit" value="Sign In"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+							style="padding: .4em 1em;"
+							onmouseover="this.style.backgroundColor='#ED2135'"
+							onmouseout="this.style.backgroundColor='#D82133'" />
 					</div>
 				</form>
 

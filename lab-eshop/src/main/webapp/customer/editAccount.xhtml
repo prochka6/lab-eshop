@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
@@ -18,13 +19,13 @@
 
 					<div class="form-field" style="display: inline-block;">
 						<h:outputLabel for="firstname" value="First Name" />
-						<h:inputText value="#{editUser.firstName}" id="firstname" />
+						<p:inputText value="#{editUser.firstName}" id="firstname" />
 						<h:message for="firstname" errorClass="errorRequired" />
 					</div>
 
 					<div class="form-field" style="display: inline-block;">
 						<h:outputLabel for="lasttname" value="Last Name" />
-						<h:inputText value="#{editUser.lastName}" id="lasttname" />
+						<p:inputText value="#{editUser.lastName}" id="lasttname" />
 						<h:message for="lasttname" errorClass="errorRequired" />
 					</div>
 
@@ -33,29 +34,29 @@
 					<!-- Form section implementation, possible with title !?!-->
 					<div class="form-field" style="display: inline-block;">
 						<h:outputLabel for="street" value="Street" />
-						<h:inputText value="#{editUser.address.street}" id="street"
+						<p:inputText value="#{editUser.address.street}" id="street"
 							size="40" />
 						<h:message for="street" errorClass="errorRequired" />
 					</div>
 
 					<div class="form-field" style="display: inline-block;">
 						<h:outputLabel for="city" value="City" />
-						<h:inputText value="#{editUser.address.city}" id="city" size="30" />
+						<p:inputText value="#{editUser.address.city}" id="city" size="30" />
 						<h:message for="city" errorClass="errorRequired" />
 					</div>
 
 					<div class="form-field" style="display: inline-block;">
 						<h:outputLabel for="country" value="Country" />
-						<h:inputText value="#{editUser.address.country}" id="country"
+						<p:inputText value="#{editUser.address.country}" id="country"
 							size="30" />
 						<h:message for="country" errorClass="errorRequired" />
 					</div>
 
 					<br />
 
-					<h:commandButton type="submit" value="Update"
-						action="#{usersBean.update}" />
-					<h:button value="Storno" outcome="accountDetail" />
+					<p:commandButton type="submit" value="Update"
+						action="#{usersBean.update}" ajax="false" />
+					<p:button value="Storno" outcome="accountDetail" />
 				</h:form>
 
 			</div>
