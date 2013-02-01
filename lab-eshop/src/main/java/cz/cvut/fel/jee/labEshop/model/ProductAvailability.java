@@ -6,6 +6,6 @@ package cz.cvut.fel.jee.labEshop.model;
  */
 public enum ProductAvailability {
 
-	IN_STOCK
+	IN_STOCK, SOLD_OUT, ORDERED
 
 }

@@ -1,8 +1,9 @@
 package cz.cvut.fel.jee.labEshop.model;
 
+import java.util.Date;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class Product extends BaseEntity {
 
 	private String title;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Brand brand;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -51,6 +52,22 @@ public class Product extends BaseEntity {
 
 	@Lob
 	private String description;
+	
+	@Column(unique=true)
+	private String code;
+	
+	private Date publishDate;
+	
+	private Date discardDate;
+	
+	private Integer pieces;
+	
+	private Integer rating;
+	
+	@Lob
+	private byte[] promoImage;
+	
+	
 
 	public String getTitle() {
 		return title;
@@ -107,5 +124,56 @@ public class Product extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Date getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
+	}
+
+	public Date getDiscardDate() {
+		return discardDate;
+	}
+
+	public void setDiscardDate(Date discardDate) {
+		this.discardDate = discardDate;
+	}
+
+	public Integer getPieces() {
+		return pieces;
+	}
+
+	public void setPieces(Integer pieces) {
+		this.pieces = pieces;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public byte[] getPromoImage() {
+		return promoImage;
+	}
+
+	public void setPromoImage(byte[] promoImage) {
+		this.promoImage = promoImage;
+	}
+
+	
+	
 
 }

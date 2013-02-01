@@ -1,11 +1,215 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head> 
-<body> 
+<h:head></h:head>
+<h:body>
 
-</body> 
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+
+		<ui:param name="pageTitle" value="EShop - Manage Products" />
+		<ui:define name="canvas">
+
+			<h:form id="subm">
+				<p:commandButton action="#{productsBean.createNewProduct()}"
+					value="Create Product" immediate="true" update=":productDetail"
+					oncomplete="LabEshop.scrollTo('productDetail');" />
+
+			</h:form>
+
+			<div class="separator" />
+
+			<h:form id="form">
+
+				<p:messages id="formMessages" globalOnly="true" autoUpdate="true"
+					closable="true" />
+
+				<p:dataTable var="product" value="#{productsBean.products}"
+					rowKey="#{product.id}" paginator="true" rows="10"
+					selection="#{productsBean.selectedProduct}" selectionMode="single"
+					filteredValue="#{productsBean.filteredProducts}" id="productsTable">
+
+					<p:ajax event="rowSelect" listener="#{productsBean.onRowSelect}"
+						update=":productDetail" />
+					<p:ajax event="rowUnselect"
+						listener="#{productsBean.onRowUnselect}" update=":productDetail" />
+
+
+					<f:facet name="header">  
+            		Seznam produktů
+        		</f:facet>
+
+
+
+					<p:column headerText="Title" sortBy="#{product.title}"
+						filterBy="#{product.title}" id="title">  
+           		 #{product.title}  
+        		</p:column>
+
+					<p:column headerText="Brand" sortBy="#{product.brand}"
+						filterBy="#{product.brand}" id="brand">  
+           		 #{product.brand}  
+        		</p:column>
+
+					<p:column headerText="Category" sortBy="#{product.category}"
+						filterBy="#{product.category.name}" id="category">  
+            	#{product.category.name}  
+        		</p:column>
+
+					<p:column headerText="availability"
+						sortBy="#{product.availability}"
+						filterBy="#{product.availability}" id="availability">  
+            		#{product.availability}  
+        		</p:column>
+
+
+
+				</p:dataTable>
+			</h:form>
+
+			<h:panelGroup id="productDetail" layout="block">
+
+				<p:panel id="detailPanel" header="Product"
+					style="margin-top: 1.7em;" rendered="#{productsBean.selection}">
+
+
+
+					<h:form id="detailForm" prependId="false">
+
+
+
+
+						<div class="form-field">
+							<h:outputLabel for="productName" value="Name" />
+							<p:inputText value="#{productsBean.selectedProduct.title}"
+								id="productName" required="true"
+								requiredMessage="Title required" size="40" />
+							<h:message for="productName" errorClass="errorRequired" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="productCode" value="Code" />
+							<p:inputText value="#{productsBean.selectedProduct.code}"
+								id="productCode" required="true"
+								requiredMessage="Title required" size="40" />
+							<h:message for="productCode" errorClass="errorRequired" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="productBrand" value="Brand" />
+							<p:selectOneMenu value="#{productsBean.selectedProduct.brand}"
+								effect="fade" converter="BrandConverter" id="productBrand">
+								<f:selectItem
+									itemLabel="#{productsBean.selectedProduct.brand.name}"
+									itemValue="" />
+								<f:selectItems value="#{productsBean.brands}" var="brand"
+									itemLabel="#{brand.name}" itemValue="#{brand}" />
+							</p:selectOneMenu>
+							<h:message for="productBrand" errorClass="errorRequired" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="productCategory" value="Category" />
+							<p:selectOneMenu value="#{productsBean.selectedProduct.category}"
+								effect="fade" converter="CategoryConverter" id="productCategory">
+								<f:selectItem
+									itemLabel="#{productsBean.selectedProduct.category.name}"
+									itemValue="" />
+								<f:selectItems value="#{productsBean.categories}" var="category"
+									itemLabel="#{category.name}" itemValue="#{category}" />
+							</p:selectOneMenu>
+							<h:message for="productCategory" errorClass="errorRequired" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="productAvailability" value="Availability" />
+							<p:selectOneMenu
+								value="#{productsBean.selectedProduct.availability}"
+								effect="fade" id="productAvailability">
+								<f:selectItem
+									itemLabel="#{productsBean.selectedProduct.availability}"
+									itemValue="" />
+								<f:selectItems value="#{productsBean.availabilities}"
+									var="availability" itemLabel="#{availability}"
+									itemValue="#{availability}" />
+							</p:selectOneMenu>
+							<h:message for="productAvailability" errorClass="errorRequired" />
+						</div>
+
+
+
+						<div class="form-field">
+							<h:outputLabel for="productPrice" value="Price" />
+							<p:inputText value="#{productsBean.price}" id="productPrice"
+								required="true" requiredMessage="Title required" size="40">
+								<f:validateLongRange minimum="1" />
+							</p:inputText>
+							<h:message for="productPrice" errorClass="errorRequired" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="productPieces" value="Pieces" />
+							<p:inputText value="#{productsBean.selectedProduct.pieces}"
+								id="productPieces" required="true"
+								requiredMessage="Title required" size="40">
+								<f:validateLongRange minimum="0" />
+							</p:inputText>
+							<h:message for="productPieces" errorClass="errorRequired" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="publishDate" value="Publish Date" />
+							<p:calendar value="#{productsBean.selectedProduct.publishDate}"
+								id="publishDate" showOn="button" />
+							<h:message for="publishDate" errorClass="errorRequired" />
+							<h:outputLabel for="discardDate" value="Discard Date" />
+							<p:calendar value="#{productsBean.selectedProduct.discardDate}"
+								id="discardDate" showOn="button" />
+							<h:message for="discardDate" errorClass="errorRequired" />
+						</div>
+						
+						
+
+						<div class="form-field">
+							<h:outputLabel for="productSum" value="Product Summary" />
+							<p:inputTextarea id="productSum"
+								value="#{productsBean.selectedProduct.summary}" rows="6"
+								cols="48" />
+						</div>
+
+						<div class="form-field">
+							<h:outputLabel for="productDesc" value="Product Description" />
+							<p:editor id="productDesc"
+								value="#{productsBean.selectedProduct.description}" width="600" />
+						</div>
+
+						<div class="form-buttons">
+
+							<p:commandButton ajax="false"
+								action="#{productsBean.submit()}" value="Submit"
+								update=":productDetail :form " />
+							<p:commandLink immediate="true" action="#{productsBean.clear()}"
+								value="Cancel" update=":productDetail" />
+						</div>
+
+
+
+
+					</h:form>
+					
+
+
+
+				</p:panel>
+
+			</h:panelGroup>
+			
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
 </html>

@@ -35,7 +35,7 @@ insert into brand (name) values ("Samsung");
 insert into brand (name) values ("Sony");
 
 -- Some products
-insert into product (title, brand_id, category_id, availability, price, summary, description) values ("Apple iMac 15.6",2,2,"IN_STOCK",36000,"Apple je lamerska spolecnost","Bla bla bla, long");
-insert into product (title, brand_id, category_id, availability, price, summary, description) values ("Acer V5-571P-6648 Core i3 4GB 500GB 15.6",1,2,"IN_STOCK",13602,'Acer V5-571P-6648 Core i3 4GB 500GB 15.6 Touchscreen USB 3.0 Laptop Windows 8','Manufacturer refurbished: An item that has been professionally restored to working order by a manufacturer or manufacturer-approved vendor. This means the product has been inspected, cleaned, and repaired to meet manufacturer specifications and is in excellent condition. This item may or may not be in the original packaging. See the seller’s listing for full details.');
+insert into product (title, code, brand_id, category_id, availability, price, pieces, rating , publishDate, discardDate, summary, description) values ("Apple iMac 15.6","0541057AF",2,2,"IN_STOCK",36000,5,100,"2012-11-11","2013-03-15","Apple je lamerska spolecnost","Bla bla bla, long");
+insert into product (title, code, brand_id, category_id, availability, price, pieces, rating , publishDate, discardDate, summary, description) values ("Acer V5-571P-6648 Core i3 4GB 500GB 15.6","054105435QS",1,2,"ORDERED",13602,0,80,"2012-12-11","2013-01-25",'Acer V5-571P-6648 Core i3 4GB 500GB 15.6 Touchscreen USB 3.0 Laptop Windows 8','Manufacturer refurbished: An item that has been professionally restored to working order by a manufacturer or manufacturer-approved vendor. This means the product has been inspected, cleaned, and repaired to meet manufacturer specifications and is in excellent condition. This item may or may not be in the original packaging. See the seller’s listing for full details.');
 
 
