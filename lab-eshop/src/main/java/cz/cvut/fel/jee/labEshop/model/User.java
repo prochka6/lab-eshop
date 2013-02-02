@@ -127,8 +127,12 @@ public class User extends BaseEntity {
 	 *         otherwise <code>false</code>
 	 */
 	public boolean isAdmin() {
-		if (roles != null && roles.contains(LabEshopConstants.ADMINISTRATOR_ROLE)) {
-			return true;
+		if (roles != null) {
+			for (Role role : roles) {
+				if (LabEshopConstants.ADMINISTRATOR_ROLE.equals(role.getRole())) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

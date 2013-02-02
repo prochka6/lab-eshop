@@ -7,18 +7,19 @@
 
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
-		<ui:param name="pageTitle" value="EShop - Manage Brands" />
+		<ui:param name="pageTitle" value="EShop - Manage Users" />
 
 		<ui:define name="canvas">
 
 			<div class="panel">
 				<h2>Users</h2>
 
-				<p>Users in system.</p>
+				<p>Table presents users in system. Users can be filtered by
+					name, email and username.</p>
 
 				<h:form prependId="false">
 					<p:dataTable var="row" value="#{viewUsersBean.tableModel}"
-						paginator="true" rows="10" rowsPerPageTemplate="10,20,50"
+						paginator="true" rows="20" rowsPerPageTemplate="20,50"
 						id="usersTable" lazy="true">
 
 						<p:column headerText="ID" sortBy="#{row.id}">
@@ -32,12 +33,18 @@
 
 						<p:column headerText="Username" sortBy="#{row.username}"
 							filterBy="#{row.username}">
-							<h:outputText value="#{row.username}" />
+							<h:link outcome="/admin/userDetail" value="#{row.username}">
+								<f:param name="id" value="#{row.id}" />
+							</h:link>
 						</p:column>
 
 						<p:column headerText="Email" sortBy="#{row.email}"
 							filterBy="#{row.email}">
 							<h:outputText value="#{row.email}" />
+						</p:column>
+
+						<p:column headerText="Admin" styleClass="text-center">
+							<h:panelGroup styleClass="ui-icon-true" rendered="#{row.admin}" />
 						</p:column>
 
 					</p:dataTable>

@@ -1,8 +1,6 @@
 package cz.cvut.fel.jee.labEshop.web.product;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.List;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,21 +28,16 @@ import cz.cvut.fel.jee.labEshop.model.Money;
 import cz.cvut.fel.jee.labEshop.model.Product;
 import cz.cvut.fel.jee.labEshop.model.ProductAvailability;
 
-
 /**
  * Products JSF controller.
- *  
+ * 
  * @author Ondřej Harcuba (<a href="mailto:harcuond@fel.cvut.cz">prochka6</a>)
  */
-
 @Named("productsBean")
 @SessionScoped
 @Stateful
-public class ProductsBean  implements Serializable {
+public class ProductsBean implements Serializable {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -1795939077116397980L;
 
 	@Inject
@@ -53,56 +45,43 @@ public class ProductsBean  implements Serializable {
 
 	@Inject
 	private Messages messages;
-	
+
 	@Inject
 	private ProductManager productManager;
-	
+
 	@Inject
 	private BrandManager brandManager;
-	
+
 	@Inject
 	private CategoryManager categoryManager;
-	
+
 	private transient List<Product> products;
-	
+
 	private Product selectedProduct;
 
 	private List<Product> filteredProducts;
-	
+
 	private List<Brand> brands;
-	
+
 	private List<Category> categories;
-	
+
 	private Long price;
-	
-	
-	
-	
-	
-	public List<Product> getProducts(){
+
+	public List<Product> getProducts() {
 		if (products == null) {
 			products = productManager.findAllProducts();
 		}
 
 		return products;
 	}
-	
-	
-	
-		
+
 	public void setBrands(List<Brand> brands) {
 		this.brands = brands;
 	}
 
-
-
-
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
-
-
-
 
 	public List<Brand> getBrands() {
 		if (brands == null) {
@@ -111,7 +90,7 @@ public class ProductsBean  implements Serializable {
 
 		return brands;
 	}
-	
+
 	public List<Category> getCategories() {
 		if (categories == null) {
 			categories = categoryManager.findAllCategories();
@@ -120,36 +99,36 @@ public class ProductsBean  implements Serializable {
 		return categories;
 	}
 
-	public void createNewProduct(){
+	public void createNewProduct() {
 		selectedProduct = new Product();
 		selectedProduct.setAvailability(ProductAvailability.IN_STOCK);
 		price = null;
 	}
-	
-	public void setSelectedProduct(Product selectedProduct){
-		if(selectedProduct!=null){
+
+	public void setSelectedProduct(Product selectedProduct) {
+		if (selectedProduct != null) {
 			price = selectedProduct.getPrice().amount();
-	    }
+		}
 		this.selectedProduct = selectedProduct;
 	}
-	
-	public void clear(){
+
+	public void clear() {
 		price = null;
 		this.selectedProduct = null;
 	}
-	
-	public Product getSelectedProduct(){
+
+	public Product getSelectedProduct() {
 		return selectedProduct;
 	}
-	
-	public List<Product> getFilteredProducts(){
+
+	public List<Product> getFilteredProducts() {
 		return filteredProducts;
 	}
-	
-	public void setFilteredProducts(List<Product> filteredProducts){
+
+	public void setFilteredProducts(List<Product> filteredProducts) {
 		this.filteredProducts = filteredProducts;
 	}
-	
+
 	public Long getPrice() {
 		return price;
 	}
@@ -158,70 +137,53 @@ public class ProductsBean  implements Serializable {
 		this.price = price;
 	}
 
-
-
-
 	public boolean isSelection() {
 		return selectedProduct != null ? true : false;
 	}
-	
-	public List<ProductAvailability> getAvailabilities(){
+
+	public List<ProductAvailability> getAvailabilities() {
 		List<ProductAvailability> list = Arrays.asList(ProductAvailability.values());
 		return list;
 	}
-	
-	public void  submit(){	
-		
-		if(selectedProduct.getId()==null){
-			selectedProduct.setPrice(new Money(price));			
-			productManager.createProduct(selectedProduct);	
+
+	public void submit() {
+
+		if (selectedProduct.getId() == null) {
+			selectedProduct.setPrice(new Money(price));
+			productManager.createProduct(selectedProduct);
 			products.add(selectedProduct);
 			selectedProduct = null;
-			FacesMessage msg = new FacesMessage("Product created");    
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-		}else{
-			if(selectedProduct.getPrice()!=null&&price!=selectedProduct.getPrice().amount()){
-				selectedProduct.setPrice(new Money(price));			
+			FacesMessage msg = new FacesMessage("Product created");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		} else {
+			if (selectedProduct.getPrice() != null && price != selectedProduct.getPrice().amount()) {
+				selectedProduct.setPrice(new Money(price));
 			}
 			selectedProduct = productManager.updateProduct(selectedProduct);
 			products.remove(products.indexOf(selectedProduct));
 			products.add(selectedProduct);
-			FacesMessage msg = new FacesMessage("Product "+selectedProduct.getTitle()+" edited");    
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesMessage msg = new FacesMessage("Product " + selectedProduct.getTitle() + " edited");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 			selectedProduct = null;
-			
-			
+
 		}
-		
-		
+
 	}
-	
+
 	public void uploadFile(FileUploadEvent event) throws IOException {
-        UploadedFile uploadedFile = event.getFile();
-        selectedProduct.setPromoImage(uploadedFile.getContents());
-        FacesMessage msg = new FacesMessage("Succesful", uploadedFile.getFileName() + " is uploaded.");  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-        
-    }
-	
-	public void onRowSelect(SelectEvent event) {  
-       
-    }  
-  
-    public void onRowUnselect(UnselectEvent event) {  
-        
-    }
+		UploadedFile uploadedFile = event.getFile();
+		selectedProduct.setPromoImage(uploadedFile.getContents());
+		FacesMessage msg = new FacesMessage("Succesful", uploadedFile.getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 
+	}
 
+	public void onRowSelect(SelectEvent event) {
 
+	}
 
-	
+	public void onRowUnselect(UnselectEvent event) {
 
+	}
 
-
-
-	
-
-
-	
 }

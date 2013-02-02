@@ -1,9 +1,12 @@
 package cz.cvut.fel.jee.labEshop.exceptions;
 
+import javax.ejb.ApplicationException;
+
 /**
  * 
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
+@ApplicationException(rollback = false)
 public class EntityNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

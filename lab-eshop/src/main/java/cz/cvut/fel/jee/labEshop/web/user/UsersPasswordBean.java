@@ -2,7 +2,7 @@ package cz.cvut.fel.jee.labEshop.web.user;
 
 import java.io.Serializable;
 
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
