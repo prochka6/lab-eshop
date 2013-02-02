@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,8 +35,7 @@ import cz.cvut.fel.jee.labEshop.model.ProductAvailability;
  * @author Ondřej Harcuba (<a href="mailto:harcuond@fel.cvut.cz">prochka6</a>)
  */
 @Named("productsBean")
-@SessionScoped
-@Stateful
+@ViewScoped
 public class ProductsBean implements Serializable {
 
 	private static final long serialVersionUID = -1795939077116397980L;
@@ -54,6 +54,9 @@ public class ProductsBean implements Serializable {
 
 	@Inject
 	private CategoryManager categoryManager;
+	
+	@Inject
+	private ImageProviderBean imgProvider;
 
 	private transient List<Product> products;
 
@@ -108,6 +111,9 @@ public class ProductsBean implements Serializable {
 	public void setSelectedProduct(Product selectedProduct) {
 		if (selectedProduct != null) {
 			price = selectedProduct.getPrice().amount();
+			imgProvider.setStream(selectedProduct.getPromoImage());
+		}else{
+			imgProvider.setStream(null);
 		}
 		this.selectedProduct = selectedProduct;
 	}
