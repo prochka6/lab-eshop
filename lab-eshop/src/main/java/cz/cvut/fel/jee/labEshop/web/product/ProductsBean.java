@@ -19,8 +19,6 @@ import org.jboss.seam.international.status.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 
@@ -129,7 +127,9 @@ public class ProductsBean  implements Serializable {
 	}
 	
 	public void setSelectedProduct(Product selectedProduct){
-		price = selectedProduct.getPrice().amount();
+		if(selectedProduct!=null){
+			price = selectedProduct.getPrice().amount();
+	    }
 		this.selectedProduct = selectedProduct;
 	}
 	

@@ -48,10 +48,10 @@ public class Product extends BaseEntity {
 	@AttributeOverride(name = "amount", column = @Column(name = "price"))
 	private Money price;
 
+	@Column(length=2048)
 	private String summary;
 
 	@Lob
-	@Column(length=2048)
 	private String description;
 	
 	@Column(unique=true)
