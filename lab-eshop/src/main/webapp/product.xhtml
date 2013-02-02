@@ -6,8 +6,12 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:body>
-	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+	<ui:composition template="/WEB-INF/templates/tmpl2Cols.xhtml">
 		<ui:param name="pageTitle" value="EShop - Product" />
+	
+		<ui:define name="leftColumn">
+			<ui:include src="/WEB-INF/includes/categoryMenu.xhtml" />
+		</ui:define>
 
 		<ui:define name="template-header">
 			<f:metadata>
@@ -19,13 +23,71 @@
 					listener="#{productDetailBean.loadProduct()}" />
 			</f:metadata>
 		</ui:define>
+		
+		
 
-		<ui:define name="canvas">
+		<ui:define name="content">
 
 			<div class="panel">
-				<h2>Product Detail</h2>
 
-				#{productDetailBean.product.title}<br />
+
+				<h:panelGroup id="productDetail" layout="block">
+
+					<p:panel id="detailPanel" header="Product"
+						style="margin-top: 1.7em;">
+
+						<h2>Product Detail</h2>
+
+
+						<h:form id="detailForm" prependId="false"
+							enctype="multipart/form-data">
+
+							<div style="float:left; width:54%;">
+								<h:panelGrid columns="2" cellspacing="13" >
+									<h:outputText value="Name: " style="font-weight:bold;"/>
+									<h:outputText value="#{productDetailBean.product.title}"
+										id="productName" />
+									<h:outputText value="Code: " style="font-weight:bold;"/>
+									<h:outputText value="#{productDetailBean.product.code}"
+										id="productCode" />
+									<h:outputText value="Brand: " style="font-weight:bold;"/>
+									<h:outputText value="#{productDetailBean.product.brand.name}"
+										id="productBrand" />
+									<h:outputText value="Category: " style="font-weight:bold;"/>
+									<h:outputText
+										value="#{productDetailBean.product.category.name}"
+										id="productCategory" />
+									<h:outputText value="Availability: " style="font-weight:bold;"/>
+									<h:outputText value="#{productDetailBean.product.availability}"
+										id="productAvailability" />
+									<h:outputText value="Price: " style="font-weight:bold;"/>
+									<h:outputText
+										value="#{productDetailBean.product.price.amount()},- or (#{productDetailBean.product.price.amount()/100*20+productDetailBean.product.price.amount()},- incl. VAT)"
+										id="productPrice" />
+									<h:outputText value="Pieces in stock: " style="font-weight:bold;"/>
+									<h:outputText value="#{productDetailBean.product.pieces}"
+										id="productPieces" />
+									
+								</h:panelGrid>
+								<p:commandButton ajax="false" action="#" value="I want this!!" />
+								<p:separator/>
+								<h:outputText value="Product Summary" style="font-weight:bold;"/>
+								<p:separator/>
+								<h:outputText id="productSum" value="#{productDetailBean.product.summary}" style="width:150px;"/>	
+							</div>
+							<p:graphicImage id="img" value="#{imageProvider.streamedImage}" alt="None" width="300" height="300" />
+							
+							<p:separator/>
+							<p:spacer height="150"/>
+							<p:separator/>
+							<h:outputText value="Product Description:" style="font-weight:bold;"/>
+							<p:separator/>
+							<h:outputText id="productDesc" value="#{productDetailBean.product.description}" escape="false" />
+						</h:form>
+
+					</p:panel>
+
+				</h:panelGroup>
 
 			</div>
 		</ui:define>
