@@ -252,3 +252,7 @@ a:hover {
 	left: 3px;
 	background: #cfdeff;
 }
+
+.ui-editor, .ui-editor > iframe, .ui-editor > textarea {
+    width: 100% ! important;
+}

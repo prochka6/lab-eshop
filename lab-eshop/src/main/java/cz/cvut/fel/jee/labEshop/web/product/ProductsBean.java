@@ -177,17 +177,17 @@ public class ProductsBean  implements Serializable {
 			productManager.createProduct(selectedProduct);	
 			products.add(selectedProduct);
 			selectedProduct = null;
-			FacesMessage msg = new FacesMessage("Product created");    
+			FacesMessage msg = new FacesMessage("Product created successfully.");    
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}else{
+			FacesMessage msg = new FacesMessage("Product "+selectedProduct.getTitle()+" edited successfully");    
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
 			if(selectedProduct.getPrice()!=null&&price!=selectedProduct.getPrice().amount()){
 				selectedProduct.setPrice(new Money(price));			
 			}
 			selectedProduct = productManager.updateProduct(selectedProduct);
-			products.remove(products.indexOf(selectedProduct));
-			products.add(selectedProduct);
-			FacesMessage msg = new FacesMessage("Product "+selectedProduct.getTitle()+" edited");    
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
+			products.set(products.indexOf(selectedProduct),selectedProduct);
+			
 			selectedProduct = null;
 			
 			
@@ -199,7 +199,7 @@ public class ProductsBean  implements Serializable {
 	public void uploadFile(FileUploadEvent event) throws IOException {
         UploadedFile uploadedFile = event.getFile();
         selectedProduct.setPromoImage(uploadedFile.getContents());
-        FacesMessage msg = new FacesMessage("Succesful", uploadedFile.getFileName() + " is uploaded.");  
+        FacesMessage msg = new FacesMessage("Image: "+uploadedFile.getFileName() + " has been successfully uploaded.");  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
         
     }

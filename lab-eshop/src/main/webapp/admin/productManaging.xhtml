@@ -5,14 +5,27 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></h:head>
 <h:body>
 
 	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
 
 		<ui:param name="pageTitle" value="EShop - Manage Products" />
+		
 		<ui:define name="canvas">
+			<div class="panel">
+			
+				<h2>Products</h2>
 
+				<p>What are the products for? Selling them makes you rich dummy! So hit the "create Product"
+				button right now, so you have something for sale. Type in unique Name and Code, choose product Brand and Category, set product 
+				price (coz you want to be rich right?) and pieces you have for sale and finally choose image and write some description of your product. 
+			 	Don't forget to Hit the "Submit" button at the bottom of the screen when you are done or all you work shall perish! Enjoy!
+				  </p>
+
+				<br />
+			
 			<h:form id="subm">
 				<p:commandButton action="#{productsBean.createNewProduct()}"
 					value="Create Product" immediate="true" update=":productDetail"
@@ -24,8 +37,7 @@
 
 			<h:form id="form">
 
-				<p:messages id="formMessages" globalOnly="true" autoUpdate="true"
-					closable="true" />
+				<p:growl id="formMessages" globalOnly="true" autoUpdate="true" />
 
 				<p:dataTable var="product" value="#{productsBean.products}"
 					rowKey="#{product.id}" paginator="true" rows="10"
@@ -33,7 +45,7 @@
 					filteredValue="#{productsBean.filteredProducts}" id="productsTable">
 
 					<p:ajax event="rowSelect" listener="#{productsBean.onRowSelect}"
-						update=":productDetail" />
+						update=":productDetail" oncomplete="LabEshop.scrollTo('productDetail');" />
 					<p:ajax event="rowUnselect"
 						listener="#{productsBean.onRowUnselect}" update=":productDetail" />
 
@@ -171,31 +183,34 @@
 							<h:message for="discardDate" errorClass="errorRequired" />
 						</div>
 
-						<div class="form-field">
+		
+								<p:graphicImage id ="img" value="#{imageBean.streamedImage}" alt="None" width="180" height="180"/>
+								<br/>
 								<h:outputLabel for="Upload" value="Upload Image" />
 								<p:fileUpload id="Upload" sizeLimit="16777216" auto="true"  
 									fileUploadListener="#{productsBean.uploadFile}" 
-									allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="width: 600px;" update="img"/>
-								<p:graphicImage id ="img" value="#{imageBean.streamedImage}" alt="None" width="150" height="150"/>
-						</div>
+									allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="img"/>
+								
+					
+					
 						
-						
-
+						<p:spacer height="30"/>
 
 
 						<div class="form-field">
 							<h:outputLabel for="productSum" value="Product Summary" />
 							<p:inputTextarea id="productSum"
 								value="#{productsBean.selectedProduct.summary}" rows="6"
-								cols="48" />
+								cols="100" style="width: 100%;"/>
 						</div>
 
-						<div class="form-field"> 
+						<p:spacer height="40"/>
+						<br/>
 							<h:outputLabel for="productDesc" value="Product Description" />
 							<p:editor id="productDesc"
-								value="#{productsBean.selectedProduct.description}" width="600" />
-						</div>
+								value="#{productsBean.selectedProduct.description}" height="600" />
 
+						
 						<div class="form-buttons">
 
 							<p:commandButton ajax="false" action="#{productsBean.submit()}"
@@ -216,7 +231,7 @@
 
 			</h:panelGroup>
 
-
+		</div>
 		</ui:define>
 	</ui:composition>
 </h:body>
