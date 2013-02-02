@@ -15,19 +15,16 @@ import org.primefaces.model.StreamedContent;
 @RequestScoped
 @Stateful
 public class DynamicImageBean implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private ProductsBean productsBean;
-	
-	
+
 	public StreamedContent getStreamedImage() {
-		if(productsBean.getSelectedProduct()!=null&&productsBean.getSelectedProduct().getPromoImage()!=null){
-			return new DefaultStreamedContent(new ByteArrayInputStream(productsBean.getSelectedProduct().getPromoImage()),"image/jpeg");
+		if (productsBean.getSelectedProduct() != null && productsBean.getSelectedProduct().getPromoImage() != null) {
+			return new DefaultStreamedContent(new ByteArrayInputStream(productsBean.getSelectedProduct()
+					.getPromoImage()), "image/jpeg");
 		}
 		return null;
 	}

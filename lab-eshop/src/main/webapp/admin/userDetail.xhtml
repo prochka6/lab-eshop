@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - Manage Brands" />
+
+		<ui:define name="template-header">
+			<f:metadata>
+				<f:viewParam name="id" value="#{viewUserDetailBean.userId}"
+					required="true">
+					<f:validateLongRange minimum="1" />
+				</f:viewParam>
+				<f:event type="preRenderView"
+					listener="#{viewUserDetailBean.loadUser()}" />
+			</f:metadata>
+		</ui:define>
+
+		<ui:define name="canvas">
+
+			<div class="panel">
+				<h3>User Detail</h3>
+
+				<h:panelGrid columns="2">
+
+					<h:outputText value="Name: " />
+					<h:outputText styleClass="emphase"
+						value="#{viewUserDetailBean.user.fullName}" />
+
+					<h:outputText value="Username: " style="margin-right: 2em;" />
+					<h:outputText value="#{viewUserDetailBean.user.username}" />
+
+					<h:outputText value="Email: " />
+					<h:outputText value="#{viewUserDetailBean.user.email}" />
+
+					<p:spacer height="10" />
+					<p:spacer height="10" />
+
+					<h:outputText value="Address: " />
+					<h:outputText
+						value="#{viewUserDetailBean.user.address.street} #{viewUserDetailBean.user.address.city} #{viewUserDetailBean.user.address.country}" />
+
+				</h:panelGrid>
+
+				<h3>Orders</h3>
+
+				<p:dataTable>
+					<p:column headerText="ID"></p:column>
+					<p:column headerText="Name"></p:column>
+					<p:column headerText="Date"></p:column>
+				</p:dataTable>
+
+				<div class="top-nav">
+					<a title="Top" onclick="LabEshop.scrollTop();">&uarr; Top</a>
+				</div>
+			</div>
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

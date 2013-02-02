@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - Product" />
+
+		<ui:define name="template-header">
+			<f:metadata>
+				<f:viewParam name="id" value="#{productDetailBean.productId}"
+					required="true">
+					<f:validateLongRange minimum="1" />
+				</f:viewParam>
+				<f:event type="preRenderView"
+					listener="#{productDetailBean.loadProduct()}" />
+			</f:metadata>
+		</ui:define>
+
+		<ui:define name="canvas">
+
+			<div class="panel">
+				<h2>Product Detail</h2>
+
+				#{productDetailBean.product.title}<br />
+
+			</div>
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

@@ -22,17 +22,16 @@ public class ProductManager {
 
 	@Inject
 	private IProductDao productDao;
-	
-	
+
 	/**
-	 * Find {@linkplain Product} by given id. If no such brand exists throws
+	 * Find {@linkplain Product} by given id. If no such product exists throws
 	 * EntityNotFoundException.
 	 * 
 	 * @param id
 	 *            the id of product
 	 * @return product entity
 	 * @throws EntityNotFoundException
-	 *             if no such brand with given id exists
+	 *             if no such product with given id exists
 	 */
 	public Product findProduct(Long id) throws EntityNotFoundException {
 		if (id == null) {
@@ -47,8 +46,7 @@ public class ProductManager {
 
 		return product;
 	}
-	
-	
+
 	/**
 	 * Create new {@linkplain Product} entity in database.
 	 * 
@@ -65,8 +63,7 @@ public class ProductManager {
 
 		productDao.saveOrUpdate(product);
 	}
-	
-	
+
 	/**
 	 * Update given {@linkplain Product} in database.
 	 * 
@@ -74,7 +71,7 @@ public class ProductManager {
 	 *            the product to be updated
 	 * @return merged database entity
 	 * @throws IllegalArgumentException
-	 *             if brand parameter is null or doesn't have assigned
+	 *             if product parameter is null or doesn't have assigned
 	 *             identifier.
 	 */
 	@RolesAllowed({ LabEshopConstants.ADMINISTRATOR_ROLE })
@@ -85,7 +82,7 @@ public class ProductManager {
 
 		return productDao.saveOrUpdate(product);
 	}
-	
+
 	/**
 	 * Return list of products stored in database.
 	 * 
