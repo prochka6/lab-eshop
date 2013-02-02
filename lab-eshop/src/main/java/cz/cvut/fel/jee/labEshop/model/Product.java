@@ -51,6 +51,7 @@ public class Product extends BaseEntity {
 	private String summary;
 
 	@Lob
+	@Column(length=2048)
 	private String description;
 	
 	@Column(unique=true)

@@ -4,10 +4,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
+import javax.faces.validator.FacesValidator;
 
 import cz.cvut.fel.jee.labEshop.model.Brand;
 import cz.cvut.fel.jee.labEshop.model.ProductAvailability;
 
+@FacesConverter(value = "AvailabilityConverter")
 public class AvailabilityConverter implements Converter{
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,

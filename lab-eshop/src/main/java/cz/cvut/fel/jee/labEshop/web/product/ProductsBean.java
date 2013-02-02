@@ -1,10 +1,14 @@
 package cz.cvut.fel.jee.labEshop.web.product;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -15,6 +19,8 @@ import org.jboss.seam.international.status.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 
@@ -35,7 +41,7 @@ import cz.cvut.fel.jee.labEshop.model.ProductAvailability;
  */
 
 @Named("productsBean")
-@ViewScoped
+@SessionScoped
 @Stateful
 public class ProductsBean  implements Serializable {
 
@@ -71,7 +77,7 @@ public class ProductsBean  implements Serializable {
 	
 	private Long price;
 	
-	private UploadedFile img;
+	
 	
 	
 	
@@ -190,17 +196,13 @@ public class ProductsBean  implements Serializable {
 		
 	}
 	
-	public void upload() {
-        if(img!=null){
-        	FacesMessage msg = new FacesMessage("Succesful",img.getFileName() + " is uploaded.");
-        	FacesContext.getCurrentInstance().addMessage(null, msg);
-        }else{
-        	 FacesMessage msg = new FacesMessage("fail");
-             FacesContext.getCurrentInstance().addMessage(null, msg);
-        	
-        }
+	public void uploadFile(FileUploadEvent event) throws IOException {
+        UploadedFile uploadedFile = event.getFile();
+        selectedProduct.setPromoImage(uploadedFile.getContents());
+        FacesMessage msg = new FacesMessage("Succesful", uploadedFile.getFileName() + " is uploaded.");  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+        
     }
-	
 	
 	public void onRowSelect(SelectEvent event) {  
        
@@ -213,19 +215,12 @@ public class ProductsBean  implements Serializable {
 
 
 
-	public UploadedFile getImg() {
-		return img;
-	}
+	
 
 
 
 
-	public void setImg(UploadedFile img) {
-		this.img = img;
-	}
-
-
-
+	
 
 
 	
