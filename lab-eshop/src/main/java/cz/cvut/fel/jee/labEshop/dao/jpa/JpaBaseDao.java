@@ -6,12 +6,19 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.cvut.fel.jee.labEshop.dao.IBaseDao;
+import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
+import cz.cvut.fel.jee.labEshop.filter.SortModel;
+import cz.cvut.fel.jee.labEshop.filter.SortOrder;
+import cz.cvut.fel.jee.labEshop.filter.UserListFilter;
 import cz.cvut.fel.jee.labEshop.model.BaseEntity;
 
 /**
@@ -119,6 +126,43 @@ public abstract class JpaBaseDao<T extends BaseEntity> implements IBaseDao<T, Lo
 	@Override
 	public void setEntityManager(EntityManager entityManager) {
 		this.em = entityManager;
+	}
+
+	/**
+	 * Apply pagination filter.
+	 * 
+	 * @param query
+	 *            the query
+	 * @param filter
+	 *            the pagination filter
+	 * @return query with set up pagination
+	 */
+	protected <X> TypedQuery<X> applyPaging(TypedQuery<X> query, EntityFilter filter) {
+		if (filter.getFirstRow() != null) {
+			query.setFirstResult(filter.getFirstRow());
+		}
+		if (filter.getMaxRows() != null) {
+			query.setMaxResults(filter.getMaxRows());
+		}
+
+		return query;
+	}
+
+	@SuppressWarnings("rawtypes")
+	protected void applySortModel(CriteriaBuilder builder, CriteriaQuery query, Root root, UserListFilter filter) {
+		if (filter.getSortModel() != null) {
+			for (SortModel.Property property : filter.getSortModel()) {
+				try {
+					if (property.getSortOrder() == SortOrder.ASCENDING) {
+						query.orderBy(builder.asc(root.get(property.getKey())));
+					} else {
+						query.orderBy(builder.desc(root.get(property.getKey())));
+					}
+				} catch (IllegalArgumentException iae) {
+					log.warn("Unmapped order by property: {}.", property.getKey());
+				}
+			}
+		}
 	}
 
 }

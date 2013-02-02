@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.jboss.solder.core.Veto;
 
+import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
+
 /**
  * User represents person who is interacting with system.
  * 
@@ -116,6 +118,19 @@ public class User extends BaseEntity {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	/**
+	 * Decide whether user has Administrator role in application.
+	 * 
+	 * @return <code>true</code> if given user has assigned administrator role
+	 *         otherwise <code>false</code>
+	 */
+	public boolean isAdmin() {
+		if (roles != null && roles.contains(LabEshopConstants.ADMINISTRATOR_ROLE)) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

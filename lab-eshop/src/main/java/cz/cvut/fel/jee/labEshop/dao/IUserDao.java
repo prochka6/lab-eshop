@@ -1,5 +1,8 @@
 package cz.cvut.fel.jee.labEshop.dao;
 
+import java.util.List;
+
+import cz.cvut.fel.jee.labEshop.filter.UserListFilter;
 import cz.cvut.fel.jee.labEshop.model.User;
 
 /**
@@ -35,5 +38,25 @@ public interface IUserDao extends IBaseDao<User, Long> {
 	 *             if email is null or empty.
 	 */
 	User getByEmail(String email) throws IllegalArgumentException;
+
+	/**
+	 * Finds users by specified user filter.
+	 * 
+	 * @param filter
+	 *            the user filter we want to search by
+	 * @return
+	 * @throws IllegalArgumentException
+	 *             if the filter param is null
+	 */
+	List<User> find(UserListFilter filter) throws IllegalArgumentException;
+
+	/**
+	 * Returns count of users by given filter.
+	 * 
+	 * @param filter
+	 *            the user filter entity
+	 * @return count of user returned by given filter
+	 */
+	int countByFilter(UserListFilter filter);
 
 }

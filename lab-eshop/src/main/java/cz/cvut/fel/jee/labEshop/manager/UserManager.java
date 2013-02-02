@@ -16,8 +16,10 @@ import javax.persistence.criteria.Root;
 import cz.cvut.fel.jee.labEshop.dao.IRoleDao;
 import cz.cvut.fel.jee.labEshop.dao.IUserDao;
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
+import cz.cvut.fel.jee.labEshop.filter.UserListFilter;
 import cz.cvut.fel.jee.labEshop.model.Role;
 import cz.cvut.fel.jee.labEshop.model.User;
+import cz.cvut.fel.jee.labEshop.util.Assert;
 
 /**
  * 
@@ -143,4 +145,35 @@ public class UserManager {
 	public void updateUser(User userToEdit) {
 		userDao.saveOrUpdate(userToEdit);
 	}
+
+	/**
+	 * Filters users by given filter.
+	 * 
+	 * @param filter
+	 *            the user filter
+	 * @return filtered User entities
+	 * @throws IllegalArgumentException
+	 *             if filter is null.
+	 */
+	public List<User> findByFilter(UserListFilter filter) throws IllegalArgumentException {
+		Assert.notNull(filter);
+
+		return userDao.find(filter);
+	}
+
+	/**
+	 * Count users by given filter.
+	 * 
+	 * @param filter
+	 *            the user filter
+	 * @return count of users returned by filter
+	 * @throws IllegalArgumentException
+	 *             if filter is null.
+	 */
+	public int countByFilter(UserListFilter filter) throws IllegalArgumentException {
+		Assert.notNull(filter);
+
+		return userDao.countByFilter(filter);
+	}
+
 }

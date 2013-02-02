@@ -3,6 +3,22 @@ insert into user (id, email, first_name, last_name, password, username) values (
 -- User with default password customer
 insert into user (id, email, first_name, last_name, password, username) values (2, "cust@cust", "Martin", "Tomasek", "kewfkyR1MEjACW0DamlPhg==", "customer")
 
+-- Custom customers
+insert into user (id, email, first_name, last_name, password, username) values (3, "jirkan@email.cz", "Jiri", "Novak", "kewfkyR1MEjACW0DamlPhg==", "jirkan")
+insert into user (id, email, first_name, last_name, password, username) values (4, "jansvob@seznam.cz", "Jan", "Svoboda", "kewfkyR1MEjACW0DamlPhg==", "jansvob")
+insert into user (id, email, first_name, last_name, password, username) values (5, "pitrnovo@centrum.cz", "Petr", "Novotny", "kewfkyR1MEjACW0DamlPhg==", "pitrnovo")
+insert into user (id, email, first_name, last_name, password, username) values (6, "pepacerny@email.cz", "Josef", "Cerny", "kewfkyR1MEjACW0DamlPhg==", "pepacerny")
+insert into user (id, email, first_name, last_name, password, username) values (7, "jardakuca@email.cz", "Jaroslav", "Kucera", "kewfkyR1MEjACW0DamlPhg==", "jardakuca")
+insert into user (id, email, first_name, last_name, password, username) values (8, "nemecv@centrum.cz", "Vaclav", "Nemec", "kewfkyR1MEjACW0DamlPhg==", "nemecv")
+insert into user (id, email, first_name, last_name, password, username) values (9, "lukykral@email.cz", "Lukas", "Kral", "kewfkyR1MEjACW0DamlPhg==", "lukykral")
+insert into user (id, email, first_name, last_name, password, username) values (10, "kubamarek@gmail.com", "Jakub", "Marek", "kewfkyR1MEjACW0DamlPhg==", "kubamarek")
+insert into user (id, email, first_name, last_name, password, username) values (11, "maruskan@email.cz", "Marie", "Novakova", "kewfkyR1MEjACW0DamlPhg==", "maruskan")
+insert into user (id, email, first_name, last_name, password, username) values (12, "dvorakjana@seznam.cz", "Jana", "Dvorakova", "kewfkyR1MEjACW0DamlPhg==", "dvorakjana")
+insert into user (id, email, first_name, last_name, password, username) values (13, "evaproch@email.cz", "Eva", "Prochazkova", "kewfkyR1MEjACW0DamlPhg==", "evaproch")
+insert into user (id, email, first_name, last_name, password, username) values (14, "ajavesela@atlas.cz", "Alena", "Vesela", "kewfkyR1MEjACW0DamlPhg==", "ajavesela")
+insert into user (id, email, first_name, last_name, password, username) values (15, "luciepokorna@email.cz", "Lucie", "Pokorna", "kewfkyR1MEjACW0DamlPhg==", "luciepokorna")
+insert into user (id, email, first_name, last_name, password, username) values (16, "fialka@seznam.cz", "Jarmila", "Fialova", "kewfkyR1MEjACW0DamlPhg==", "fialka")
+
 -- JAAS insert required, create role
 insert into role (id, role) values(1,"admin");
 insert into role (id, role) values(2,"customer");
@@ -14,6 +30,22 @@ insert into user_role (users_id, roles_id) values (1,1);
 insert into user_role (users_id, roles_id) values (1,2);
 -- User 2 is customer
 insert into user_role (users_id, roles_id) values (2,2);
+
+-- Custom customers roles
+insert into user_role (users_id, roles_id) values (3,2);
+insert into user_role (users_id, roles_id) values (4,2);
+insert into user_role (users_id, roles_id) values (5,2);
+insert into user_role (users_id, roles_id) values (6,2);
+insert into user_role (users_id, roles_id) values (7,2);
+insert into user_role (users_id, roles_id) values (8,2);
+insert into user_role (users_id, roles_id) values (9,2);
+insert into user_role (users_id, roles_id) values (10,2);
+insert into user_role (users_id, roles_id) values (11,2);
+insert into user_role (users_id, roles_id) values (12,2);
+insert into user_role (users_id, roles_id) values (13,2);
+insert into user_role (users_id, roles_id) values (14,2);
+insert into user_role (users_id, roles_id) values (15,2);
+insert into user_role (users_id, roles_id) values (16,2);
 
 -- Default categories
 insert into category (name) values ("Computers");

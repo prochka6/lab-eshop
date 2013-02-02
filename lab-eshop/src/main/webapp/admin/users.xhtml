@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - Manage Brands" />
+
+		<ui:define name="canvas">
+
+			<div class="panel">
+				<h2>Users</h2>
+
+				<p>Users in system.</p>
+
+				<h:form prependId="false">
+					<p:dataTable var="row" value="#{viewUsersBean.tableModel}"
+						paginator="true" rows="10" rowsPerPageTemplate="10,20,50"
+						id="usersTable" lazy="true">
+
+						<p:column headerText="ID" sortBy="#{row.id}">
+							<h:outputText value="#{row.id}" />
+						</p:column>
+
+						<p:column headerText="Fullname" sortBy="#{row.fullName}"
+							filterBy="#{row.fullName}">
+							<h:outputText value="#{row.fullName}" />
+						</p:column>
+
+						<p:column headerText="Username" sortBy="#{row.username}"
+							filterBy="#{row.username}">
+							<h:outputText value="#{row.username}" />
+						</p:column>
+
+						<p:column headerText="Email" sortBy="#{row.email}"
+							filterBy="#{row.email}">
+							<h:outputText value="#{row.email}" />
+						</p:column>
+
+					</p:dataTable>
+				</h:form>
+
+				<div class="top-nav">
+					<a title="Top" onclick="LabEshop.scrollTop();">&uarr; Top</a>
+				</div>
+			</div>
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>
