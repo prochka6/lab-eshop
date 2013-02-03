@@ -1,9 +1,11 @@
 package cz.cvut.fel.jee.labEshop.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.jboss.solder.core.Veto;
@@ -67,8 +70,8 @@ public class Product extends BaseEntity {
 	
 	@Lob
 	private byte[] promoImage;
-	
-	
+	 @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+	private List<BasketItem> basketsItems;
 
 	public String getTitle() {
 		return title;
@@ -172,6 +175,14 @@ public class Product extends BaseEntity {
 
 	public void setPromoImage(byte[] promoImage) {
 		this.promoImage = promoImage;
+	}
+
+	public List<BasketItem> getBasketsItems() {
+		return basketsItems;
+	}
+
+	public void setBasketsItems(List<BasketItem> basketsItems) {
+		this.basketsItems = basketsItems;
 	}
 
 	
