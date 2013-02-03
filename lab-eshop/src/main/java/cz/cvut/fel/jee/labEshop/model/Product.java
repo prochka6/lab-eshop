@@ -74,10 +74,6 @@ public class Product extends BaseEntity {
 	@Lob
 	private byte[] promoImage;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH,
-			CascadeType.MERGE, CascadeType.PERSIST })
-	private List<BasketItem> basketsItems;
-
 	public String getTitle() {
 		return title;
 	}
@@ -180,14 +176,6 @@ public class Product extends BaseEntity {
 
 	public void setPromoImage(byte[] promoImage) {
 		this.promoImage = promoImage;
-	}
-
-	public List<BasketItem> getBasketsItems() {
-		return basketsItems;
-	}
-
-	public void setBasketsItems(List<BasketItem> basketsItems) {
-		this.basketsItems = basketsItems;
 	}
 
 }

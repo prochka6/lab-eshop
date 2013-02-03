@@ -12,20 +12,21 @@
 
 			<div class="panel">
 				<div class="panel-title">Cart</div>
-
+<h:form>
 				<p:dataTable var="item" value="#{basketBean.itemsInBasket}"
 				emptyMessage="No data has been found."> 
 				<p:column>
 				<h:outputText value="#{item.product.title}" />
 				</p:column>
 								<p:column>
-				<h:outputText value="#{item.numberOfItems}" />
+				<h:inputText value="#{item.numberOfItems}" />
 				</p:column>
 								<p:column>
-				<h:outputText value="#{item.product.price}" />
+				<h:outputText value="#{item.numberOfItems*item.product.price.amount()}"  />
 				</p:column>
 				</p:dataTable>
-
+				<p:commandButton id="modifyBasketButton" ajax="false" value="Modify" action="#{basketBean.modifyBasket()}"></p:commandButton>
+				</h:form>
 			</div>
 		</ui:define>
 	</ui:composition>
