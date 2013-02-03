@@ -90,8 +90,8 @@ public abstract class JpaBaseDao<T extends BaseEntity> implements IBaseDao<T, Lo
 
 	@Override
 	public void delete(T entity) {
-		em.merge(entity);
-		em.remove(entity);
+		  entity = em.merge(entity);
+		  em.remove(entity);
 	}
 
 	@Override

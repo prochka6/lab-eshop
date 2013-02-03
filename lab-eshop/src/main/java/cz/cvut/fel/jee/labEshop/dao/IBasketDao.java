@@ -1,7 +1,6 @@
 package cz.cvut.fel.jee.labEshop.dao;
 
 import cz.cvut.fel.jee.labEshop.model.Basket;
-import cz.cvut.fel.jee.labEshop.model.Brand;
 import cz.cvut.fel.jee.labEshop.model.User;
 
 public interface IBasketDao extends IBaseDao<Basket, Long> {
