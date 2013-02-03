@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import cz.cvut.fel.jee.labEshop.dao.IProductDao;
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
+import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
 import cz.cvut.fel.jee.labEshop.model.Brand;
 import cz.cvut.fel.jee.labEshop.model.Product;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
@@ -81,6 +82,23 @@ public class ProductManager {
 		}
 
 		return productDao.saveOrUpdate(product);
+	}
+
+	/**
+	 * Finds latest published products sorted by publish date descending. If
+	 * pagination filter is null, assign default row size to 10.
+	 * 
+	 * @param filter
+	 *            the pagination filter
+	 * @return list of latest published products
+	 */
+	public List<Product> findLatestsProducts(EntityFilter filter) {
+		if (filter == null) {
+			filter = new EntityFilter();
+			filter.setMaxRows(10);
+		}
+
+		return productDao.findLatestsProducts(filter);
 	}
 
 	/**

@@ -4,12 +4,8 @@ import java.util.List;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaQuery;
 
-import org.slf4j.Logger;
-
-import cz.cvut.fel.jee.labEshop.dao.IUserDao;
+import cz.cvut.fel.jee.labEshop.manager.ProductManager;
 import cz.cvut.fel.jee.labEshop.model.Product;
 
 /**
@@ -22,23 +18,14 @@ import cz.cvut.fel.jee.labEshop.model.Product;
 @Model
 public class Sample {
 
-	@Inject
-	private Logger log;
-
-	@Inject
-	private EntityManager em;
-
 	private List<Product> products;
 
 	@Inject
-	private IUserDao userDao;
+	private ProductManager productManager;
 
 	public List<Product> products() {
 		if (products == null) {
-			log.debug("Retrieving all products from database.");
-			CriteriaQuery<Product> query = em.getCriteriaBuilder().createQuery(Product.class);
-			query.from(Product.class);
-			products = em.createQuery(query).getResultList();
+			products = productManager.findLatestsProducts(null);
 		}
 
 		return products;

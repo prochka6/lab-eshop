@@ -1,17 +1,11 @@
 package cz.cvut.fel.jee.labEshop.web.product;
 
-import java.io.ByteArrayInputStream;
-
 import javax.enterprise.inject.Model;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.jboss.seam.international.status.Messages;
 import org.jboss.solder.servlet.http.RequestParam;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.slf4j.Logger;
 
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;

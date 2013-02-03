@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,6 +32,7 @@ import org.jboss.solder.core.Veto;
 @Veto
 @Entity
 @Table(name = "product")
+@NamedQueries({ @NamedQuery(name = "Product.getLatests", query = "select p from Product p where p.discardDate > :date order by p.publishDate desc") })
 public class Product extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -51,26 +54,28 @@ public class Product extends BaseEntity {
 	@AttributeOverride(name = "amount", column = @Column(name = "price"))
 	private Money price;
 
-	@Column(length=2048)
+	@Column(length = 2048)
 	private String summary;
 
 	@Lob
 	private String description;
-	
-	@Column(unique=true)
+
+	@Column(unique = true)
 	private String code;
-	
+
 	private Date publishDate;
-	
+
 	private Date discardDate;
-	
+
 	private Integer pieces;
-	
+
 	private Integer rating;
-	
+
 	@Lob
 	private byte[] promoImage;
-	 @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH,
+			CascadeType.MERGE, CascadeType.PERSIST })
 	private List<BasketItem> basketsItems;
 
 	public String getTitle() {
@@ -184,8 +189,5 @@ public class Product extends BaseEntity {
 	public void setBasketsItems(List<BasketItem> basketsItems) {
 		this.basketsItems = basketsItems;
 	}
-
-	
-	
 
 }

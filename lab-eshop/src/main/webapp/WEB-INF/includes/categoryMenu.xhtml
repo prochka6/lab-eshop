@@ -8,13 +8,26 @@
 
 <ui:composition>
 
-	<h:panelGroup class="catMenu" layout="block">
+	<div class="widget-panel">
+		<div class="panel-title">Categories</div>
+
 		<ul>
 			<ui:repeat var="category" value="#{categoriesList}">
-				<li><a href="#">#{category.name}</a></li>
+				<li><span class="ui-icon-arrow-right" /><a href="#">#{category.name}</a></li>
 			</ui:repeat>
 		</ul>
-	</h:panelGroup>
+	</div>
+
+	<div class="widget-panel">
+		<div class="panel-title">Pages</div>
+
+		<ul>
+			<li><h:link outcome="/pages/faq" value="FAQ" /></li>
+			<li><h:link outcome="/pages/delivery" value="Delivery" /></li>
+			<li><h:link outcome="/pages/contact" value="Contacts" /></li>
+		</ul>
+
+	</div>
 
 </ui:composition>
 </html>

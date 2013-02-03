@@ -8,8 +8,7 @@
 
 <h:body>
 	<ui:composition template="/WEB-INF/templates/tmpl2Cols.xhtml">
-		<ui:param name="pageTitle" value="EShop" />
-		<ui:param name="pageHeading" value="Hello World !" />
+		<ui:param name="pageTitle" value="EShop - Delivery" />
 
 		<ui:define name="leftColumn">
 			<ui:include src="/WEB-INF/includes/categoryMenu.xhtml" />
@@ -17,15 +16,14 @@
 
 		<ui:define name="content">
 
-			<h3>Latests products</h3>
+			<div class="panel">
 
-			<ui:repeat var="product" value="#{sample.products}" varStatus="s">
-				<div style="float: left;#{s.odd?'':'margin-right: 15px;'}">
-					<shop:productPreview product="#{product}" />
-				</div>
-			</ui:repeat>
+				<div class="panel-title">Goods Delivery</div>
 
-			<div style="clear: both;" />
+				<p>Goods delivery information page.</p>
+
+			</div>
+
 		</ui:define>
 
 	</ui:composition>
