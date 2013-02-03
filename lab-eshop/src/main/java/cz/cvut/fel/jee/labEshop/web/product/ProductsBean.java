@@ -105,6 +105,7 @@ public class ProductsBean implements Serializable {
 	public void createNewProduct() {
 		selectedProduct = new Product();
 		selectedProduct.setAvailability(ProductAvailability.IN_STOCK);
+		imgProvider.setStream(null);
 		price = null;
 	}
 
@@ -181,6 +182,7 @@ public class ProductsBean implements Serializable {
 	public void uploadFile(FileUploadEvent event) throws IOException {
         UploadedFile uploadedFile = event.getFile();
         selectedProduct.setPromoImage(uploadedFile.getContents());
+        imgProvider.setStream(selectedProduct.getPromoImage());
         FacesMessage msg = new FacesMessage("Image: "+uploadedFile.getFileName() + " has been successfully uploaded.");  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
         

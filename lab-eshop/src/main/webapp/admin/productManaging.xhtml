@@ -184,14 +184,15 @@
 						</div>
 
 		
-								<p:graphicImage id ="img" value="#{imageProvider.streamedImage}" alt="None" width="180" height="180"/>
-								<br/>
+								
 								<h:outputLabel for="Upload" value="Upload Image" />
 								<p:fileUpload id="Upload" sizeLimit="16777216" auto="true"  
 									fileUploadListener="#{productsBean.uploadFile}" 
 									allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="img"/>
+								<br/>
+								<p:graphicImage id ="img" value="#{imageProvider.streamedImage}" alt="None" width="180" height="180"/>
 								
-					
+						
 					
 						
 						<p:spacer height="30"/>
