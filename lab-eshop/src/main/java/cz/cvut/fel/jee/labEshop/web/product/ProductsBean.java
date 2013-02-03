@@ -158,7 +158,7 @@ public class ProductsBean implements Serializable {
 		if (selectedProduct.getId() == null) {
 			selectedProduct.setPrice(new Money(price));
 			productManager.createProduct(selectedProduct);
-			products.add(selectedProduct);
+			products.add(0,selectedProduct);
 			selectedProduct = null;
 			FacesMessage msg = new FacesMessage("Product created successfully.");    
 	        FacesContext.getCurrentInstance().addMessage(null, msg);

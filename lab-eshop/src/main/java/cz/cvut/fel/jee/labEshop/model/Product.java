@@ -39,10 +39,10 @@ public class Product extends BaseEntity {
 
 	private String title;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Brand brand;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Category category;
 
 	@Basic(optional = false)
