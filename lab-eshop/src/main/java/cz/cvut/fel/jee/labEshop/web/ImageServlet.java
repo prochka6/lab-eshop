@@ -37,6 +37,7 @@ public class ImageServlet extends HttpServlet {
 	private static final int BUFFER_DEFAULT_SIZE = 10240; // 10KB
 
 	// For simplicity we always except that uploaded images are jpegs.
+	// We do not store mime types for images right now
 	private static final String IMAGE_CONTENT_TYPE = "image/jpeg";
 
 	private final Logger log = LoggerFactory.getLogger(ImageServlet.class);

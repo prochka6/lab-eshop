@@ -15,22 +15,22 @@ import cz.cvut.fel.jee.labEshop.model.BasketItem;
 import cz.cvut.fel.jee.labEshop.model.BasketItem_;
 import cz.cvut.fel.jee.labEshop.model.Product;
 
-public class JpaBasketItemDao extends JpaBaseDao<BasketItem> implements IBasketItemDao{
-	
+public class JpaBasketItemDao extends JpaBaseDao<BasketItem> implements IBasketItemDao {
+
 	@Override
 	public List<BasketItem> findItemsInBasket(Basket basket) {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<BasketItem> query = builder.createQuery(BasketItem.class);
 		Root<BasketItem> root = query.from(BasketItem.class);
-		Predicate basketPredicate = builder.equal(root.get(BasketItem_.basket),basket);
+		Predicate basketPredicate = builder.equal(root.get(BasketItem_.basket), basket);
 		query.distinct(true);
 		query.where(basketPredicate);
-        TypedQuery<BasketItem> typedQuery = em.createQuery(query);
-        List<BasketItem> resultList = typedQuery.getResultList();
-        if(resultList.isEmpty()){
-        	return new ArrayList<BasketItem>();
-        }
-        return resultList;
+		TypedQuery<BasketItem> typedQuery = em.createQuery(query);
+		List<BasketItem> resultList = typedQuery.getResultList();
+		if (resultList.isEmpty()) {
+			return new ArrayList<BasketItem>();
+		}
+		return resultList;
 	}
 
 	@Override
@@ -38,17 +38,16 @@ public class JpaBasketItemDao extends JpaBaseDao<BasketItem> implements IBasketI
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<BasketItem> query = builder.createQuery(BasketItem.class);
 		Root<BasketItem> root = query.from(BasketItem.class);
-		Predicate basketPredicate = builder.equal(root.get(BasketItem_.basket),basket);
+		Predicate basketPredicate = builder.equal(root.get(BasketItem_.basket), basket);
 		Predicate productPredicate = builder.equal(root.get(BasketItem_.product), productItem);
 		query.distinct(true);
-		query.where(builder.and(productPredicate,basketPredicate));
-        TypedQuery<BasketItem> typedQuery = em.createQuery(query);
-        List<BasketItem> resultList = typedQuery.getResultList();
-        if(!resultList.isEmpty()){
-        	return resultList.get(0);
-        }
-        return null;
+		query.where(builder.and(productPredicate, basketPredicate));
+		TypedQuery<BasketItem> typedQuery = em.createQuery(query);
+		List<BasketItem> resultList = typedQuery.getResultList();
+		if (!resultList.isEmpty()) {
+			return resultList.get(0);
+		}
+		return null;
 	}
-	
 
 }

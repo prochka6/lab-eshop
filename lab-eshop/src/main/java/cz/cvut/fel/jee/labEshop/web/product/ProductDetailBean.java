@@ -4,16 +4,14 @@ import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-import org.jboss.seam.international.status.Messages;
 import org.jboss.solder.servlet.http.RequestParam;
-import org.slf4j.Logger;
 
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
 import cz.cvut.fel.jee.labEshop.manager.ProductManager;
 import cz.cvut.fel.jee.labEshop.model.Product;
 
 /**
- * Skeleton for Product detail page.
+ * Product detail page.
  * 
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
@@ -21,13 +19,11 @@ import cz.cvut.fel.jee.labEshop.model.Product;
 public class ProductDetailBean {
 
 	@Inject
-	private Logger log;
-	@Inject
 	private FacesContext facesContext;
-	@Inject
-	private Messages messages;
+
 	@Inject
 	private ProductManager productManager;
+
 	@Inject
 	private ImageProviderBean imgProvider;
 

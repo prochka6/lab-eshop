@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -54,7 +52,7 @@ public class ProductsBean implements Serializable {
 
 	@Inject
 	private CategoryManager categoryManager;
-	
+
 	@Inject
 	private ImageProviderBean imgProvider;
 
@@ -113,7 +111,7 @@ public class ProductsBean implements Serializable {
 		if (selectedProduct != null) {
 			price = selectedProduct.getPrice().amount();
 			imgProvider.setStream(selectedProduct.getPromoImage());
-		}else{
+		} else {
 			imgProvider.setStream(null);
 		}
 		this.selectedProduct = selectedProduct;
@@ -149,51 +147,44 @@ public class ProductsBean implements Serializable {
 	}
 
 	public List<ProductAvailability> getAvailabilities() {
-		List<ProductAvailability> list = Arrays.asList(ProductAvailability.values());
-		return list;
+		return Arrays.asList(ProductAvailability.values());
 	}
 
 	public void submit() {
-
 		if (selectedProduct.getId() == null) {
 			selectedProduct.setPrice(new Money(price));
 			productManager.createProduct(selectedProduct);
-			products.add(0,selectedProduct);
-			selectedProduct = null;
-			FacesMessage msg = new FacesMessage("Product created successfully.");    
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-		}else{
-			FacesMessage msg = new FacesMessage("Product "+selectedProduct.getTitle()+" edited successfully");    
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-			if(selectedProduct.getPrice()!=null&&price!=selectedProduct.getPrice().amount()){
-				selectedProduct.setPrice(new Money(price));			
+			products.add(0, selectedProduct);
+
+			messages.info("Product created successfully.");
+		} else {
+			FacesMessage msg = new FacesMessage("Product " + selectedProduct.getTitle() + " edited successfully");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			if (selectedProduct.getPrice() != null && price != selectedProduct.getPrice().amount()) {
+				selectedProduct.setPrice(new Money(price));
 			}
 			selectedProduct = productManager.updateProduct(selectedProduct);
-			products.set(products.indexOf(selectedProduct),selectedProduct);
-			
-			selectedProduct = null;
-			
-			
+			products.set(products.indexOf(selectedProduct), selectedProduct);
+
+			messages.info("Product {0} edited successfully", selectedProduct.getTitle());
 		}
-		
-		
+
+		selectedProduct = null;
 	}
-	
+
 	public void uploadFile(FileUploadEvent event) throws IOException {
-        UploadedFile uploadedFile = event.getFile();
-        selectedProduct.setPromoImage(uploadedFile.getContents());
-        imgProvider.setStream(selectedProduct.getPromoImage());
-        FacesMessage msg = new FacesMessage("Image: "+uploadedFile.getFileName() + " has been successfully uploaded.");  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-        
-    }
-	
-	public void onRowSelect(SelectEvent event) {  
-       
-    }  
-  
-    public void onRowUnselect(UnselectEvent event) {  
-        
-    }
+		UploadedFile uploadedFile = event.getFile();
+		selectedProduct.setPromoImage(uploadedFile.getContents());
+		imgProvider.setStream(selectedProduct.getPromoImage());
+
+		log.info("Image {} upload success.", uploadedFile.getFileName());
+		messages.info("Image: {0} has been successfully uploaded.", uploadedFile.getFileName());
+	}
+
+	public void onRowSelect(SelectEvent event) {
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+	}
 
 }

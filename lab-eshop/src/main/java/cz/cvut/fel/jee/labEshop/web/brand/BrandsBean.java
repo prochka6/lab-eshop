@@ -3,7 +3,6 @@ package cz.cvut.fel.jee.labEshop.web.brand;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.Stateful;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIViewRoot;
@@ -24,7 +23,6 @@ import cz.cvut.fel.jee.labEshop.model.Brand;
  */
 @Named("brandsBean")
 @ViewScoped
-@Stateful
 public class BrandsBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

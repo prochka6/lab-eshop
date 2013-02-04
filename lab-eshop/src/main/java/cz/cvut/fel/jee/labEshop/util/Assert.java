@@ -59,10 +59,8 @@ public final class Assert {
 	 * <code>not empty</code>.
 	 * 
 	 * <p>
-	 * Empty strings:
-	 * String string = null;
-	 * String string = "";
-	 * String string = "  ";
+	 * Empty strings: String string = null; String string = ""; String string =
+	 * "  ";
 	 * 
 	 * @param string
 	 *            the string to check

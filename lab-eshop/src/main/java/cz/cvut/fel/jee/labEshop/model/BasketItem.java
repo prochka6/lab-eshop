@@ -8,19 +8,25 @@ import javax.persistence.Table;
 
 import org.jboss.solder.core.Veto;
 
-
+/**
+ * 
+ * @author Tom
+ */
 @Veto
 @Entity
 @Table(name = "basket_item")
 public class BasketItem extends BaseEntity {
+
 	private static final long serialVersionUID = 1L;
-	
-	 @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.PERSIST })
 	private Basket basket;
-	
-	 @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.PERSIST })
 	private Product product;
-	
+
 	private int numberOfItems;
 
 	public int getNumberOfItems() {
@@ -46,6 +52,5 @@ public class BasketItem extends BaseEntity {
 	public void setBasket(Basket basket) {
 		this.basket = basket;
 	}
-	
-	
+
 }

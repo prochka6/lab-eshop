@@ -27,7 +27,7 @@ public class ForgottenPasswordBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	Logger log;
+	private Logger log;
 
 	@Inject
 	private Messages messages;
@@ -93,10 +93,8 @@ public class ForgottenPasswordBean implements Serializable {
 	}
 
 	private String generateMessage(String password, User user) {
-		String message = "Hi, " + user.getFullName() + " ("
-				+ user.getUsername() + ")\n";
-		message += "For your account was generated new password: " + password
-				+ "\n\n\n";
+		String message = "Hi, " + user.getFullName() + " (" + user.getUsername() + ")\n";
+		message += "For your account was generated new password: " + password + "\n\n\n";
 		message += "Your Lab-Eshop Team.\n\n\n";
 		message += "Please do not reply to this message.";
 

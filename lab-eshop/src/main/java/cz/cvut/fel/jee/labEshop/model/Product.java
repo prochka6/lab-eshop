@@ -1,11 +1,9 @@
 package cz.cvut.fel.jee.labEshop.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -16,7 +14,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.jboss.solder.core.Veto;
@@ -32,7 +29,7 @@ import org.jboss.solder.core.Veto;
 @Veto
 @Entity
 @Table(name = "product")
-@NamedQueries({ @NamedQuery(name = "Product.getLatests", query = "select p from Product p where p.discardDate > :date order by p.publishDate desc") })
+@NamedQueries({ @NamedQuery(name = "Product.getLatests", query = "select p from Product p where p.discardDate > :date and p.publishDate <= :date order by p.publishDate desc") })
 public class Product extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
