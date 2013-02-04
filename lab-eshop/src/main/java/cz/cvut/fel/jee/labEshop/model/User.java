@@ -1,5 +1,6 @@
 package cz.cvut.fel.jee.labEshop.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,7 +35,9 @@ import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<Order> orders;
+	
 	@Column(nullable = false, unique = true)
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Role> roles;
@@ -153,6 +157,14 @@ public class User extends BaseEntity {
 
 	public void setBasket(Basket basket) {
 		this.basket = basket;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 }

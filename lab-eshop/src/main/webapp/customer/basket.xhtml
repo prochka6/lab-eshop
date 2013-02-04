@@ -26,6 +26,8 @@
 				</p:column>
 				</p:dataTable>
 				<p:commandButton id="modifyBasketButton" ajax="false" value="Modify" action="#{basketBean.modifyBasket()}"></p:commandButton>
+				<p:commandButton id="dropBasketButton" ajax="false" value="Drop basket" action="#{basketBean.dropBasket()}"></p:commandButton>
+				<p:commandButton id="buyBasketButton" ajax="false" value="Buy" action="#{orderBean.createOrder()}"></p:commandButton>
 				</h:form>
 			</div>
 		</ui:define>

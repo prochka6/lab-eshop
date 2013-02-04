@@ -98,6 +98,20 @@ public class BasketManager extends BaseManager<BasketItem> {
 		}
 		basketDao.saveOrUpdate(ownersBasket);
 	}
+	
+	public void dropBasket(User basketOwner){
+		if(basketOwner!=null){
+			Basket ownersBasket = findBasketByUser(basketOwner);
+			List<BasketItem> itemsInBasket = basketItemDao.findItemsInBasket(ownersBasket);
+			while(itemsInBasket.size()>=1){
+				BasketItem itemInBasket = itemsInBasket.get(0);
+				itemsInBasket.remove(0);
+				basketItemDao.delete(itemInBasket);
+			}
+			ownersBasket.setItems(new ArrayList<BasketItem>());
+			basketDao.saveOrUpdate(ownersBasket);
+		}
+	}
 
 	/**
 	 * This method add item to basket which belongs to concrete user. Use logic

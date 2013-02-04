@@ -56,6 +56,10 @@ public class BasketBean implements Serializable {
 		Long id = Long.parseLong(parameter);
 		basketManager.addItemToBasket(loginBean.getLoggedUser(), productManager.findProduct(id));
 	}
+	
+	public void dropBasket(){
+		basketManager.dropBasket(loginBean.getLoggedUser());
+	}
 
 	/**
 	 * This function call business method to modify basket.

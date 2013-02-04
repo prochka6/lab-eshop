@@ -27,8 +27,7 @@ public class Basket extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	private User user;
 
-	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.DETACH,
-			CascadeType.MERGE, CascadeType.PERSIST })
+	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY)
 	private List<BasketItem> items;
 
 	public List<BasketItem> getItems() {
