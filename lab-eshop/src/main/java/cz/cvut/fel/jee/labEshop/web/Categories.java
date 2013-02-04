@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 
 import cz.cvut.fel.jee.labEshop.model.Category;
+import cz.cvut.fel.jee.labEshop.model.Category_;
 
 /**
  * Sample implementation using producer method to retrieve categories list
@@ -39,10 +40,9 @@ public class Categories {
 	public List<Category> listCategories() {
 		CriteriaQuery<Category> query = em.getCriteriaBuilder().createQuery(Category.class);
 		Root<Category> root = query.from(Category.class);
-		//query.orderBy(em.getCriteriaBuilder().asc(root.get(Category_.name)));
+		query.orderBy(em.getCriteriaBuilder().asc(root.get(Category_.name)));
 
 		log.debug("Retrieving list of all categories.");
-
 		return em.createQuery(query).getResultList();
 	}
 

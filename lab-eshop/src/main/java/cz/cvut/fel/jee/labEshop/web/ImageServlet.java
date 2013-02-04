@@ -5,6 +5,10 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
@@ -24,17 +28,39 @@ import cz.cvut.fel.jee.labEshop.model.Product;
 /**
  * ImageServlet servlet for serving product images.
  * 
- * TODO caching (HTTP ? server side ?), mime type, generic for more types of
- * resources. Expression language evaluation ?
+ * TODO mime type, generic for more types of resources. Expression language
+ * evaluation ?
  * 
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
-@WebServlet(urlPatterns = { "/dynamic-resources/product/*" }, initParams = { @WebInitParam(name = "bufferSize", value = "10240") })
+@WebServlet(urlPatterns = { "/dynamic-resources/product/*" }, initParams = {
+		@WebInitParam(name = "bufferSize", value = "10240"), @WebInitParam(name = "cache", value = "true"),
+		@WebInitParam(name = "cacheSeconds", value = "600") })
 public class ImageServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * BUFFER_SIZE_PARAM web.xml context param name.
+	 */
+	private static final String BUFFER_SIZE_PARAM = "bufferSize";
+	/**
+	 * CACHE_PARAM web.xml context param name.
+	 */
+	private static final String CACHE_PARAM = "cache";
+	/**
+	 * CACHE_SECONDS_PARAM web.xml context param name.
+	 */
+	private static final String CACHE_SECONDS_PARAM = "cacheSeconds";
+
+	/**
+	 * Default output buffer size. Set up to 10kB.
+	 */
 	private static final int BUFFER_DEFAULT_SIZE = 10240; // 10KB
+	/**
+	 * Default cache seconds. Set up to 5 minutes.
+	 */
+	private static final long CACHE_EXPIRY_DEFAULT = 60 * 10; // 10 minutes
 
 	// For simplicity we always except that uploaded images are jpegs.
 	// We do not store mime types for images right now
@@ -47,6 +73,11 @@ public class ImageServlet extends HttpServlet {
 	private EntityManagerFactory emf;
 
 	private int bufferSize = BUFFER_DEFAULT_SIZE;
+
+	private boolean cache = false;
+
+	private long cacheSeconds = CACHE_EXPIRY_DEFAULT;
+	private long cacheMillis = CACHE_EXPIRY_DEFAULT * 1000;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -66,9 +97,7 @@ public class ImageServlet extends HttpServlet {
 			return;
 		}
 
-		resp.reset();
-		resp.setBufferSize(BUFFER_DEFAULT_SIZE);
-		resp.setContentType(IMAGE_CONTENT_TYPE);
+		prepareResponse(resp);
 
 		BufferedInputStream input = null;
 		BufferedOutputStream output = null;
@@ -89,7 +118,30 @@ public class ImageServlet extends HttpServlet {
 
 	}
 
-	private void close(Closeable resource) {
+	/**
+	 * Prepares HttpServletReposnse with header information, etc.
+	 * 
+	 * @param response
+	 *            the HttpServletResponse
+	 */
+	protected void prepareResponse(HttpServletResponse response) {
+		response.reset();
+		response.setBufferSize(BUFFER_DEFAULT_SIZE);
+		response.setContentType(IMAGE_CONTENT_TYPE);
+
+		if (cache) {
+			response.setHeader("Cache-Control", "max-age=" + cacheSeconds + ", must-revalidate");
+			response.setHeader("Expires", htmlExpiresDateFormat().format(System.currentTimeMillis() + cacheMillis));
+		}
+	}
+
+	protected DateFormat htmlExpiresDateFormat() {
+		DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+		httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+		return httpDateFormat;
+	}
+
+	protected void close(Closeable resource) {
 		if (resource != null) {
 			try {
 				resource.close();
@@ -125,15 +177,30 @@ public class ImageServlet extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 
-		if (config.getInitParameter("bufferSize") != null) {
+		if (config.getInitParameter(BUFFER_SIZE_PARAM) != null) {
 			try {
-				bufferSize = Integer.parseInt(config.getInitParameter("bufferSize"));
+				bufferSize = Integer.parseInt(config.getInitParameter(BUFFER_SIZE_PARAM));
 			} catch (NumberFormatException nfe) {
 				throw new IllegalArgumentException("Buffer size init param could not be parsed to int value.");
 			}
 		}
 
-		log.info("Initialization of ImageServlet completed, bufferSize={}.", bufferSize);
+		if (config.getInitParameter(CACHE_PARAM) != null) {
+			if (cache = Boolean.parseBoolean(config.getInitParameter(CACHE_PARAM))) {
+				if (config.getInitParameter(CACHE_SECONDS_PARAM) != null) {
+					try {
+						cacheSeconds = Long.parseLong(config.getInitParameter(CACHE_SECONDS_PARAM));
+						cacheMillis = cacheSeconds * 1000;
+					} catch (NumberFormatException nfe) {
+						throw new IllegalArgumentException(
+								"Cache seconds init param could not be parsed to long value.");
+					}
+				}
+			}
+		}
+
+		log.info("Initialization of ImageServlet completed, bufferSize = {}, caching = {}, cacheSeconds = {}",
+				new Object[] { bufferSize, cache, cacheSeconds });
 	}
 
 	@Override
