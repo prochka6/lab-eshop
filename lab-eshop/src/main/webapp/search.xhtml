@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:shop="http://java.sun.com/jsf/composite/components"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmpl2Cols.xhtml">
+		<ui:param name="pageTitle" value="EShop - Product" />
+
+		<ui:define name="leftColumn">
+			<ui:include src="/WEB-INF/includes/categoryMenu.xhtml" />
+		</ui:define>
+
+		<ui:define name="template-header">
+			<f:metadata>
+				<f:viewParam name="orderBy" value="#{searchBean.orderBy}" />
+				<f:viewParam name="ordering" value="#{searchBean.ordering}" />
+				<f:viewParam name="priceMin" value="#{searchBean.priceMin}">
+					<f:converter converterId="longSafeConverter" />
+				</f:viewParam>
+				<f:viewParam name="priceMax" value="#{searchBean.priceMax}">
+					<f:converter converterId="longSafeConverter" />
+				</f:viewParam>
+				<f:viewParam name="page" value="#{searchBean.page}" />
+				<f:viewParam name="categories" value="#{searchBean.categoryIds}">
+					<f:converter converterId="longListCommaConverter" />
+				</f:viewParam>
+				<f:viewParam name="brands" value="#{searchBean.brandIds}">
+					<f:converter converterId="longListCommaConverter" />
+				</f:viewParam>
+				<f:viewParam name="inStock" value="#{searchBean.inStock}" />
+
+				<f:event type="preRenderView" listener="#{searchBean.search()}" />
+			</f:metadata>
+		</ui:define>
+
+		<ui:define name="content">
+
+			<ui:repeat var="product" value="#{searchBean.products}" varStatus="s">
+				<div style="float: left;#{s.odd?'':'margin-right: 15px;'}">
+					<shop:productPreview product="#{product}" />
+				</div>
+			</ui:repeat>
+
+			<div style="clear: both;" />
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

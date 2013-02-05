@@ -42,6 +42,15 @@ public class Money implements Comparable<Money>, Serializable {
 		return amount;
 	}
 
+	// hibernate
+	public long getAmount() {
+		return amount;
+	}
+
+	// hibernate
+	public void setAmount(long amount) {
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

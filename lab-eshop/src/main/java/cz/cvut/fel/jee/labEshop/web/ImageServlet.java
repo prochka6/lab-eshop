@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -89,7 +90,9 @@ public class ImageServlet extends HttpServlet {
 			return;
 		}
 
-		Product product = emf.createEntityManager().find(Product.class, productId);
+		EntityManager entityManager = emf.createEntityManager();
+		entityManager.joinTransaction();
+		Product product = entityManager.find(Product.class, productId);
 
 		if (product == null || product.getPromoImage() == null) {
 			log.debug("Invalid product image request: {}", req.getRequestURI());

@@ -18,7 +18,6 @@ import cz.cvut.fel.jee.labEshop.dao.IBaseDao;
 import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
 import cz.cvut.fel.jee.labEshop.filter.SortModel;
 import cz.cvut.fel.jee.labEshop.filter.SortOrder;
-import cz.cvut.fel.jee.labEshop.filter.UserListFilter;
 import cz.cvut.fel.jee.labEshop.model.BaseEntity;
 
 /**
@@ -149,7 +148,7 @@ public abstract class JpaBaseDao<T extends BaseEntity> implements IBaseDao<T, Lo
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected void applySortModel(CriteriaBuilder builder, CriteriaQuery query, Root root, UserListFilter filter) {
+	protected void applySortModel(CriteriaBuilder builder, CriteriaQuery query, Root root, EntityFilter filter) {
 		if (filter.getSortModel() != null) {
 			for (SortModel.Property property : filter.getSortModel()) {
 				try {

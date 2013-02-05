@@ -14,7 +14,7 @@ import cz.cvut.fel.jee.labEshop.model.Order;
 import cz.cvut.fel.jee.labEshop.model.Order_;
 import cz.cvut.fel.jee.labEshop.model.User;
 
-public class JpaOrderDao extends JpaBaseDao<Order> implements IOrderDao{
+public class JpaOrderDao extends JpaBaseDao<Order> implements IOrderDao {
 
 	@Override
 	public List<Order> findOrdersByUser(User user) {
@@ -26,7 +26,7 @@ public class JpaOrderDao extends JpaBaseDao<Order> implements IOrderDao{
 		query.where(usersBasket);
 		TypedQuery<Order> typedQuery = em.createQuery(query);
 		List<Order> resultList = typedQuery.getResultList();
-		if (resultList!=null) {
+		if (resultList != null) {
 			return resultList;
 		}
 		return new ArrayList<Order>();

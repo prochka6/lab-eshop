@@ -3,6 +3,7 @@ package cz.cvut.fel.jee.labEshop.dao;
 import java.util.List;
 
 import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
+import cz.cvut.fel.jee.labEshop.filter.ProductSearchFilter;
 import cz.cvut.fel.jee.labEshop.model.Product;
 
 /**
@@ -22,5 +23,16 @@ public interface IProductDao extends IBaseDao<Product, Long> {
 	 * @return list of latest published Products
 	 */
 	List<Product> findLatestsProducts(EntityFilter filter);
+
+	/**
+	 * Finds products by specified product filter.
+	 * 
+	 * @param filter
+	 *            the product filter we want to search by
+	 * @return
+	 * @throws IllegalArgumentException
+	 *             if the filter param is null
+	 */
+	List<Product> find(ProductSearchFilter filter);
 
 }

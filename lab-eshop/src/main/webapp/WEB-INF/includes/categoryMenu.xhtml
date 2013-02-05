@@ -13,7 +13,10 @@
 
 		<ul>
 			<ui:repeat var="category" value="#{categoriesList}">
-				<li><span class="ui-icon-arrow-right" /><a href="#">#{category.name}</a></li>
+				<li><span class="ui-icon-arrow-right" /> <h:link
+						outcome="/search" value="#{category.name}">
+						<f:param name="categories" value="#{category.id}" />
+					</h:link></li>
 			</ui:repeat>
 		</ul>
 	</div>

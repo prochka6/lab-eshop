@@ -9,8 +9,10 @@ import javax.inject.Inject;
 import cz.cvut.fel.jee.labEshop.dao.IProductDao;
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
 import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
+import cz.cvut.fel.jee.labEshop.filter.ProductSearchFilter;
 import cz.cvut.fel.jee.labEshop.model.Brand;
 import cz.cvut.fel.jee.labEshop.model.Product;
+import cz.cvut.fel.jee.labEshop.util.Assert;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
 
 /**
@@ -99,6 +101,21 @@ public class ProductManager {
 		}
 
 		return productDao.findLatestsProducts(filter);
+	}
+
+	/**
+	 * Filters products by given filter.
+	 * 
+	 * @param filter
+	 *            the product search filter
+	 * @return filtered Product entities
+	 * @throws IllegalArgumentException
+	 *             if filter is null.
+	 */
+	public List<Product> findByFilter(ProductSearchFilter filter) {
+		Assert.notNull(filter);
+
+		return productDao.find(filter);
 	}
 
 	/**
