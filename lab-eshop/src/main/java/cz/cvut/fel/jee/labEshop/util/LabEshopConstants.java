@@ -23,10 +23,6 @@ public class LabEshopConstants {
 	public static final String MAIL_PASSWORD = "ajeelabeshop";
 	
 	
-	///////////////////////////////////////
-	////////// Messages //////////////////
-	/////////////////////////////////////
 	
-	public static final String EMPTY_Table = "No data has been found";
 
 }

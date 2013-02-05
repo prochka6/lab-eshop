@@ -9,10 +9,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cz.cvut.fel.jee.labEshop.dao.jpa.JpaOrderDao;
+import cz.cvut.fel.jee.labEshop.dao.jpa.JpaPaymentMethodDao;
 import cz.cvut.fel.jee.labEshop.model.Basket;
 import cz.cvut.fel.jee.labEshop.model.BasketItem;
 import cz.cvut.fel.jee.labEshop.model.Order;
 import cz.cvut.fel.jee.labEshop.model.OrderItem;
+import cz.cvut.fel.jee.labEshop.model.PaymentMethod;
 import cz.cvut.fel.jee.labEshop.model.User;
 import cz.cvut.fel.jee.labEshop.util.converter.OrderItemConverter;
 
@@ -33,6 +35,8 @@ public class OrderManager implements Serializable{
 	@Inject
 	private JpaOrderDao orderDao;
 
+	@Inject
+	private JpaPaymentMethodDao paymentMethodDao;
 	/**
 	 * This method create new order. Order is created based on logged user.
 	 * First users basket is found and then if there are items in basket is order created.
@@ -58,6 +62,19 @@ public class OrderManager implements Serializable{
 			}
 			order.setTotalPrice(totalPrice);
 			order.setItems(orderItems);
+			List<PaymentMethod> methods = paymentMethodDao.getAll();
+			PaymentMethod defaultMethod = null;
+			if(methods!=null && !methods.isEmpty()){
+				defaultMethod = methods.get(0);
+			}
+			else{
+				defaultMethod = new PaymentMethod();
+				defaultMethod.setDescription("Super metoda");
+				defaultMethod.setName("Czech post");
+				defaultMethod.setPrice(new Long(0));
+				defaultMethod=paymentMethodDao.saveOrUpdate(defaultMethod);
+			}
+			order.setPaymentMethod(defaultMethod);
 			orderDao.saveOrUpdate(order);
 			orderDao.flush();
 			basketManager.dropBasket(loggedUser);
@@ -102,6 +119,10 @@ public class OrderManager implements Serializable{
 	 */
 	public Order findOrderById(Long id){
 		return orderDao.get(id);
+	}
+	
+	public List<PaymentMethod> findAllPaymentMethod(){
+		return paymentMethodDao.getAll();
 	}
 	
 }

@@ -30,7 +30,7 @@
 					<br />
 					<h:outputText value="#{orderDetailBean.order.stateOfOrder}" />
 					<br />
-
+					<h:outputText value="#{orderDetailBean.order.paymentMethod.name} " /> <h:outputText value="#{orderDetailBean.order.paymentMethod.price}" /> 
 					<p:dataTable var="items" value="#{orderDetailBean.order.items}"
 						emptyMessage="No data has been found." id="ordersTable"
 						rowKey="#{items.id}">

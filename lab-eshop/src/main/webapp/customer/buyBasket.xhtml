@@ -24,7 +24,6 @@
 					<br />
 					<h:outputText value="#{loginBean.loggedUser.address.country}" />
 					<br />
-
 					<p:dataTable var="items" value="#{basketBean.itemsInBasket}"
 						emptyMessage="No data has been found." id="ordersTable"
 						rowKey="#{items.id}">
@@ -42,7 +41,7 @@
 						<p:column headerText="Price">
 							<h:outputText value="#{items.product.price.amount()}" />
 						</p:column>
-					<f:facet name="footer">
+						<f:facet name="footer">
 							<p:summaryRow>
 								<p:column colspan="2" style="text-align:right">  
                                     Total price:  
@@ -53,7 +52,7 @@
 							</p:summaryRow>
 						</f:facet>
 					</p:dataTable>
-						<p:commandButton id="buyBasketButton" ajax="false" value="Buy"
+					<p:commandButton id="buyBasketButton" ajax="false" value="Buy"
 						action="#{orderBean.createOrder()}"></p:commandButton>
 					<br />
 				</h:form>

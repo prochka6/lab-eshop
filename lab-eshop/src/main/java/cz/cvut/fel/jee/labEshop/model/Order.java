@@ -31,6 +31,9 @@ public class Order extends BaseEntity {
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date dateOfInsert;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private PaymentMethod paymentMethod;
+	
     public static enum State {
     	INSERTED,
         ACCEPTED,
@@ -65,6 +68,12 @@ public class Order extends BaseEntity {
 	}
 	public void setDateOfInsert(Date dateOfInsert) {
 		this.dateOfInsert = dateOfInsert;
+	}
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
 }

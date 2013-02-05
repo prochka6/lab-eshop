@@ -13,9 +13,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cz.cvut.fel.jee.labEshop.manager.BasketManager;
+import cz.cvut.fel.jee.labEshop.manager.OrderManager;
 import cz.cvut.fel.jee.labEshop.manager.ProductManager;
 import cz.cvut.fel.jee.labEshop.model.Basket;
 import cz.cvut.fel.jee.labEshop.model.BasketItem;
+import cz.cvut.fel.jee.labEshop.model.PaymentMethod;
 import cz.cvut.fel.jee.labEshop.web.LoginBean;
 
 /**
@@ -36,6 +38,7 @@ public class BasketBean implements Serializable {
 	private Basket basket;
 
 	private List<BasketItem> itemsInBasket;
+	
 	
 	private Long totalPrice;
 	
