@@ -2,6 +2,7 @@ package cz.cvut.fel.jee.labEshop.manager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,7 +33,8 @@ public class OrderManager implements Serializable{
 		List<BasketItem> itemsInBasket = userBasket.getItems();
 		if(!itemsInBasket.isEmpty()){
 			Order order = new Order();
-			order.setStateOfOrder(Order.State.ACCEPTED);
+			order.setStateOfOrder(Order.State.INSERTED);
+			order.setDateOfInsert(Calendar.getInstance().getTime());
 			order.setUser(loggedUser);
 			Iterator<BasketItem> basketItemIt = itemsInBasket.iterator();
 			List<OrderItem> orderItems = new ArrayList<OrderItem>();
@@ -51,6 +53,14 @@ public class OrderManager implements Serializable{
 			basketManager.dropBasket(loggedUser);
 		}
 		
+	}
+	
+	public List<Order> findUsersOrders(User user){
+		List<Order> orders = new ArrayList<Order>();
+		if(user !=null){
+			orders = orderDao.findOrdersByUser(user);
+		}
+		return orders;
 	}
 	
 }

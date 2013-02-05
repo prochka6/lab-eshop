@@ -37,7 +37,12 @@
 
 				<h:form prependId="false"
 					style="float:right; display: inline-block;">
-					<p:commandButton action="#" value="Purchase" ajax="false" rendered="#{loginBean.userLogged}"/>
+					<p:commandButton ajax="false"
+						action="#{basketBean.addItemToBasket}" value="I want this!!"
+						rendered="#{loginBean.userLogged}">
+						<f:param name="productId" value="#{cc.attrs.product.id}">
+						</f:param>
+					</p:commandButton>
 				</h:form>
 			</div>
 			<div style="clear: both;" />

@@ -1,5 +1,6 @@
 package cz.cvut.fel.jee.labEshop.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -7,10 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 import org.jboss.solder.core.Veto;
 
@@ -27,7 +28,11 @@ public class Order extends BaseEntity {
 	private Long totalPrice;
 	@Enumerated(EnumType.STRING)
 	private State stateOfOrder;
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date dateOfInsert;
+	
     public static enum State {
+    	INSERTED,
         ACCEPTED,
         CLOSED,
     }
@@ -54,6 +59,12 @@ public class Order extends BaseEntity {
 	}
 	public void setStateOfOrder(State stateOfOrder) {
 		this.stateOfOrder = stateOfOrder;
+	}
+	public Date getDateOfInsert() {
+		return dateOfInsert;
+	}
+	public void setDateOfInsert(Date dateOfInsert) {
+		this.dateOfInsert = dateOfInsert;
 	}
 
 }

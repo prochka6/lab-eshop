@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import cz.cvut.fel.jee.labEshop.dao.IBasketDao;
 import cz.cvut.fel.jee.labEshop.dao.IBasketItemDao;
-import cz.cvut.fel.jee.labEshop.dao.IUserDao;
 import cz.cvut.fel.jee.labEshop.model.Basket;
 import cz.cvut.fel.jee.labEshop.model.BasketItem;
 import cz.cvut.fel.jee.labEshop.model.Product;
@@ -32,8 +31,6 @@ public class BasketManager extends BaseManager<BasketItem> {
 	@Inject
 	private IBasketItemDao basketItemDao;
 
-	@Inject
-	private IUserDao userDao;
 
 	/**
 	 * This method find users basket, if there is no basket then new basket will
@@ -46,7 +43,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	public Basket findBasketByUser(User user) {
 		Basket result = basketDao.findBasketByUser(user);
 		if (result == null) {
-			result = createBasket(buildBasket(user), user);
+			result = basketDao.saveOrUpdate(buildBasket(user));
 		}
 		return result;
 	}
@@ -154,23 +151,6 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 */
 	public List<BasketItem> findItemsInBasket(Basket basket) {
 		return basketItemDao.findItemsInBasket(basket);
-	}
-
-	/**
-	 * Method add new basket to database
-	 * 
-	 * @param basket
-	 *            to create
-	 * @param user
-	 *            withou basket
-	 * @return new basket
-	 */
-	public Basket createBasket(Basket basket, User user) {
-		Basket toReturn = basketDao.createBasketForUser(basket);
-		user.setBasket(basket);
-		userDao.saveOrUpdate(user);
-		return toReturn;
-
 	}
 
 	/**

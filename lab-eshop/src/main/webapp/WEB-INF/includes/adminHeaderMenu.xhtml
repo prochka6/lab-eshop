@@ -14,9 +14,13 @@
 		<!-- Menu for logged admin -->
 		<li><h:link outcome="/admin/users">Users</h:link></li>
 		<li><h:link outcome="/admin/productManaging">Products</h:link></li>
-		<li><h:link>Orders</h:link></li>
+	
+		<li><h:link>Orders managing</h:link></li>
 		<li><h:link outcome="/admin/categories">Categories</h:link></li>
 		<li><h:link outcome="/admin/brands">Brands</h:link></li>
+
+		<li><h:link outcome="/customer/basket">Basket</h:link></li>
+		<li><h:link outcome="/customer/customerOrders">Orders</h:link></li>
 		<li><h:form style="display: inline;">
 				<h:commandLink action="#{loginBean.logout}">Logout</h:commandLink>
 			</h:form></li>

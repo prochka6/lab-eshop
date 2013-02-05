@@ -12,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -66,8 +65,6 @@ public class User extends BaseEntity {
 	@Embedded
 	private Address address;
 	
-	 @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
-	private Basket basket;
 
 	public String getUsername() {
 		return username;
@@ -149,14 +146,6 @@ public class User extends BaseEntity {
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", firstName=" + firstName + ", lastName=" + lastName + "]";
-	}
-
-	public Basket getBasket() {
-		return basket;
-	}
-
-	public void setBasket(Basket basket) {
-		this.basket = basket;
 	}
 
 	public List<Order> getOrders() {

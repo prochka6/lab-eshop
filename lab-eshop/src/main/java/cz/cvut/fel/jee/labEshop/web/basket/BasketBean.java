@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,7 +23,7 @@ import cz.cvut.fel.jee.labEshop.web.LoginBean;
  * @author Tom
  */
 @Named("basketBean")
-@SessionScoped
+@RequestScoped
 public class BasketBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public class BasketBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		basket = basketManager.findBasketByUser(loginBean.getLoggedUser());
+ 		basket = basketManager.findBasketByUser(loginBean.getLoggedUser());
 		itemsInBasket = basketManager.findItemsInBasket(basket);
 	}
 
@@ -59,6 +59,7 @@ public class BasketBean implements Serializable {
 	
 	public void dropBasket(){
 		basketManager.dropBasket(loginBean.getLoggedUser());
+		itemsInBasket = basketManager.findItemsInBasket(basket);
 	}
 
 	/**
@@ -66,10 +67,11 @@ public class BasketBean implements Serializable {
 	 */
 	public void modifyBasket() {
 		basketManager.modifyBasket(itemsInBasket, loginBean.getLoggedUser());
+		itemsInBasket = basketManager.findItemsInBasket(basket);
 	}
 
 	public List<BasketItem> getItemsInBasket() {
-		itemsInBasket = basketManager.findItemsInBasket(basket);
+//		itemsInBasket = basketManager.findItemsInBasket(basket);
 		return itemsInBasket;
 	}
 
