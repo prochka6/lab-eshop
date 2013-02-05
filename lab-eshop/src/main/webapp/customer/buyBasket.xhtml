@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - buy basket final step " />
+
+		<ui:define name="canvas">
+
+			<div class="panel">
+				<div class="panel-title">Buy basket final step</div>
+				<h:form>
+
+					<h:outputText value="#{loginBean.loggedUser.fullName}" />
+					<br />
+					<h:outputText value="#{loginBean.loggedUser.email}" />
+					<br />
+					<h:outputText value="#{loginBean.loggedUser.address.city}" />
+					<br />
+					<h:outputText value="#{loginBean.loggedUser.address.street}" />
+					<br />
+					<h:outputText value="#{loginBean.loggedUser.address.country}" />
+					<br />
+
+					<p:dataTable var="items" value="#{basketBean.itemsInBasket}"
+						emptyMessage="No data has been found." id="ordersTable"
+						rowKey="#{items.id}">
+						<f:facet name="header">
+							<h:outputText value="Items" />
+						</f:facet>
+						<p:column headerText="Title">
+							<h:link outcome="/product" value="#{item.product.title}">
+								<f:param name="id" value="#{item.product.id}" />
+							</h:link>
+						</p:column>
+						<p:column headerText="Pieces">
+							<h:outputText value="#{items.numberOfItems}" />
+						</p:column>
+						<p:column headerText="Price">
+							<h:outputText value="#{items.product.price.amount()}" />
+						</p:column>
+					<f:facet name="footer">
+							<p:summaryRow>
+								<p:column colspan="2" style="text-align:right">  
+                                    Total price:  
+                                </p:column>
+								<p:column>
+									<h:outputText value="#{basketBean.calculateTotalPrice()}" />
+								</p:column>
+							</p:summaryRow>
+						</f:facet>
+					</p:dataTable>
+						<p:commandButton id="buyBasketButton" ajax="false" value="Buy"
+						action="#{orderBean.createOrder()}"></p:commandButton>
+					<br />
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>

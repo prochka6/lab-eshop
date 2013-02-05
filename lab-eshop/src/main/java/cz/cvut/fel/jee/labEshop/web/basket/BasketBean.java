@@ -1,6 +1,8 @@
 package cz.cvut.fel.jee.labEshop.web.basket;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +36,9 @@ public class BasketBean implements Serializable {
 	private Basket basket;
 
 	private List<BasketItem> itemsInBasket;
-
+	
+	private Long totalPrice;
+	
 	@Inject
 	private BasketManager basketManager;
 	@Inject
@@ -57,19 +61,45 @@ public class BasketBean implements Serializable {
 		basketManager.addItemToBasket(loginBean.getLoggedUser(), productManager.findProduct(id));
 	}
 	
+	/**
+	 * This function call business layer to drop basket, then items are re-rendered
+	 */
 	public void dropBasket(){
 		basketManager.dropBasket(loginBean.getLoggedUser());
-		itemsInBasket = basketManager.findItemsInBasket(basket);
+		itemsInBasket = new ArrayList<BasketItem>();
 	}
 
 	/**
-	 * This function call business method to modify basket.
+	 * This function call business method to modify basket, then items are re-rendered
 	 */
 	public void modifyBasket() {
 		basketManager.modifyBasket(itemsInBasket, loginBean.getLoggedUser());
 		itemsInBasket = basketManager.findItemsInBasket(basket);
 	}
-
+	/**
+	 * This function calculate total price in basket
+	 * @return total price items in basket
+	 */
+	public Long calculateTotalPrice(){
+		totalPrice = new Long(0);
+		if(itemsInBasket !=null){
+			Iterator<BasketItem> basketItemIt = itemsInBasket.iterator();
+			while(basketItemIt.hasNext()){
+				BasketItem item = basketItemIt.next();
+				setTotalPrice(getTotalPrice() + item.getProduct().getPrice().amount()*item.getNumberOfItems());
+			}
+		}
+		return totalPrice;
+	}
+	
+	/**
+	 * This method redirect user to final buy procedure
+	 * @return page address of final buy procedure
+	 */
+	public String nextStep(){
+		return "buyBasket";
+	}
+	
 	public List<BasketItem> getItemsInBasket() {
 //		itemsInBasket = basketManager.findItemsInBasket(basket);
 		return itemsInBasket;
@@ -77,6 +107,14 @@ public class BasketBean implements Serializable {
 
 	public void setItemsInBasket(List<BasketItem> itemsInBasket) {
 		this.itemsInBasket = itemsInBasket;
+	}
+
+	public Long getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Long totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 }

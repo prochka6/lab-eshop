@@ -19,8 +19,12 @@
 						<f:facet name="header">
 							<h:outputText value="Orders" />
 						</f:facet>
-						<p:column headerText="ID">
-							<h:outputText value="#{order.id}" />
+						<p:column headerText="Order number">
+							<h:commandLink action="#{orderDetailBean.loadOrderDetail()}"
+								value="#{order.id}">
+								<f:param name="orderId" value="#{order.id}">
+								</f:param>
+							</h:commandLink>
 						</p:column>
 						<p:column headerText="Date">
 							<h:outputText value="#{order.dateOfInsert}">

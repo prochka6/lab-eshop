@@ -1,8 +1,8 @@
 package cz.cvut.fel.jee.labEshop.model;
 
+
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -29,7 +29,7 @@ public class Basket extends BaseEntity {
 
 	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY)
 	private List<BasketItem> items;
-
+	
 	public List<BasketItem> getItems() {
 		return items;
 	}
@@ -45,4 +45,5 @@ public class Basket extends BaseEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 }

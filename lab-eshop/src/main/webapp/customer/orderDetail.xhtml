@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - order " />
+
+		<ui:define name="canvas">
+
+			<div class="panel">
+				<div class="panel-title">Orders</div>
+				<h:form>
+
+					<h:outputText value="#{orderDetailBean.order.user.fullName}" />
+					<br />
+					<h:outputText value="#{orderDetailBean.order.user.email}" />
+					<br />
+					<h:outputText value="#{orderDetailBean.order.user.address.city}" />
+					<br />
+					<h:outputText value="#{orderDetailBean.order.user.address.street}" />
+					<br />
+					<h:outputText value="#{orderDetailBean.order.user.address.country}" />
+					<br />
+					<h:outputText value="#{orderDetailBean.order.dateOfInsert}">
+						<f:convertDateTime type="both" timeZone="Europe/Prague"></f:convertDateTime>
+					</h:outputText>
+					<br />
+					<h:outputText value="#{orderDetailBean.order.stateOfOrder}" />
+					<br />
+
+					<p:dataTable var="items" value="#{orderDetailBean.order.items}"
+						emptyMessage="No data has been found." id="ordersTable"
+						rowKey="#{items.id}">
+						<f:facet name="header">
+							<h:outputText value="Items" />
+						</f:facet>
+						<p:column headerText="Title">
+							<h:link outcome="/product" value="#{items.product.title}">
+								<f:param name="id" value="#{items.product.id}" />
+							</h:link>
+						</p:column>
+						<p:column headerText="Pieces">
+							<h:outputText value="#{items.numberOfPieces}" />
+						</p:column>
+						<p:column headerText="Price">
+							<h:outputText value="#{items.price}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:summaryRow>
+								<p:column colspan="2" style="text-align:right">  
+                                    Total price:  
+                                </p:column>
+								<p:column>
+									<h:outputText value="#{orderDetailBean.order.totalPrice}" />
+								</p:column>
+							</p:summaryRow>
+						</f:facet>
+					</p:dataTable>
+					<br />
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>

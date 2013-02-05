@@ -96,6 +96,10 @@ public class BasketManager extends BaseManager<BasketItem> {
 		basketDao.saveOrUpdate(ownersBasket);
 	}
 	
+	/**
+	 * This method drop all items in basket. Basket is not deleted, but item in them are.
+	 * @param basketOwner owner of basket, which basket will be empty
+	 */
 	public void dropBasket(User basketOwner){
 		if(basketOwner!=null){
 			Basket ownersBasket = findBasketByUser(basketOwner);

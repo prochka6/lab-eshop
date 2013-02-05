@@ -1,7 +1,5 @@
 package cz.cvut.fel.jee.labEshop.util.converter;
 
-import javax.ejb.Stateless;
-
 import cz.cvut.fel.jee.labEshop.model.BasketItem;
 import cz.cvut.fel.jee.labEshop.model.OrderItem;
 
