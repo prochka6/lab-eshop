@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import cz.cvut.fel.jee.labEshop.dao.jpa.JpaOrderDao;
 import cz.cvut.fel.jee.labEshop.dao.jpa.JpaPaymentMethodDao;
+import cz.cvut.fel.jee.labEshop.dao.jpa.JpaProductDao;
 import cz.cvut.fel.jee.labEshop.model.Basket;
 import cz.cvut.fel.jee.labEshop.model.BasketItem;
 import cz.cvut.fel.jee.labEshop.model.Order;
@@ -34,6 +35,8 @@ public class OrderManager implements Serializable{
 	private BasketManager basketManager;
 	@Inject
 	private JpaOrderDao orderDao;
+	@Inject
+	private JpaProductDao productDao;
 
 	@Inject
 	private JpaPaymentMethodDao paymentMethodDao;
