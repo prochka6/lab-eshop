@@ -38,12 +38,19 @@
 							</p:summaryRow>
 						</f:facet>
 					</p:dataTable>
+					<p:growl id="growl" showDetail="true" sticky="true" />
 					<p:commandButton id="modifyBasketButton" ajax="false"
-						value="Modify" action="#{basketBean.modifyBasket}"></p:commandButton>
+						value="Modify" action="#{basketBean.modifyBasket}"
+						rendered="#{not empty basketBean.itemsInBasket}" update="growl"></p:commandButton>
 					<p:commandButton id="dropBasketButton" ajax="false"
-						value="Drop basket" action="#{basketBean.dropBasket}"></p:commandButton>
+						value="Drop basket" action="#{basketBean.dropBasket}"
+						rendered="#{not empty basketBean.itemsInBasket}" update="growl"></p:commandButton>
 					<p:commandButton ajax="false" id="buyBasketButton" value="Next"
-						action="#{basketBean.nextStep()}"></p:commandButton>
+						action="buyBasket" immediate="true"
+						rendered="#{not empty basketBean.itemsInBasket}" process="@this"></p:commandButton>
+				</h:form>
+				<h:form>
+
 				</h:form>
 			</div>
 		</ui:define>

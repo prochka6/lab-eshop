@@ -2,9 +2,13 @@ package cz.cvut.fel.jee.labEshop.manager;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.jboss.ejb3.annotation.SecurityDomain;
 
 import cz.cvut.fel.jee.labEshop.dao.IProductDao;
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
@@ -12,6 +16,7 @@ import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
 import cz.cvut.fel.jee.labEshop.filter.ProductSearchFilter;
 import cz.cvut.fel.jee.labEshop.model.Brand;
 import cz.cvut.fel.jee.labEshop.model.Product;
+import cz.cvut.fel.jee.labEshop.model.ProductAvailability;
 import cz.cvut.fel.jee.labEshop.util.Assert;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
 
@@ -21,6 +26,8 @@ import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
  * @author Ondřej Harcuba (<a href="mailto:harcuond@fel.cvut.cz">harcuond</a>)
  */
 @Stateless
+@SecurityDomain("labeshopsecurity")
+@DeclareRoles({ LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE })
 public class ProductManager {
 
 	@Inject
@@ -36,6 +43,7 @@ public class ProductManager {
 	 * @throws EntityNotFoundException
 	 *             if no such product with given id exists
 	 */
+	@PermitAll
 	public Product findProduct(Long id) throws EntityNotFoundException {
 		if (id == null) {
 			throw new EntityNotFoundException(Brand.class, id);
@@ -49,10 +57,10 @@ public class ProductManager {
 
 		return product;
 	}
-	
-	
+
 	/**
-	 * Find {@linkplain Product} by given code. If no such product exists return null.
+	 * Find {@linkplain Product} by given code. If no such product exists return
+	 * null.
 	 * 
 	 * @param code
 	 *            the code of product
@@ -60,13 +68,14 @@ public class ProductManager {
 	 * @throws IllegalArgumentException
 	 *             if product parameter is null
 	 */
+	@PermitAll
 	public Product findProduct(String code) throws EntityNotFoundException {
 		if (code == null) {
 			throw new EntityNotFoundException(Brand.class, code);
 		}
 
 		Product product = productDao.findProductByCode(code);
-		
+
 		return product;
 	}
 
@@ -114,6 +123,7 @@ public class ProductManager {
 	 *            the pagination filter
 	 * @return list of latest published products
 	 */
+	@PermitAll
 	public List<Product> findLatestsProducts(EntityFilter filter) {
 		if (filter == null) {
 			filter = new EntityFilter();
@@ -132,6 +142,7 @@ public class ProductManager {
 	 * @throws IllegalArgumentException
 	 *             if filter is null.
 	 */
+	@PermitAll
 	public List<Product> findByFilter(ProductSearchFilter filter) {
 		Assert.notNull(filter);
 
@@ -143,7 +154,36 @@ public class ProductManager {
 	 * 
 	 * @return list of all products never <code>null</code>
 	 */
+	@PermitAll
 	public List<Product> findAllProducts() {
 		return productDao.getAll();
+	}
+
+	@RolesAllowed({ LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE })
+	public void sellProduct(Product productToSell, int pieces) {
+		// change number of product pieces in stock
+		int inStock = productToSell.getPieces();
+		if (inStock > 0) {
+			if (inStock - pieces <= 0) {
+				productToSell.setPieces(0);
+				if (productToSell.getAvailability() != ProductAvailability.ORDERED) {
+					productToSell.setAvailability(ProductAvailability.SOLD_OUT);
+				}
+			} else {
+				productToSell.setPieces(inStock - pieces);
+			}
+			productDao.saveOrUpdate(productToSell);
+		}
+	}
+
+	@RolesAllowed(LabEshopConstants.ADMINISTRATOR_ROLE)
+	public void revertProduct(Product produtctToRever, int pieces) {
+		if (produtctToRever.getPieces() <= 0) {
+			produtctToRever.setAvailability(ProductAvailability.IN_STOCK);
+			produtctToRever.setPieces(pieces);
+		} else {
+			produtctToRever.setPieces(produtctToRever.getPieces() + pieces);
+		}
+		productDao.saveOrUpdate(produtctToRever);
 	}
 }

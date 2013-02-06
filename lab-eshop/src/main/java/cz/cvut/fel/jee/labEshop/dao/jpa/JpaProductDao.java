@@ -34,8 +34,6 @@ public class JpaProductDao extends JpaBaseDao<Product> implements IProductDao {
 				new Date());
 		return applyPaging(query, filter).getResultList();
 	}
-	
-	
 
 	@Override
 	public List<Product> find(ProductSearchFilter filter) {
@@ -97,13 +95,11 @@ public class JpaProductDao extends JpaBaseDao<Product> implements IProductDao {
 		return applyPaging(em.createQuery(query), filter).getResultList();
 	}
 
-
-
 	@Override
 	public Product findProductByCode(String code) {
-		List<Product> result = em.createNamedQuery("Product.getByCode", Product.class)
-							  .setParameter("code",code).getResultList();
-		
+		List<Product> result = em.createNamedQuery("Product.getByCode", Product.class).setParameter("code", code)
+				.getResultList();
+
 		if (result.isEmpty()) {
 			return null;
 		}

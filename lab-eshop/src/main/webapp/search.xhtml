@@ -108,6 +108,23 @@
 				</div>
 			</h:panelGroup>
 
+			<div style="position: relative; height: 1.2em;">
+				<h:panelGroup rendered="#{searchBean.hasPrevious()}"
+					style="position: absolute;">
+					<h:link outcome="/search?includeViewParams=true"
+						value="&lt;&lt; Previous ">
+						<f:param name="page" value="#{searchBean.page - 1}" />
+					</h:link>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{searchBean.hasNext()}"
+					style="position: absolute; right: 0;">
+					<h:link outcome="/search?includeViewParams=true"
+						value=" Next &gt;&gt;">
+						<f:param name="page" value="#{searchBean.page + 1}" />
+					</h:link>
+				</h:panelGroup>
+			</div>
+
 			<ui:repeat var="product" value="#{searchBean.products}" varStatus="s">
 				<div style="float: left;#{s.odd?'':'margin-right: 15px;'}">
 					<shop:productPreview product="#{product}" />
@@ -115,6 +132,23 @@
 			</ui:repeat>
 
 			<div style="clear: both;" />
+
+			<div style="position: relative; height: 1em;">
+				<h:panelGroup rendered="#{searchBean.hasPrevious()}"
+					style="position: absolute;">
+					<h:link outcome="/search?includeViewParams=true"
+						value="&lt;&lt; Previous ">
+						<f:param name="page" value="#{searchBean.page - 1}" />
+					</h:link>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{searchBean.hasNext()}"
+					style="position: absolute; right: 0;">
+					<h:link outcome="/search?includeViewParams=true"
+						value=" Next &gt;&gt;">
+						<f:param name="page" value="#{searchBean.page + 1}" />
+					</h:link>
+				</h:panelGroup>
+			</div>
 		</ui:define>
 
 	</ui:composition>

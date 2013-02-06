@@ -52,8 +52,10 @@
 							</p:summaryRow>
 						</f:facet>
 					</p:dataTable>
+					<p:growl id="growl" showDetail="true" sticky="true" />  
 					<p:commandButton id="buyBasketButton" ajax="false" value="Buy"
-						action="#{orderBean.createOrder()}"></p:commandButton>
+						action="#{orderBean.createOrder()}"
+						update="growl"></p:commandButton>
 					<br />
 				</h:form>
 			</div>

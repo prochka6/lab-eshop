@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -13,6 +16,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import cz.cvut.fel.jee.labEshop.dao.IRoleDao;
 import cz.cvut.fel.jee.labEshop.dao.IUserDao;
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
@@ -20,6 +25,7 @@ import cz.cvut.fel.jee.labEshop.filter.UserListFilter;
 import cz.cvut.fel.jee.labEshop.model.Role;
 import cz.cvut.fel.jee.labEshop.model.User;
 import cz.cvut.fel.jee.labEshop.util.Assert;
+import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
 
 /**
  * 
@@ -27,6 +33,8 @@ import cz.cvut.fel.jee.labEshop.util.Assert;
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
 @Stateless
+@SecurityDomain("labeshopsecurity")
+@DeclareRoles({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 public class UserManager {
 
 	@Inject
@@ -44,6 +52,7 @@ public class UserManager {
 	 * @throws EntityNotFoundException
 	 *             if user with given identifier doesn't exists.
 	 */
+	@PermitAll
 	public User findUser(Long id) throws EntityNotFoundException {
 		if (id == null) {
 			throw new EntityNotFoundException(User.class, id);
@@ -66,6 +75,7 @@ public class UserManager {
 	 * @return entity User which has username given as parameter. If there is no
 	 *         user or more then one user then null is returned
 	 */
+	@PermitAll
 	public User findUserByUsername(String username) {
 		if (username == null) {
 			return null;
@@ -82,6 +92,7 @@ public class UserManager {
 	 * @return entity User which has email given as parameter. If there is no
 	 *         user or more then one user then null is returned
 	 */
+	@PermitAll
 	public User findUserByEmail(String email) {
 		if (email == null) {
 			return null;
@@ -98,6 +109,7 @@ public class UserManager {
 	 * @param roles
 	 *            role which will user has
 	 */
+	@PermitAll
 	public void addUser(User user, Set<String> roles) {
 		// refactor !!!
 
@@ -132,6 +144,7 @@ public class UserManager {
 	 * 
 	 * @return List<Usr> of all users
 	 */
+	@PermitAll
 	public List<User> findAllUsers() {
 		return userDao.getAll();
 	}
@@ -142,6 +155,7 @@ public class UserManager {
 	 * @param userToEdit
 	 *            user which will updated in database
 	 */
+	@PermitAll
 	public void updateUser(User userToEdit) {
 		userDao.saveOrUpdate(userToEdit);
 	}
@@ -155,6 +169,7 @@ public class UserManager {
 	 * @throws IllegalArgumentException
 	 *             if filter is null.
 	 */
+	@PermitAll
 	public List<User> findByFilter(UserListFilter filter) throws IllegalArgumentException {
 		Assert.notNull(filter);
 
@@ -170,6 +185,7 @@ public class UserManager {
 	 * @throws IllegalArgumentException
 	 *             if filter is null.
 	 */
+	@PermitAll
 	public int countByFilter(UserListFilter filter) throws IllegalArgumentException {
 		Assert.notNull(filter);
 

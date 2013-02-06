@@ -85,7 +85,7 @@ public class ImageServlet extends HttpServlet {
 		Long productId = extractProductId(req);
 
 		if (productId == null || productId < 1) {
-			log.debug("Invalid product image request: {}", req.getRequestURI());
+			log.warn("Invalid product image request: {}", req.getRequestURI());
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
@@ -95,7 +95,7 @@ public class ImageServlet extends HttpServlet {
 		Product product = entityManager.find(Product.class, productId);
 
 		if (product == null || product.getPromoImage() == null) {
-			log.debug("Invalid product image request: {}", req.getRequestURI());
+			log.warn("Invalid product image request: {}", req.getRequestURI());
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}

@@ -2,9 +2,13 @@ package cz.cvut.fel.jee.labEshop.manager;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.jboss.ejb3.annotation.SecurityDomain;
 
 import cz.cvut.fel.jee.labEshop.dao.ICategoryDao;
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
@@ -18,6 +22,8 @@ import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
 @Stateless
+@SecurityDomain("labeshopsecurity")
+@DeclareRoles({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 public class CategoryManager {
 
 	@Inject
@@ -33,6 +39,7 @@ public class CategoryManager {
 	 * @throws EntityNotFoundException
 	 *             if no such category with given id exists
 	 */
+	  @PermitAll
 	public Category findCategory(Long id) throws EntityNotFoundException {
 		if (id == null) {
 			throw new EntityNotFoundException(Brand.class, id);
@@ -55,6 +62,7 @@ public class CategoryManager {
 	 *            the name of the category
 	 * @return the category entity with given name or <code>null</code>
 	 */
+	  @PermitAll
 	public Category findCategoryByName(String name) {
 		if (name == null || "".equals(name.trim())) {
 			return null;
@@ -104,6 +112,7 @@ public class CategoryManager {
 	 * 
 	 * @return list of all categories never <code>null</code>
 	 */
+	@PermitAll
 	public List<Category> findAllCategories() {
 		return categoryDao.getAll();
 	}

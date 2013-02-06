@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.jboss.ejb3.annotation.SecurityDomain;
 
 import cz.cvut.fel.jee.labEshop.dao.IBasketDao;
 import cz.cvut.fel.jee.labEshop.dao.IBasketItemDao;
@@ -13,6 +19,7 @@ import cz.cvut.fel.jee.labEshop.model.Basket;
 import cz.cvut.fel.jee.labEshop.model.BasketItem;
 import cz.cvut.fel.jee.labEshop.model.Product;
 import cz.cvut.fel.jee.labEshop.model.User;
+import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
 
 /**
  * This manager work with basket and items in basket
@@ -21,6 +28,8 @@ import cz.cvut.fel.jee.labEshop.model.User;
  * 
  */
 @Stateless
+@SecurityDomain("labeshopsecurity")
+@DeclareRoles({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 public class BasketManager extends BaseManager<BasketItem> {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +39,8 @@ public class BasketManager extends BaseManager<BasketItem> {
 
 	@Inject
 	private IBasketItemDao basketItemDao;
+	@Resource
+	private SessionContext sessionContext; 
 
 
 	/**
@@ -40,6 +51,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 *            which basket has been found
 	 * @return basket which has particular user
 	 */
+	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 	public Basket findBasketByUser(User user) {
 		Basket result = basketDao.findBasketByUser(user);
 		if (result == null) {
@@ -56,6 +68,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 * @param owner
 	 *            of basket
 	 */
+	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 	public void modifyBasket(List<BasketItem> itemsToModify, User owner) {
 		if (itemsToModify == null) {
 			return;
@@ -79,6 +92,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 * @param ownersBasket
 	 *            basekt of owner
 	 */
+	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 	public void modifyBasket(BasketItem item, User owner, Basket ownersBasket) {
 		if (ownersBasket == null) {
 			ownersBasket = findBasketByUser(owner);
@@ -100,6 +114,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 * This method drop all items in basket. Basket is not deleted, but item in them are.
 	 * @param basketOwner owner of basket, which basket will be empty
 	 */
+	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 	public void dropBasket(User basketOwner){
 		if(basketOwner!=null){
 			Basket ownersBasket = findBasketByUser(basketOwner);
@@ -124,6 +139,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 * @param productToAdd
 	 *            product which will be added
 	 */
+	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 	public void addItemToBasket(User owner, Product productToAdd) {
 		Basket basket = findBasketByUser(owner);
 		BasketItem basketItem = basketItemDao.findBasketItemInBasket(productToAdd, basket);
@@ -153,6 +169,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 *            in which are items
 	 * @return items which are in basket
 	 */
+	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 	public List<BasketItem> findItemsInBasket(Basket basket) {
 		return basketItemDao.findItemsInBasket(basket);
 	}
@@ -164,6 +181,7 @@ public class BasketManager extends BaseManager<BasketItem> {
 	 *            user withnout basekt
 	 * @return new basket
 	 */
+	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 	private Basket buildBasket(User owner) {
 		Basket basket = new Basket();
 		List<BasketItem> basketItem = new ArrayList<BasketItem>();
