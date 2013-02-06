@@ -11,6 +11,8 @@ import javax.inject.Named;
 import cz.cvut.fel.jee.labEshop.manager.BasketManager;
 import cz.cvut.fel.jee.labEshop.manager.OrderManager;
 import cz.cvut.fel.jee.labEshop.model.Order;
+import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
+import cz.cvut.fel.jee.labEshop.web.BaseBean;
 import cz.cvut.fel.jee.labEshop.web.LoginBean;
 /**
  * This bean controll orders and their details
@@ -20,12 +22,12 @@ import cz.cvut.fel.jee.labEshop.web.LoginBean;
 
 @Named("orderBean")
 @RequestScoped
-public class OrderBean implements Serializable{
+public class OrderBean extends BaseBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Inject
-	OrderManager orderManager;
+	protected OrderManager orderManager;
 	@Inject
-	BasketManager basketManager;
+	protected BasketManager basketManager;
 	@Inject
 	private LoginBean loginBean;
 
@@ -44,6 +46,7 @@ public class OrderBean implements Serializable{
 	public String createOrder() {
 		orderManager.createOrder(loginBean.getLoggedUser());
 		orders = orderManager.findUsersOrders(loginBean.getLoggedUser());
+		printMessage(LabEshopConstants.CREATE_ORDER_SUCC_HEADER, "");
 		return "customerOrders";
 	}
 

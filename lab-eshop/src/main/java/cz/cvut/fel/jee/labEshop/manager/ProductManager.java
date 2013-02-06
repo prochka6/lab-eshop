@@ -12,6 +12,7 @@ import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
 import cz.cvut.fel.jee.labEshop.filter.ProductSearchFilter;
 import cz.cvut.fel.jee.labEshop.model.Brand;
 import cz.cvut.fel.jee.labEshop.model.Product;
+import cz.cvut.fel.jee.labEshop.model.ProductAvailability;
 import cz.cvut.fel.jee.labEshop.util.Assert;
 import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
 
@@ -98,7 +99,8 @@ public class ProductManager {
 	 *             identifier.
 	 */
 	@RolesAllowed({ LabEshopConstants.ADMINISTRATOR_ROLE })
-	public Product updateProduct(Product product) throws IllegalArgumentException {
+	public Product updateProduct(Product product)
+			throws IllegalArgumentException {
 		if (product == null || product.getId() == null) {
 			throw new IllegalArgumentException();
 		}
@@ -145,5 +147,21 @@ public class ProductManager {
 	 */
 	public List<Product> findAllProducts() {
 		return productDao.getAll();
+	}
+
+	public void sellProduct(Product productToSell, int pieces) {
+		// change number of product pieces in stock
+		int inStock = productToSell.getPieces();
+		if (inStock > 0) {
+			if (inStock - pieces <= 0) {
+				productToSell.setPieces(0);
+				if (productToSell.getAvailability() != ProductAvailability.ORDERED) {
+					productToSell.setAvailability(ProductAvailability.SOLD_OUT);
+				}
+			} else {
+				productToSell.setPieces(inStock - pieces);
+			}
+			productDao.saveOrUpdate(productToSell);
+		}
 	}
 }

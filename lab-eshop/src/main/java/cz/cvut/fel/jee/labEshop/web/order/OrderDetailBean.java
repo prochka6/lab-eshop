@@ -12,7 +12,6 @@ import javax.inject.Named;
 import cz.cvut.fel.jee.labEshop.manager.BasketManager;
 import cz.cvut.fel.jee.labEshop.manager.OrderManager;
 import cz.cvut.fel.jee.labEshop.model.Order;
-import cz.cvut.fel.jee.labEshop.web.LoginBean;
 
 @Named("orderDetailBean")
 @SessionScoped
@@ -23,11 +22,9 @@ public class OrderDetailBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Inject
-	OrderManager orderManager;
+	protected OrderManager orderManager;
 	@Inject
-	BasketManager basketManager;
-	@Inject
-	private LoginBean loginBean;
+	protected BasketManager basketManager;
 	
 	private Order order;
 	
@@ -40,8 +37,13 @@ public class OrderDetailBean implements Serializable {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String parameter = params.get("orderId");
 		Long id = Long.parseLong(parameter);
-		order = orderManager.findOrderByIdAndUser(id, loginBean.getLoggedUser());
+		order = orderManager.findOrderById(id);
 		return "orderDetail";
+	}
+	
+	public String loadOrderAdminDetail(){
+		loadOrderDetail();
+		return "orderAdminDetail";
 	}
 
 	public Order getOrder() {

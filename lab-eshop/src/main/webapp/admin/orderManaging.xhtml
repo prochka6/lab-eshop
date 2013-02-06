@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/WEB-INF/templates/tmplSimple.xhtml">
+		<ui:param name="pageTitle" value="EShop - Orders" />
+
+		<ui:define name="canvas">
+
+			<div class="panel">
+				<div class="panel-title">Orders</div>
+				<h:form>
+					<p:dataTable var="order" value="#{orderAdminBean.orders}"
+						emptyMessage="No data has been found." id="ordersTable"
+						rowKey="#{order.id}">
+						<f:facet name="header">
+							<h:outputText value="Orders" />
+						</f:facet>
+						<p:column headerText="Order number">
+							<h:commandLink action="#{orderDetailBean.loadOrderAdminDetail()}"
+								value="#{order.id}">
+								<f:param name="orderId" value="#{order.id}">
+								</f:param>
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Date">
+							<h:outputText value="#{order.dateOfInsert}">
+								<f:convertDateTime type="both" timeZone="Europe/Prague"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="State">
+							<h:outputText value="#{order.stateOfOrder}" />
+						</p:column>
+						<p:column headerText="Total price">
+							<h:outputText value="#{order.totalPrice}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
