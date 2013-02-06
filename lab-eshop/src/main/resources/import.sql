@@ -1,12 +1,12 @@
 -- Insert into users, default admin password is admin
-insert into user (id, email, first_name, last_name, password, username) values (1, "admin@admin", "admin", "admin", "ISMvKXpXpadDiUoOSoAfww==", "admin")
+insert into user (id, email, first_name, last_name, password, username, street, city, country) values (1, "admin@admin", "admin", "admin", "ISMvKXpXpadDiUoOSoAfww==", "admin","Řepice 111", "Strakonice", "Czech republic")
 -- User with default password customer
-insert into user (id, email, first_name, last_name, password, username) values (2, "cust@cust", "Martin", "Tomášek", "kewfkyR1MEjACW0DamlPhg==", "customer")
+insert into user (id, email, first_name, last_name, password, username,  street, city, country) values (2, "martin@toms-cz.com", "Martin", "Tomášek", "kewfkyR1MEjACW0DamlPhg==", "customer","Řepice 111", "Strakonice", "Czech republic")
 
 -- Custom customers
-insert into user (id, email, first_name, last_name, password, username) values (3, "jirkan@email.cz", "Jiri", "Novák", "kewfkyR1MEjACW0DamlPhg==", "jirkan")
-insert into user (id, email, first_name, last_name, password, username) values (4, "jansvob@seznam.cz", "Jan", "Svoboda", "kewfkyR1MEjACW0DamlPhg==", "jansvob")
-insert into user (id, email, first_name, last_name, password, username) values (5, "pitrnovo@centrum.cz", "Petr", "Novotný", "kewfkyR1MEjACW0DamlPhg==", "pitrnovo")
+insert into user (id, email, first_name, last_name, password, username, street, city, country) values (3, "jirkan@email.cz", "Jiri", "Novák", "kewfkyR1MEjACW0DamlPhg==", "jirkan","Čihákov 22", "PRAHA", "Czech republic")
+insert into user (id, email, first_name, last_name, password, username, street, city, country) values (4, "jansvob@seznam.cz", "Jan", "Svoboda", "kewfkyR1MEjACW0DamlPhg==", "jansvob","Čihákov 22", "PRAHA", "Czech republic")
+insert into user (id, email, first_name, last_name, password, username, street, city, country) values (5, "pitrnovo@centrum.cz", "Petr", "Novotný", "kewfkyR1MEjACW0DamlPhg==", "pitrnovo","Čihákov 22", "PRAHA", "Czech republic")
 insert into user (id, email, first_name, last_name, password, username) values (6, "pepacerny@email.cz", "Josef", "Černý", "kewfkyR1MEjACW0DamlPhg==", "pepacerny")
 insert into user (id, email, first_name, last_name, password, username) values (7, "jardakuca@email.cz", "Jaroslav", "Kučera", "kewfkyR1MEjACW0DamlPhg==", "jardakuca")
 insert into user (id, email, first_name, last_name, password, username) values (8, "nemecv@centrum.cz", "Václav", "Němec", "kewfkyR1MEjACW0DamlPhg==", "nemecv")

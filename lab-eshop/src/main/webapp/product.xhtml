@@ -67,7 +67,7 @@
 										id="productPieces" />
 									
 								</h:panelGrid>
-								<p:growl id="growl" showDetail="true" sticky="true" />  
+						  <p:growl id="growl" showDetail="true" sticky="false"  life="800"/>  
 								<p:commandButton ajax="false" action="#{basketBean.addItemToBasket()}" value="I want this!!" rendered="#{loginBean.userLogged}"
 								update="growl" >
 								<f:param name="productId" value="#{productDetailBean.productId}"> </f:param>

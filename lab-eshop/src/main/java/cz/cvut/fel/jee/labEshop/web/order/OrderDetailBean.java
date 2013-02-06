@@ -12,10 +12,12 @@ import javax.inject.Named;
 import cz.cvut.fel.jee.labEshop.manager.BasketManager;
 import cz.cvut.fel.jee.labEshop.manager.OrderManager;
 import cz.cvut.fel.jee.labEshop.model.Order;
+import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
+import cz.cvut.fel.jee.labEshop.web.BaseBean;
 
 @Named("orderDetailBean")
 @SessionScoped
-public class OrderDetailBean implements Serializable {
+public class OrderDetailBean extends BaseBean implements Serializable {
 
 	/**
 	 * 
@@ -66,6 +68,7 @@ public class OrderDetailBean implements Serializable {
 	public void saveOrder() {
 		if (order != null) {
 			orderManager.updateOrder(order);
+			printMessage(LabEshopConstants.MODIFY_ORDER_SUCC_HEADER, "");
 		}
 
 		// setOrders(orderManager.findAllOrders());

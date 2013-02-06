@@ -21,7 +21,7 @@
 						</f:facet>
 						<p:column headerText="Order number">
 							<h:commandLink action="#{orderDetailBean.loadOrderDetail()}"
-								value="#{order.id}">
+								value="order #{order.id}">
 								<f:param name="orderId" value="#{order.id}">
 								</f:param>
 							</h:commandLink>

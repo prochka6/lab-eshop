@@ -33,4 +33,5 @@ public class LabEshopConstants {
 	
 	public static final String CREATE_ORDER_SUCC_HEADER = "The order has been successfully created";
 
+	public static final String MODIFY_ORDER_SUCC_HEADER = "The order has been successfully modified";
 }

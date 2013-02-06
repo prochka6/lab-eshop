@@ -66,12 +66,14 @@
 						</f:facet>
 					</p:dataTable>
 					<br />
+						  <p:growl id="growl" showDetail="true" sticky="false"  life="800"/>  
 					<p:commandButton value="Delete" ajax="false" action="#{orderDetailBean.deleteOrder()}">
 					<f:param name="orderId" value="#{orderDetailBean.order.id}">
 								</f:param>
 					</p:commandButton>
 					
-					<p:commandButton value="Save" ajax="false" action="#{orderDetailBean.saveOrder()}">
+					<p:commandButton value="Save" ajax="false" action="#{orderDetailBean.saveOrder()}"
+					update="growl">
 								<f:param name="orderId" value="#{orderDetailBean.order.id}">
 								</f:param>
 					</p:commandButton>

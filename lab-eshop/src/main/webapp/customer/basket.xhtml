@@ -38,7 +38,7 @@
 							</p:summaryRow>
 						</f:facet>
 					</p:dataTable>
-					<p:growl id="growl" showDetail="true" sticky="true" />
+				  <p:growl id="growl" showDetail="true" sticky="false"  life="800"/>  
 					<p:commandButton id="modifyBasketButton" ajax="false"
 						value="Modify" action="#{basketBean.modifyBasket}"
 						rendered="#{not empty basketBean.itemsInBasket}" update="growl"></p:commandButton>
