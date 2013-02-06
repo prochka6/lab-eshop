@@ -34,5 +34,16 @@ public interface IProductDao extends IBaseDao<Product, Long> {
 	 *             if the filter param is null
 	 */
 	List<Product> find(ProductSearchFilter filter);
+	
+	/**
+	 * Finds products by specified product code.
+	 * 
+	 * @param code
+	 *            the product code we want to search by
+	 * @return
+	 * @throws IllegalArgumentException
+	 *             if the code param is null
+	 */
+	Product findProductByCode(String code);
 
 }

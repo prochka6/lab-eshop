@@ -29,7 +29,8 @@ import org.jboss.solder.core.Veto;
 @Veto
 @Entity
 @Table(name = "product")
-@NamedQueries({ @NamedQuery(name = "Product.getLatests", query = "select p from Product p join fetch p.category join fetch p.brand where p.discardDate > :date and p.publishDate <= :date order by p.publishDate desc") })
+@NamedQueries({ @NamedQuery(name = "Product.getLatests", query = "select p from Product p join fetch p.category join fetch p.brand where p.discardDate > :date and p.publishDate <= :date order by p.publishDate desc"),
+	 			@NamedQuery(name = "Product.getByCode", query = "select p from Product p where p.code = :code")})
 public class Product extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

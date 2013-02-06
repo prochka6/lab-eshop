@@ -37,7 +37,7 @@
 
 			<h:form id="form">
 
-				<p:growl id="formMessages" globalOnly="true" autoUpdate="true" />
+				<p:growl id="formMessages"/>
 
 				<p:dataTable var="product" value="#{productsBean.products}"
 					rowKey="#{product.id}" paginator="true" rows="10"
@@ -98,7 +98,9 @@
 							<h:outputLabel for="productName" value="Name" />
 							<p:inputText value="#{productsBean.selectedProduct.title}"
 								id="productName" required="true"
-								requiredMessage="Title required" size="40" />
+								requiredMessage="Please set product title!" size="40" >
+									<f:validateLength minimum="5"/>
+								</p:inputText>
 							<h:message for="productName" errorClass="errorRequired" />
 						</div>
 
@@ -106,14 +108,17 @@
 							<h:outputLabel for="productCode" value="Code" />
 							<p:inputText value="#{productsBean.selectedProduct.code}"
 								id="productCode" required="true"
-								requiredMessage="Title required" size="40" />
+								requiredMessage="Please set product code!" size="40" validator="#{productsBean.validateCode}">
+									<f:validateLength minimum="5"/>
+								</p:inputText>
 							<h:message for="productCode" errorClass="errorRequired" />
 						</div>
 
 						<div class="form-field">
 							<h:outputLabel for="productBrand" value="Brand" />
 							<p:selectOneMenu value="#{productsBean.selectedProduct.brand}"
-								effect="fade" converter="BrandConverter" id="productBrand">
+								effect="fade" converter="BrandConverter" id="productBrand" required="true"
+								requiredMessage="Please select brand!">
 								<f:selectItem
 									itemLabel="#{productsBean.selectedProduct.brand.name}"
 									itemValue="" />
@@ -126,7 +131,8 @@
 						<div class="form-field">
 							<h:outputLabel for="productCategory" value="Category" />
 							<p:selectOneMenu value="#{productsBean.selectedProduct.category}"
-								effect="fade" converter="CategoryConverter" id="productCategory">
+								effect="fade" converter="CategoryConverter" id="productCategory" required="true"
+								requiredMessage="Please select category!">
 								<f:selectItem
 									itemLabel="#{productsBean.selectedProduct.category.name}"
 									itemValue="" />
@@ -140,7 +146,8 @@
 							<h:outputLabel for="productAvailability" value="Availability" />
 							<p:selectOneMenu
 								value="#{productsBean.selectedProduct.availability}"
-								effect="fade" id="productAvailability">
+								effect="fade" id="productAvailability" required="true"
+								requiredMessage="Please select Availibility!">
 								<f:selectItem
 									itemLabel="#{productsBean.selectedProduct.availability}"
 									itemValue="" />
@@ -156,8 +163,8 @@
 						<div class="form-field">
 							<h:outputLabel for="productPrice" value="Price" />
 							<p:inputText value="#{productsBean.price}" id="productPrice"
-								required="true" requiredMessage="Title required" size="40">
-								<f:validateLongRange minimum="1" />
+								required="true" requiredMessage="Please set product price!" size="40">
+								<f:validateLongRange minimum="1" maximum="9999999"/>
 							</p:inputText>
 							<h:message for="productPrice" errorClass="errorRequired" />
 						</div>
@@ -166,8 +173,8 @@
 							<h:outputLabel for="productPieces" value="Pieces" />
 							<p:inputText value="#{productsBean.selectedProduct.pieces}"
 								id="productPieces" required="true"
-								requiredMessage="Title required" size="40">
-								<f:validateLongRange minimum="0" />
+								requiredMessage="Please set product pieces!" size="40">
+								<f:validateLongRange minimum="0" maximum="999"/>
 							</p:inputText>
 							<h:message for="productPieces" errorClass="errorRequired" />
 						</div>
@@ -175,11 +182,13 @@
 						<div class="form-field">
 							<h:outputLabel for="publishDate" value="Publish Date" />
 							<p:calendar value="#{productsBean.selectedProduct.publishDate}"
-								id="publishDate" showOn="button" />
+								id="publishDate" showOn="button" required="true"
+								requiredMessage="Please set publish date!"/>
 							<h:message for="publishDate" errorClass="errorRequired" />
 							<h:outputLabel for="discardDate" value="Discard Date" />
 							<p:calendar value="#{productsBean.selectedProduct.discardDate}"
-								id="discardDate" showOn="button" />
+								id="discardDate" showOn="button" validator="#{productsBean.validateDate}" required="true"
+								requiredMessage="Please select discard date!"/>
 							<h:message for="discardDate" errorClass="errorRequired" />
 						</div>
 
@@ -202,7 +211,9 @@
 							<h:outputLabel for="productSum" value="Product Summary" />
 							<p:inputTextarea id="productSum"
 								value="#{productsBean.selectedProduct.summary}" rows="6"
-								cols="100" style="width: 100%;"/>
+								cols="100" style="width: 100%;">
+									<f:validateLength maximum="2048"/>
+								</p:inputTextarea>
 						</div>
 
 						<p:spacer height="40"/>

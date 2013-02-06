@@ -49,6 +49,26 @@ public class ProductManager {
 
 		return product;
 	}
+	
+	
+	/**
+	 * Find {@linkplain Product} by given code. If no such product exists return null.
+	 * 
+	 * @param code
+	 *            the code of product
+	 * @return product entity
+	 * @throws IllegalArgumentException
+	 *             if product parameter is null
+	 */
+	public Product findProduct(String code) throws EntityNotFoundException {
+		if (code == null) {
+			throw new EntityNotFoundException(Brand.class, code);
+		}
+
+		Product product = productDao.findProductByCode(code);
+		
+		return product;
+	}
 
 	/**
 	 * Create new {@linkplain Product} entity in database.

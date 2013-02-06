@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -179,6 +182,35 @@ public class ProductsBean implements Serializable {
 
 		log.info("Image {} upload success.", uploadedFile.getFileName());
 		messages.info("Image: {0} has been successfully uploaded.", uploadedFile.getFileName());
+	}
+	
+	public void validateDate(FacesContext context, UIComponent component, Object value) {
+
+	       long publish = selectedProduct.getPublishDate().getTime();
+	       long discard = ((Date) value).getTime();
+
+	       if (publish>discard) {
+	    	  messages.warn("Wrong product input information! - Operation cancelled.");
+	          throw new ValidatorException(new FacesMessage("Invalid Date - Discard date must be later than publish date!"));
+	       }
+	       
+
+	}
+	
+	public void validateCode(FacesContext context, UIComponent component, Object value) {
+	       String code = ((String) value);
+     
+	       if (selectedProduct.getId()==null&&productManager.findProduct(code)!=null) {
+	    	  messages.warn("Wrong product input information! - Operation cancelled.");
+	          throw new ValidatorException(new FacesMessage("Invalid Code - Code allready in database!"));
+	       }
+	       if (selectedProduct.getId()!=null) {
+	    	   messages.warn("Wrong product input information! - Operation cancelled.");
+	    	   Product productinDB = productManager.findProduct(code);
+	    	   if(productinDB!=null&&productinDB.getId()!=selectedProduct.getId())
+		          throw new ValidatorException(new FacesMessage("Invalid Code - Code allready in database!"));
+		   }
+	       
 	}
 
 	public void onRowSelect(SelectEvent event) {

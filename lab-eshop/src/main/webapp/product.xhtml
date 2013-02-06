@@ -70,18 +70,18 @@
 								<p:commandButton ajax="false" action="#{basketBean.addItemToBasket()}" value="I want this!!" rendered="#{loginBean.userLogged}" >
 								<f:param name="productId" value="#{productDetailBean.productId}"> </f:param>
 								</p:commandButton>
-								<p:separator/>
+								<div class="invisible-separator"/>
 								<h:outputText value="Product Summary" style="font-weight:bold;"/>
-								<p:separator/>
+								<div class="invisible-separator"/>
 								<h:outputText id="productSum" value="#{productDetailBean.product.summary}" style="width:150px;"/>	
 							</div>
 							<p:graphicImage id="img" value="#{imageProvider.streamedImage}" alt="None" width="300" height="300" />
 							
-							<p:separator/>
+							<div class="invisible-separator"/>
 							<p:spacer height="150"/>
-							<p:separator/>
+							<div class="invisible-separator"/>
 							<h:outputText value="Product Description:" style="font-weight:bold;"/>
-							<p:separator/>
+							<div class="invisible-separator"/>
 							<h:outputText id="productDesc" value="#{productDetailBean.product.description}" escape="false" />
 						</h:form>
 
