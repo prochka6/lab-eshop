@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 
 import cz.cvut.fel.jee.labEshop.dao.IUserDao;
 import cz.cvut.fel.jee.labEshop.dao.jpa.JpaUserDao;
+import cz.cvut.fel.jee.labEshop.filter.EntityFilter;
 import cz.cvut.fel.jee.labEshop.model.User;
 import cz.cvut.fel.jee.labEshop.test.ResourceProducers;
 import cz.cvut.fel.jee.labEshop.util.Assert;
@@ -38,10 +39,16 @@ public class JpaUserDaoTest {
 
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(WebArchive.class, "UserDaoTest.war").addPackages(true, IUserDao.class.getPackage())
-				.addPackages(true, User.class.getPackage()).addClasses(ResourceProducers.class, Assert.class)
-				.addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml").addAsWebInfResource("test-ds.xml");
+		return ShrinkWrap
+				.create(WebArchive.class, "UserDaoTest.war")
+				.addPackages(true, IUserDao.class.getPackage())
+				.addPackages(true, EntityFilter.class.getPackage())
+				.addPackages(true, User.class.getPackage())
+				.addClasses(ResourceProducers.class, Assert.class)
+				.addAsResource("META-INF/test-persistence.xml",
+						"META-INF/persistence.xml")
+				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+				.addAsWebInfResource("test-ds.xml");
 	}
 
 	@PersistenceContext
