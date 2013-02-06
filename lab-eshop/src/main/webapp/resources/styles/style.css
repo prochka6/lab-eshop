@@ -180,6 +180,10 @@ a:hover {
 	color: red;
 }
 
+.vertical-middle {
+	vertical-align: middle;
+}
+
 .bold {
 	font-weight: bold;
 }

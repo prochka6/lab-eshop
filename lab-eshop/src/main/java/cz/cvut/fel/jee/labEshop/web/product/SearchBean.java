@@ -3,8 +3,12 @@ package cz.cvut.fel.jee.labEshop.web.product;
 import java.util.List;
 import java.util.Set;
 
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Model;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+
+import org.jboss.solder.servlet.http.RequestParam;
 
 import cz.cvut.fel.jee.labEshop.filter.ProductSearchFilter;
 import cz.cvut.fel.jee.labEshop.filter.SortModel;
@@ -20,7 +24,12 @@ import cz.cvut.fel.jee.labEshop.model.Product;
 @Model
 public class SearchBean {
 
-	private static final int DEFAULT_PAGE_SIZE = 10;
+	public static final int DEFAULT_PAGE_SIZE = 10;
+	public static final long DEFAULT_PRICE_MIN = 0L;
+	public static final long DEFAULT_PRICE_MAX = 50000L;
+
+	@Inject
+	private FacesContext facesContext;
 
 	@Inject
 	private ProductManager productManager;
@@ -28,8 +37,8 @@ public class SearchBean {
 	// Product filter properties
 	private String orderBy;
 	private String ordering;
-	private Long priceMin;
-	private Long priceMax;
+	private Long priceMin = DEFAULT_PRICE_MIN;
+	private Long priceMax = DEFAULT_PRICE_MAX;
 	private Set<Long> categoryIds;
 	private Set<Long> brandIds;
 	private Integer page = 1;
@@ -37,12 +46,15 @@ public class SearchBean {
 
 	private List<Product> products;
 
-	public String search() {
-		products = productManager.findByFilter(buildFilter());
-		return null;
-	}
+	@Inject
+	@RequestParam("productId")
+	private Instance<String> productId;
 
 	public List<Product> getProducts() {
+		if (products == null && !(productId.get() == null && facesContext.isPostback())) {
+			products = productManager.findByFilter(buildFilter());
+		}
+
 		return products;
 	}
 
@@ -81,6 +93,10 @@ public class SearchBean {
 		filter.setBrandIds(brandIds);
 
 		return filter;
+	}
+
+	public String search() {
+		return "/search?includeViewParams=true&amp;faces-redirect=true";
 	}
 
 	public String getOrderBy() {

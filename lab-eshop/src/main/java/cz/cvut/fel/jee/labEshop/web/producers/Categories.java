@@ -1,4 +1,4 @@
-package cz.cvut.fel.jee.labEshop.web;
+package cz.cvut.fel.jee.labEshop.web.producers;
 
 import java.util.List;
 
@@ -18,13 +18,12 @@ import cz.cvut.fel.jee.labEshop.model.Category;
 import cz.cvut.fel.jee.labEshop.model.Category_;
 
 /**
- * Sample implementation using producer method to retrieve categories list
- * ordered by name using hibernate criteria query for pertaining type safety and
- * store in current user {@linkplain HttpServletRequest}.
+ * Categories list producer implementation using producer method to retrieve
+ * categories list ordered by name using hibernate criteria query for pertaining
+ * type safety and store in current user {@linkplain HttpServletRequest}.
  * 
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
-@Named
 @Stateless
 public class Categories {
 

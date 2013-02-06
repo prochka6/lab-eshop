@@ -8,6 +8,7 @@
 	<name>E-shop</name>
 
 	<properties>
+		<primefaces.version>3.5</primefaces.version>
 		<seam.version>3.1.0.Final</seam.version>
 		<javaee6.web.spec.version>2.0.0.Final</javaee6.web.spec.version>
 		<jboss.bom.version>1.0.0.Final</jboss.bom.version>
@@ -69,7 +70,7 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>3.4.2</version>
+			<version>${primefaces.version}</version>
 		</dependency>
 
 		<dependency>
@@ -141,10 +142,10 @@
 		</dependency>
 		<!-- File upload -->
 		<dependency>
-		<groupId>commons-fileupload</groupId>
-		<artifactId>commons-fileupload</artifactId>
-		<version>1.2.1</version>
-	</dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

@@ -56,7 +56,7 @@ public class JpaProductDao extends JpaBaseDao<Product> implements IProductDao {
 		}
 		if (filter.getInStock() != null && filter.getInStock()) {
 			predicate = builder.and(predicate,
-					builder.equal(root.get(Product_.availability), ProductAvailability.IN_STOCK.toString()));
+					builder.equal(root.get(Product_.availability), ProductAvailability.IN_STOCK));
 		}
 		if (filter.getCategoryIds() != null && !filter.getCategoryIds().isEmpty()) {
 			predicate = builder.and(predicate, root.get(Product_.category).in(filter.getCategoryIds()));
@@ -64,6 +64,11 @@ public class JpaProductDao extends JpaBaseDao<Product> implements IProductDao {
 		if (filter.getBrandIds() != null && !filter.getBrandIds().isEmpty()) {
 			predicate = builder.and(predicate, root.get(Product_.brand).in(filter.getBrandIds()));
 		}
+
+		// default publish and discard date
+		// TODO: add the to filter ?
+		predicate = builder.and(predicate, builder.greaterThan(root.get(Product_.discardDate), new Date()));
+		predicate = builder.and(predicate, builder.lessThanOrEqualTo(root.get(Product_.publishDate), new Date()));
 
 		query.distinct(true);
 		query.select(root);

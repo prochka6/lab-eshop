@@ -32,12 +32,81 @@
 					<f:converter converterId="longListCommaConverter" />
 				</f:viewParam>
 				<f:viewParam name="inStock" value="#{searchBean.inStock}" />
-
-				<f:event type="preRenderView" listener="#{searchBean.search()}" />
 			</f:metadata>
 		</ui:define>
 
 		<ui:define name="content">
+
+			<p:panel id="filterWidget" toggleable="true" header="Filter"
+				style="margin-bottom: 1em;" collapsed="true">
+
+				<h:form id="searchForm">
+
+					<h:panelGrid columns="2" style="width: 100%;">
+						<p:selectCheckboxMenu value="#{searchBean.brandIds}"
+							label="Brands" filter="true" filterMatchMode="startsWith"
+							style="display:inline-block; margin-bottom: -0.25em;">
+							<f:selectItems itemLabel="#{brand.name}" itemValue="#{brand.id}"
+								var="brand" value="#{brandsList}" />
+							<f:converter converterId="longSafeConverter" />
+						</p:selectCheckboxMenu>
+
+						<p:selectCheckboxMenu value="#{searchBean.categoryIds}"
+							label="Categories" filter="true" filterMatchMode="startsWith"
+							style="display:inline-block; margin-bottom: -0.25em;">
+							<f:selectItems itemLabel="#{cat.name}" itemValue="#{cat.id}"
+								var="cat" value="#{categoriesList}" />
+							<f:converter converterId="longSafeConverter" />
+						</p:selectCheckboxMenu>
+					</h:panelGrid>
+
+					<div style="margin: 1em 0;">
+						<h:panelGrid columns="1" style="margin-bottom:10px">
+							<h:outputText id="priceRange"
+								value="Price range: #{searchBean.priceMin} - #{searchBean.priceMax}"
+								style="line-height: 2;" />
+							<p:slider for="priceMin,priceMax" display="priceRange"
+								displayTemplate="Price range: {min} - {max}" style="width:755px"
+								range="true" step="1000" minValue="0" maxValue="50000" />
+						</h:panelGrid>
+						<h:inputHidden id="priceMin" value="#{searchBean.priceMin}" />
+						<h:inputHidden id="priceMax" value="#{searchBean.priceMax}" />
+					</div>
+
+					<h:panelGrid columns="2" style="width: 100%">
+						<h:panelGroup>
+							<span style="margin-right: 1em;">Order by:</span>
+							<p:selectOneMenu value="#{searchBean.orderBy}"
+								style="min-width: 70px; display:inline-block; margin-bottom: -0.5em; border: 1px solid; border-color: #9b9b9b #ededed #ddd #c2c2c2;">
+								<f:selectItem itemLabel="Title" itemValue="title" />
+								<f:selectItem itemLabel="Price" itemValue="price" />
+							</p:selectOneMenu>
+							<p:selectOneMenu value="#{searchBean.ordering}"
+								style=" min-width: 60px; display:inline-block; margin-left: 1em; margin-bottom: -0.5em; border: 1px solid; border-color: #9b9b9b #ededed #ddd #c2c2c2;">
+								<f:selectItem itemLabel="asc" itemValue="asc" />
+								<f:selectItem itemLabel="desc" itemValue="desc" />
+							</p:selectOneMenu>
+						</h:panelGroup>
+						<p:spacer />
+						<h:panelGroup>
+							<span style="margin-right: 1em;">In Stock:</span>
+							<p:selectBooleanCheckbox value="#{searchBean.inStock}" />
+						</h:panelGroup>
+						<p:commandButton action="#{searchBean.search()}" value="Filter"
+							style="margin-right: -3.1em;" />
+					</h:panelGrid>
+
+				</h:form>
+			</p:panel>
+
+			<h:panelGroup
+				rendered="#{searchBean.products == null or searchBean.products.size == 0}">
+				<div class="panel">
+					<h3>No products match filter.</h3>
+
+					<p>Please try again.</p>
+				</div>
+			</h:panelGroup>
 
 			<ui:repeat var="product" value="#{searchBean.products}" varStatus="s">
 				<div style="float: left;#{s.odd?'':'margin-right: 15px;'}">
