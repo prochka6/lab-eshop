@@ -49,13 +49,6 @@
 					<p:ajax event="rowUnselect"
 						listener="#{productsBean.onRowUnselect}" update=":productDetail" />
 
-
-					<f:facet name="header">  
-            		Seznam produktů
-        		</f:facet>
-
-
-
 					<p:column headerText="Title" sortBy="#{product.title}"
 						filterBy="#{product.title}" id="title">  
            		 #{product.title}  
