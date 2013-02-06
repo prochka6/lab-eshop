@@ -27,7 +27,7 @@ import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
  */
 @Stateless
 @SecurityDomain("labeshopsecurity")
-@DeclareRoles({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
+@DeclareRoles({ LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE })
 public class ProductManager {
 
 	@Inject
@@ -57,10 +57,10 @@ public class ProductManager {
 
 		return product;
 	}
-	
-	
+
 	/**
-	 * Find {@linkplain Product} by given code. If no such product exists return null.
+	 * Find {@linkplain Product} by given code. If no such product exists return
+	 * null.
 	 * 
 	 * @param code
 	 *            the code of product
@@ -75,7 +75,7 @@ public class ProductManager {
 		}
 
 		Product product = productDao.findProductByCode(code);
-		
+
 		return product;
 	}
 
@@ -107,8 +107,7 @@ public class ProductManager {
 	 *             identifier.
 	 */
 	@RolesAllowed({ LabEshopConstants.ADMINISTRATOR_ROLE })
-	public Product updateProduct(Product product)
-			throws IllegalArgumentException {
+	public Product updateProduct(Product product) throws IllegalArgumentException {
 		if (product == null || product.getId() == null) {
 			throw new IllegalArgumentException();
 		}
@@ -159,7 +158,8 @@ public class ProductManager {
 	public List<Product> findAllProducts() {
 		return productDao.getAll();
 	}
-	@RolesAllowed({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
+
+	@RolesAllowed({ LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE })
 	public void sellProduct(Product productToSell, int pieces) {
 		// change number of product pieces in stock
 		int inStock = productToSell.getPieces();
@@ -175,14 +175,14 @@ public class ProductManager {
 			productDao.saveOrUpdate(productToSell);
 		}
 	}
+
 	@RolesAllowed(LabEshopConstants.ADMINISTRATOR_ROLE)
-	public void revertProduct(Product produtctToRever, int pieces){
-		if(produtctToRever.getPieces() <=0){
+	public void revertProduct(Product produtctToRever, int pieces) {
+		if (produtctToRever.getPieces() <= 0) {
 			produtctToRever.setAvailability(ProductAvailability.IN_STOCK);
 			produtctToRever.setPieces(pieces);
-		}
-		else{
-			produtctToRever.setPieces(produtctToRever.getPieces()+pieces);
+		} else {
+			produtctToRever.setPieces(produtctToRever.getPieces() + pieces);
 		}
 		productDao.saveOrUpdate(produtctToRever);
 	}

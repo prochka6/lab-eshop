@@ -45,6 +45,8 @@ public class SearchBean {
 	private Boolean inStock;
 
 	private List<Product> products;
+	// helper property for determining if exists more products
+	private boolean hasNext = false;
 
 	@Inject
 	@RequestParam("productId")
@@ -52,7 +54,13 @@ public class SearchBean {
 
 	public List<Product> getProducts() {
 		if (products == null && !(productId.get() == null && facesContext.isPostback())) {
-			products = productManager.findByFilter(buildFilter());
+			List<Product> searched = productManager.findByFilter(buildFilter());
+			if (searched.size() == DEFAULT_PAGE_SIZE + 1) {
+				hasNext = true;
+				this.products = searched.subList(0, searched.size() - 1);
+			} else {
+				this.products = searched;
+			}
 		}
 
 		return products;
@@ -61,9 +69,9 @@ public class SearchBean {
 	private ProductSearchFilter buildFilter() {
 		ProductSearchFilter filter = new ProductSearchFilter();
 
-		filter.setMaxRows(DEFAULT_PAGE_SIZE);
+		filter.setMaxRows(DEFAULT_PAGE_SIZE + 1);
 		if (page != null && page > 1) {
-			filter.setFirstRow(DEFAULT_PAGE_SIZE * page + 1);
+			filter.setFirstRow(DEFAULT_PAGE_SIZE * (page - 1));
 		}
 		if (priceMin != null && priceMin > 0) {
 			filter.setPriceMin(priceMin);
@@ -95,7 +103,20 @@ public class SearchBean {
 		return filter;
 	}
 
+	public boolean hasPrevious() {
+		if (page != null && page > 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasNext() {
+		return hasNext;
+	}
+
 	public String search() {
+		page = 1;
 		return "/search?includeViewParams=true&amp;faces-redirect=true";
 	}
 
