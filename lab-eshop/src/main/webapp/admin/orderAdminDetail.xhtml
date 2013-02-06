@@ -28,9 +28,15 @@
 						<f:convertDateTime type="both" timeZone="Europe/Prague"></f:convertDateTime>
 					</h:outputText>
 					<br />
-					<h:outputText value="#{orderDetailBean.order.stateOfOrder}" />
+					   <h:selectOneMenu id="statusTask" value="#{orderDetailBean.order.stateOfOrder}" > 
+                            <f:selectItem itemValue="#{orderDetailBean.order.stateOfOrder}" itemLabel="Choose state" />
+                            <f:selectItem itemValue="INSERTED" itemLabel="Inserted" />
+                            <f:selectItem itemValue="ACCEPTED" itemLabel="Accepted" />
+                            <f:selectItem itemValue="CLOSED" itemLabel="Closed" />
+                        </h:selectOneMenu>
 					<br />
-					<h:outputText value="#{orderDetailBean.order.paymentMethod.name} " /> <h:outputText value="#{orderDetailBean.order.paymentMethod.price}" /> 
+					<h:outputText value="#{orderDetailBean.order.paymentMethod.name} " />
+					<h:outputText value="#{orderDetailBean.order.paymentMethod.price}" />
 					<p:dataTable var="items" value="#{orderDetailBean.order.items}"
 						emptyMessage="No data has been found." id="ordersTable"
 						rowKey="#{items.id}">
@@ -60,6 +66,15 @@
 						</f:facet>
 					</p:dataTable>
 					<br />
+					<p:commandButton value="Delete" ajax="false" action="#{orderDetailBean.deleteOrder()}">
+					<f:param name="orderId" value="#{orderDetailBean.order.id}">
+								</f:param>
+					</p:commandButton>
+					
+					<p:commandButton value="Save" ajax="false" action="#{orderDetailBean.saveOrder()}">
+								<f:param name="orderId" value="#{orderDetailBean.order.id}">
+								</f:param>
+					</p:commandButton>
 				</h:form>
 			</div>
 		</ui:define>

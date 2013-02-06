@@ -25,25 +25,50 @@ public class OrderDetailBean implements Serializable {
 	protected OrderManager orderManager;
 	@Inject
 	protected BasketManager basketManager;
-	
+
 	private Order order;
-	
+
 	@PostConstruct
-	public void init(){
-		
+	public void init() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String parameter = params.get("orderId");
+		if (parameter != null) {
+			Long id = Long.parseLong(parameter);
+			order = orderManager.findOrderById(id);
+		}
 	}
-	
-	public String loadOrderDetail(){
+	/**
+	 * This function load detail of order
+	 * @return navigation string
+	 */
+	public String loadOrderDetail() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String parameter = params.get("orderId");
 		Long id = Long.parseLong(parameter);
 		order = orderManager.findOrderById(id);
 		return "orderDetail";
 	}
-	
-	public String loadOrderAdminDetail(){
+
+	public String loadOrderAdminDetail() {
 		loadOrderDetail();
 		return "orderAdminDetail";
+	}
+
+	public String deleteOrder() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String parameter = params.get("orderId");
+		Long id = Long.parseLong(parameter);
+		orderManager.deleteOrder(id);
+		// setOrders(orderManager.findAllOrders());
+		return "orderManaging";
+	}
+
+	public void saveOrder() {
+		if (order != null) {
+			orderManager.updateOrder(order);
+		}
+
+		// setOrders(orderManager.findAllOrders());
 	}
 
 	public Order getOrder() {
@@ -53,6 +78,5 @@ public class OrderDetailBean implements Serializable {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	
-	
+
 }

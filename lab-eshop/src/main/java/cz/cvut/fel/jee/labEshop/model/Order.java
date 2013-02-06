@@ -23,7 +23,7 @@ public class Order extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
-	@OneToMany(mappedBy="order", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST })
+	@OneToMany(mappedBy="order", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE })
 	private List<OrderItem> items;
 	private Long totalPrice;
 	@Enumerated(EnumType.STRING)

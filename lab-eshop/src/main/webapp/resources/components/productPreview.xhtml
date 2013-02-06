@@ -36,7 +36,7 @@
 				<span style="font-size: 160%; color: red;">#{cc.attrs.product.price.amount},-</span>
 
 				<h:form style="float:right; display: inline-block;">
-				<p:growl id="growl" showDetail="true" sticky="true" />  
+				  <p:growl id="growl" showDetail="true" sticky="true" />  
 					<p:commandButton actionListener="#{basketBean.addItemToBasket}"
 						value="I want this!!" rendered="#{loginBean.userLogged}"
 						update="@form, growl" process="@form">

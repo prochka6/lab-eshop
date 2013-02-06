@@ -291,3 +291,10 @@ a:hover {
 .ui-editor,.ui-editor>iframe,.ui-editor>textarea {
 	width: 100% !important;
 }
+
+.ui-growl {
+    position: fixed;
+    right: 10px;
+    top: 160px;
+    width: 311px;
+}

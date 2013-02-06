@@ -2,9 +2,13 @@ package cz.cvut.fel.jee.labEshop.manager;
 
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
+import org.jboss.ejb3.annotation.SecurityDomain;
 
 import cz.cvut.fel.jee.labEshop.dao.IBrandDao;
 import cz.cvut.fel.jee.labEshop.exceptions.EntityNotFoundException;
@@ -17,6 +21,8 @@ import cz.cvut.fel.jee.labEshop.util.LabEshopConstants;
  * @author Kamil Prochazka (<a href="mailto:prochka6@fel.cvut.cz">prochka6</a>)
  */
 @Stateless
+@SecurityDomain("labeshopsecurity")
+@DeclareRoles({LabEshopConstants.ADMINISTRATOR_ROLE, LabEshopConstants.CUSTOMER_ROLE})
 public class BrandManager {
 
 	@Inject
@@ -32,6 +38,7 @@ public class BrandManager {
 	 * @throws EntityNotFoundException
 	 *             if no such brand with given id exists
 	 */
+	  @PermitAll
 	public Brand findBrand(Long id) throws EntityNotFoundException {
 		if (id == null) {
 			throw new EntityNotFoundException(Brand.class, id);
@@ -87,6 +94,7 @@ public class BrandManager {
 	 * 
 	 * @return list of all brands never <code>null</code>
 	 */
+	  @PermitAll
 	public List<Brand> findAllBrands() {
 		return brandDao.getAll();
 	}
