@@ -3,7 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></h:head>
@@ -25,19 +26,18 @@
 				  </p>
 
 				<br />
-			
+				
 			<h:form id="subm">
 				<p:commandButton action="#{productsBean.createNewProduct()}"
 					value="Create Product" immediate="true" update=":productDetail"
 					oncomplete="LabEshop.scrollTo('productDetail');" />
-
+					
 			</h:form>
 
 			<div class="separator" />
 
 			<h:form id="form">
-
-				<p:growl id="formMessages"/>
+				<p:growl id ="messages" autoUpdate="true" globalOnly="true"  > </p:growl>
 
 				<p:dataTable var="product" value="#{productsBean.products}"
 					rowKey="#{product.id}" paginator="true" rows="10"
@@ -92,7 +92,7 @@
 					<h:form id="detailForm" prependId="false" enctype="multipart/form-data">
 
 
-
+				
 
 						<div class="form-field">
 							<h:outputLabel for="productName" value="Name" />
@@ -108,7 +108,7 @@
 							<h:outputLabel for="productCode" value="Code" />
 							<p:inputText value="#{productsBean.selectedProduct.code}"
 								id="productCode" required="true"
-								requiredMessage="Please set product code!" size="40" validator="#{productsBean.validateCode}">
+								requiredMessage="Please set product code!" size="40">
 									<f:validateLength minimum="5"/>
 								</p:inputText>
 							<h:message for="productCode" errorClass="errorRequired" />
@@ -183,11 +183,11 @@
 							<h:outputLabel for="publishDate" value="Publish Date" />
 							<p:calendar value="#{productsBean.selectedProduct.publishDate}"
 								id="publishDate" showOn="button" required="true"
-								requiredMessage="Please set publish date!"/>
+								requiredMessage="Please set publish date!" />
 							<h:message for="publishDate" errorClass="errorRequired" />
 							<h:outputLabel for="discardDate" value="Discard Date" />
 							<p:calendar value="#{productsBean.selectedProduct.discardDate}"
-								id="discardDate" showOn="button" validator="#{productsBean.validateDate}" required="true"
+								id="discardDate" showOn="button" required="true"
 								requiredMessage="Please select discard date!"/>
 							<h:message for="discardDate" errorClass="errorRequired" />
 						</div>
@@ -226,12 +226,12 @@
 						<div class="form-buttons">
 
 							<p:commandButton ajax="false" action="#{productsBean.submit()}"
-								value="Submit" update=":productDetail :form " />
+								value="Submit" update=":productDetail :form :form:messages" />
 							<p:commandLink immediate="true" action="#{productsBean.clear()}"
 								value="Cancel" update=":productDetail" />
 						</div>
 
-
+				
 
 
 					</h:form>

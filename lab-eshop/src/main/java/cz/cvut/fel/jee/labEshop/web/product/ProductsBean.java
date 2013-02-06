@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
@@ -154,25 +155,51 @@ public class ProductsBean implements Serializable {
 	}
 
 	public void submit() {
-		if (selectedProduct.getId() == null) {
-			selectedProduct.setPrice(new Money(price));
-			productManager.createProduct(selectedProduct);
-			products.add(0, selectedProduct);
-
-			messages.info("Product created successfully.");
-		} else {
-			FacesMessage msg = new FacesMessage("Product " + selectedProduct.getTitle() + " edited successfully");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			if (selectedProduct.getPrice() != null && price != selectedProduct.getPrice().amount()) {
-				selectedProduct.setPrice(new Money(price));
-			}
-			selectedProduct = productManager.updateProduct(selectedProduct);
-			products.set(products.indexOf(selectedProduct), selectedProduct);
-
-			messages.info("Product {0} edited successfully", selectedProduct.getTitle());
+		if (selectedProduct.getPublishDate().getTime() > selectedProduct
+				.getDiscardDate().getTime()) {
+			messages.error("Invalid Dates - Publish Date must be lower than Discard Date!- Operation cancelled.");
+			return;
 		}
 
-		selectedProduct = null;
+		if (selectedProduct.getId() == null) {
+			selectedProduct.setPrice(new Money(price));
+
+			if (productManager.findProduct(selectedProduct.getCode()) != null) {
+				FacesMessage msg = new FacesMessage("Invalid Code - Code allready in database!- Operation cancelled.");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			} else {
+				productManager.createProduct(selectedProduct);
+				products.add(0, selectedProduct);
+				messages.info("Product created successfully.");
+				selectedProduct = null;
+				price = null;
+			}
+
+		} else {
+			Product productinDB = productManager.findProduct(selectedProduct
+					.getCode());
+			if (productinDB != null
+					&& productinDB.getId() != selectedProduct.getId()) {
+				FacesMessage msg = new FacesMessage("Invalid Code - Code allready in database!- Operation cancelled.");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				return;
+			} else {
+
+				FacesMessage msg = new FacesMessage("Product "
+						+ selectedProduct.getTitle() + " edited successfully");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				if (selectedProduct.getPrice() != null
+						&& price != selectedProduct.getPrice().amount()) {
+					selectedProduct.setPrice(new Money(price));
+				}
+				selectedProduct = productManager.updateProduct(selectedProduct);
+				products.set(products.indexOf(selectedProduct), selectedProduct);
+
+				selectedProduct = null;
+				price = null;
+			}
+		}
+
 	}
 
 	public void uploadFile(FileUploadEvent event) throws IOException {
@@ -181,36 +208,8 @@ public class ProductsBean implements Serializable {
 		imgProvider.setStream(selectedProduct.getPromoImage());
 
 		log.info("Image {} upload success.", uploadedFile.getFileName());
-		messages.info("Image: {0} has been successfully uploaded.", uploadedFile.getFileName());
-	}
-	
-	public void validateDate(FacesContext context, UIComponent component, Object value) {
-
-	       long publish = selectedProduct.getPublishDate().getTime();
-	       long discard = ((Date) value).getTime();
-
-	       if (publish>discard) {
-	    	  messages.warn("Wrong product input information! - Operation cancelled.");
-	          throw new ValidatorException(new FacesMessage("Invalid Date - Discard date must be later than publish date!"));
-	       }
-	       
-
-	}
-	
-	public void validateCode(FacesContext context, UIComponent component, Object value) {
-	       String code = ((String) value);
-     
-	       if (selectedProduct.getId()==null&&productManager.findProduct(code)!=null) {
-	    	  messages.warn("Wrong product input information! - Operation cancelled.");
-	          throw new ValidatorException(new FacesMessage("Invalid Code - Code allready in database!"));
-	       }
-	       if (selectedProduct.getId()!=null) {
-	    	   messages.warn("Wrong product input information! - Operation cancelled.");
-	    	   Product productinDB = productManager.findProduct(code);
-	    	   if(productinDB!=null&&productinDB.getId()!=selectedProduct.getId())
-		          throw new ValidatorException(new FacesMessage("Invalid Code - Code allready in database!"));
-		   }
-	       
+		messages.info("Image: {0} has been successfully uploaded.",
+				uploadedFile.getFileName());
 	}
 
 	public void onRowSelect(SelectEvent event) {
